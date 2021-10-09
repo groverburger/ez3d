@@ -3,6 +3,9 @@ import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import './styles.css'
 
+/**
+ * Basic implementation to creating a Box element.
+ */
 function Box() {
   return (
     <mesh>
@@ -12,6 +15,18 @@ function Box() {
   )
 }
 
+/**
+ * Create a Canvas to render elements into the scene.
+ * 
+ * OrbitControls    Allows the camera to move around a target
+ * ambientLight     Lighting for all objects in the scene
+ * spotLight        Lighting in one direction in a cone
+ * gridHelper       Creates a grid
+ * - args           [X-Dimension, Y-Dimension, Middle Grid Color, General Grid Color]
+ * fog              Adds fog into the scene
+ * - args           [Color, Minimum Distance, Maximum Distance]
+ * Box              Includes the Box element into the scene
+ */
 export default function App() {
   return (
     <Canvas camera={{ position: [3, 3, 3] }}>
