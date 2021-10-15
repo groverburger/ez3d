@@ -17,7 +17,7 @@ function Box() {
 
 /**
  * Create a Canvas to render elements into the scene.
- * 
+ *
  * OrbitControls    Allows the camera to move around a target
  * ambientLight     Lighting for all objects in the scene
  * spotLight        Lighting in one direction in a cone
@@ -29,14 +29,21 @@ function Box() {
  */
 export default function App() {
   return (
-    <Canvas camera={{ position: [3, 3, 3] }}>
-      <OrbitControls />
-      <ambientLight intensity={0.5} />
-      <spotLight position={[0, 5, 10]} angle={0.3}/>
-      <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
-      <fog attach="fog" args={["#d9d9db", 10, 20]} />
-      <Box />
-    </Canvas>
+    <>
+      <div>
+        <button>
+          hihi
+        </button>
+      </div>
+      <Canvas camera={{ position: [3, 3, 3] }}>
+        <OrbitControls />
+        <ambientLight intensity={0.5} />
+        <spotLight position={[0, 5, 10]} angle={0.3}/>
+        <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
+        <fog attach="fog" args={["#d9d9db", 10, 20]} />
+        <Box />
+      </Canvas>
+    </>
   )
 }
 
