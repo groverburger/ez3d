@@ -28,6 +28,16 @@ function Box(props) {
   )
 }
 
+function Cylinder(props) {
+  const mesh = useRef()
+   return (
+    <mesh {...props} ref={mesh}>
+      <cylinderBufferGeometry attach="geometry" />
+      <meshLambertMaterial attach="material" color="green" />
+    </mesh>
+  )
+}
+
 
 /**
  * Create a Canvas to render elements into the scene.
@@ -45,28 +55,35 @@ function Box(props) {
 // edited by Ruiyang, click button, create new box
 export default function App() {
   const [boxes, setBoxes] = useState([])
+  const [cylinders, setCylinders] = useState([])
 
   return (
     // create canvas and button in one section.
     <>
       <div>
         <button onClick={() => generateNewBlock()}>
-          hihi
+          Add Cube
+        </button>
+        <button onClick={() => generateNewCylinder()}>
+          Add Cylinder
         </button>
       </div>
-      <Canvas 
+      <Canvas
         onClick={() => Box()}
         camera={{ position: [3, 3, 3] }}>
-      
+
         <OrbitControls />
         <ambientLight intensity={0.5} />
         <spotLight position={[0, 5, 10]} angle={0.3}/>
         {boxes.map((props) => (
         <Box {...props} />
         ))}
+        {cylinders.map((props) => (
+        <Cylinder {...props} />
+        ))}
         <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
         <fog attach="fog" args={["#d9d9db", 10, 20]} />
-        
+
       </Canvas>
     </>
   )
@@ -77,7 +94,15 @@ export default function App() {
     let newBoxes = boxes
     newBoxes.push({position: [0, total * 2 , 0]})
     console.log(total)
-    setBoxes([...newBoxes])  
+    setBoxes([...newBoxes])
+  }
+
+  function generateNewCylinder() {
+    const total = cylinders.length
+    let newCylinders = cylinders
+    newCylinders.push({position: [0, total * 2 , 0]})
+    console.log(total)
+    setCylinders([...newCylinders])
   }
 
 }
@@ -90,16 +115,16 @@ export default function App() {
 //           hihi
 //         </button>
 //       </div>
-//       <Canvas 
+//       <Canvas
 //         onClick={() => Box()}
 //         camera={{ position: [3, 3, 3] }}>
-      
+
 //         <OrbitControls />
 //         <ambientLight intensity={0.5} />
 //         <spotLight position={[0, 5, 10]} angle={0.3}/>
 //         <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
 //         <fog attach="fog" args={["#d9d9db", 10, 20]} />
-        
+
 //       </Canvas>
 //     </>
 //   )
