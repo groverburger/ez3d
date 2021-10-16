@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import './styles.css'
+import Header from './components/header'
+import { Context } from './components/context'
 
 /**
  * Basic implementation to creating a Box element.
@@ -17,26 +19,36 @@ function Box() {
 
 /**
  * Create a Canvas to render elements into the scene.
+ * Create a hook that set state for the grid (on/off).
  * 
- * OrbitControls    Allows the camera to move around a target
- * ambientLight     Lighting for all objects in the scene
- * spotLight        Lighting in one direction in a cone
- * gridHelper       Creates a grid
- * - args           [X-Dimension, Y-Dimension, Middle Grid Color, General Grid Color]
- * fog              Adds fog into the scene
- * - args           [Color, Minimum Distance, Maximum Distance]
- * Box              Includes the Box element into the scene
+ * Context.Provider    All components under this component can receive and respond to
+ *                     the global state value (true/false in this case).
+ * Header              Adds a header.
+ * OrbitControls       Allows the camera to move around a target
+ * ambientLight        Lighting for all objects in the scene
+ * spotLight           Lighting in one direction in a cone
+ * Box                 Includes the Box element into the scene
+ * fog                 Adds fog into the scene
+ * - args              [Color, Minimum Distance, Maximum Distance]
+ * gridHelper          If toggle is true, create grid - else, create nothing
+ * - args              [X-Dimension, Y-Dimension, Middle Grid Color, General Grid Color]
  */
 export default function App() {
+  const [toggle, setToggle] = useState(true)
   return (
-    <Canvas camera={{ position: [3, 3, 3] }}>
-      <OrbitControls />
-      <ambientLight intensity={0.5} />
-      <spotLight position={[0, 5, 10]} angle={0.3}/>
-      <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
-      <fog attach="fog" args={["#d9d9db", 10, 20]} />
-      <Box />
-    </Canvas>
+    <>
+      <Context.Provider value={[toggle, setToggle]}>
+        <Header />
+      </Context.Provider>
+      <Canvas camera={{ position: [3, 3, 3] }}>
+        <OrbitControls />
+        <ambientLight intensity={0.5} />
+        <spotLight position={[0, 5, 10]} angle={0.3} />
+        <Box />
+        <fog attach="fog" args={["#d9d9db", 10, 20]} />
+        {toggle ? <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]} /> : null}
+      </Canvas>
+    </>
   )
 }
 
