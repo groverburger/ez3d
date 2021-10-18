@@ -28,6 +28,9 @@ function Box(props) {
   )
 }
 
+//Edited by Gabi with Ruiyang's code above as reference
+//create a cylinder
+//set color to green
 function Cylinder(props) {
   const mesh = useRef()
    return (
@@ -40,6 +43,7 @@ function Cylinder(props) {
 
 
 /**
+ * Create constants for boxes and cylinders
  * Create a Canvas to render elements into the scene.
  *
  * OrbitControls    Allows the camera to move around a target
@@ -53,6 +57,7 @@ function Cylinder(props) {
  */
 
 // edited by Ruiyang, click button, create new box
+//edited by Gabi, click cylinder button to get new cylinder
 export default function App() {
   const [boxes, setBoxes] = useState([])
   const [cylinders, setCylinders] = useState([])
@@ -92,15 +97,21 @@ export default function App() {
   function generateNewBlock() {
     const total = boxes.length
     let newBoxes = boxes
-    newBoxes.push({position: [0, total * 2 , 0]})
+    newBoxes.push({position: [0, 0 , 0]})
     console.log(total)
     setBoxes([...newBoxes])
   }
 
+//edited by Gabi
+//cylinder creation function
   function generateNewCylinder() {
+
+    //total = number of cylinders
     const total = cylinders.length
     let newCylinders = cylinders
-    newCylinders.push({position: [0, total * 2 , 0]})
+
+    //push a new cylinder onto the list in center of scene
+    newCylinders.push({position: [0, 0, 0]})
     console.log(total)
     setCylinders([...newCylinders])
   }
