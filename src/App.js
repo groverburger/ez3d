@@ -1,5 +1,5 @@
-import React from 'react'
-import { Canvas } from '@react-three/fiber'
+import React, { useRef, useState } from 'react'
+import { Canvas} from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import './styles.css'
 import SplitPane from "react-split-pane/lib/SplitPane";
@@ -93,7 +93,6 @@ function App() {
         This is the outliner
         </Pane>
       </SplitPane>
-
     </>
   );
 }
