@@ -1,20 +1,20 @@
 * {
     box-sizing: border-box;
   }
-  
+
   html,
   body,
   #root {
-    width: 100vw;
-    height: 100vh;
+    /* keeps the viewport filling 100% of the window */
+    width: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
     user-select: none;
     background: #d9d9db;
   }
-  
+
   body {
     font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto,
       segoe ui, arial, sans-serif;
   }
-

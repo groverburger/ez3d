@@ -2,184 +2,99 @@ import React, { useRef, useState } from 'react'
 import { Canvas} from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import './styles.css'
+import SplitPane from "react-split-pane/lib/SplitPane";
+import Pane from "react-split-pane/lib/Pane";
+import {Navbar, Nav, NavDropdown} from "react-bootstrap";
 
 /**
  * Basic implementation to creating a Box element.
  */
-// function Box() {
-//   return (
-//     <mesh position={[1, 2, 3]}>
-//       <boxBufferGeometry attach="geometry" />
-//       <meshLambertMaterial attach="material" color="hotpink" />
-//     </mesh>
-//   )
-// }
-
-// edited by Ruiyang
-// create a box on origin
-// reference: https://codesandbox.io/s/r3f-basic-demo-forked-6q6ww?file=/src/App.js:600-604
-function Box(props) {
-  const mesh = useRef()
-   return (
-    <mesh {...props} ref={mesh}>
+function Box() {
+  return(
+    <mesh>
       <boxBufferGeometry attach="geometry" />
       <meshLambertMaterial attach="material" color="hotpink" />
     </mesh>
   )
 }
 
-function Cylinder(props) {
-  const mesh = useRef()
-   return (
-    <mesh {...props} ref={mesh}>
-      <cylinderBufferGeometry attach="geometry" />
-      <meshLambertMaterial attach="material" color="green" />
-    </mesh>
-  )
-}
-
-
-/**
- * Create a Canvas to render elements into the scene.
- *
- * OrbitControls    Allows the camera to move around a target
- * ambientLight     Lighting for all objects in the scene
- * spotLight        Lighting in one direction in a cone
- * gridHelper       Creates a grid
- * - args           [X-Dimension, Y-Dimension, Middle Grid Color, General Grid Color]
- * fog              Adds fog into the scene
- * - args           [Color, Minimum Distance, Maximum Distance]
- * Box              Includes the Box element into the scene
- */
-
-// edited by Ruiyang, click button, create new box
-export default function App() {
-  const [boxes, setBoxes] = useState([])
-  const [cylinders, setCylinders] = useState([])
-
+function App() {
   return (
-    // create canvas and button in one section.
-    <>
-      <div>
-        <button onClick={() => generateNewBlock()}>
-          Add Cube
-        </button>
-        <button onClick={() => resetCube()}>
-          reset cube to origin
-        </button>
-        <button onClick={() => generateNewCylinder()}>
-          Add Cylinder
-        </button>
-      </div>
-      <Canvas
-        onClick={() => Box()}
-        camera={{ position: [3, 3, 3] }}>
+    < >
+      {/* Navigation bar with file, edit, add, etc.
+          reference: https://react-bootstrap.github.io/components/navbar/
+      */}
+      <nav>
+        {/*
+          bg= light (light theme... there is also a dark theme)
+          expand = small(how far the window closes until menu icon)
+          fixed = top (fixed navbar along the top of the screen, scrolls with page)
+        */}
+        <Navbar bg="light" expand="sm" fixed="top">
+            {/*
+              Brand = Title of the website.
+              It also has a link attached to it if user clicks on the EZ-3D
+            */}
+            <Navbar.Brand href="#home">EZ-3D</Navbar.Brand>
+            {/*Toggle and Collapse Components control when content collapses behind buttons*/}
+            <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+            <Navbar.Collapse id="responsive-navbar-nav">
+              <Nav className="me-auto">
+                {/*link attached to File*/}
+                <Nav.Link href="#home">File</Nav.Link>
+                {/*link attached to Edit*/}
+                <Nav.Link href="#link">Edit</Nav.Link>
+                {/*Dropdown menu where you can add meshes and lights*/}
+                <NavDropdown title="Add" id="responsive-nav-dropdown">
+                  <NavDropdown.ItemText>Meshes</NavDropdown.ItemText>{/*Non-clickable text*/}
+                  <NavDropdown.Divider /> {/*Seperator line in dropdown*/}
+                  <NavDropdown.Item href="#action/3.1">Cube</NavDropdown.Item>{/*Button that will add Cube mesh to scene*/}
+                  <NavDropdown.Item href="#action/3.2">Sphere</NavDropdown.Item>{/*Button that will add Sphere mesh to scene*/}
+                  <NavDropdown.Item href="#action/3.3">Cylinder</NavDropdown.Item>{/*Button that will add Cylinder mesh to scene*/}
 
-        <OrbitControls />
-        <ambientLight intensity={0.5} />
-        <spotLight position={[0, 5, 10]} angle={0.3}/>
-        {boxes.map((props) => (
-        <Box {...props} />
-        ))}
-        {cylinders.map((props) => (
-        <Cylinder {...props} />
-        ))}
-        <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
-        <fog attach="fog" args={["#d9d9db", 10, 20]} />
-
-      </Canvas>
+                  <NavDropdown.Divider />{/*Seperator line in dropdown*/}
+                  <NavDropdown.ItemText>Lights</NavDropdown.ItemText>{/*Non-clickable text*/}
+                  <NavDropdown.Divider />{/*Seperator line in dropdown*/}
+                  <NavDropdown.Item href="#action/3.4">Point</NavDropdown.Item>{/*Button that will add point light to scene*/}
+                  <NavDropdown.Item href="#action/3.5">Direction</NavDropdown.Item>{/*Button that will add direction light to scene*/}
+                  <NavDropdown.Item href="#action/3.6">Ambient</NavDropdown.Item>{/*Button that will add Ambient light to scene*/}
+                </NavDropdown>
+              </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+      </nav>
+      {/* Vertical Splitpane = left side is viewport, right panel is the outliner
+          reference: https://www.npmjs.com/package/react-split-pane
+      */}
+      <SplitPane split="vertical">{/*split can be horizontal or vertical*/}
+        <Pane> {/*left pane*/}
+        {/**
+         * Create a Canvas to render elements into the scene
+         * OrbitControls    Allows the camera to move around a target
+         * ambientLight     Lighting for all objects in the scene
+         * spotLight        Lighting in one direction in a cone
+         * gridHelper       Creates a grid
+         * - args           [X-Dimension, Y-Dimension, Middle Grid Color, General Grid Color]
+         * fog              Adds fog into the scene
+         * - args           [Color, Minimum Distance, Maximum Distance]
+         * Box              Includes the Box element into the scene
+         */}
+          <Canvas camera={{ position: [3, 3, 3] }}>
+            <OrbitControls />
+            <ambientLight intensity={0.5} />
+            <spotLight position={[0, 5, 10]} angle={0.3}/>
+            <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
+            <fog attach="fog" args={["#d9d9db", 10, 20]} />
+            <Box/>
+          </Canvas>
+        </Pane>
+        {/*right pane with pixel limits(initialSize, minSize, maxSize)*/}
+        <Pane initialSize="350px" minSize="250px" maxSize="350px">
+        This is the outliner
+        </Pane>
+      </SplitPane>
     </>
-  )
-
-  // edited by Ruiyang
-  function generateNewBlock() {
-    const total = boxes.length
-    let newBoxes = boxes
-    newBoxes.push({position: [0, total * 2 , 0]})
-    console.log(total)
-    setBoxes([...newBoxes])
-  }
-
-  // reset the cube to certain posistion (0,-5,0) for convenience
-  // only support reset one cube now 
-  // edited by Ruiyang Liu
-  function resetCube(){
-    let temp_box1 = boxes;
-    temp_box1.pop();
-    temp_box1.push({position: [0, -5, 0]})
-    setBoxes([...temp_box1])
-  }
-
-  function generateNewCylinder() {
-    const total = cylinders.length
-    let newCylinders = cylinders
-    newCylinders.push({position: [0, total * 2 , 0]})
-    console.log(total)
-    setCylinders([...newCylinders])
-  }
-
+  );
 }
 
-// export default function App() {
-//   return (
-//     <>
-//       <div>
-//         <button onClick={test}>
-//           hihi
-//         </button>
-//       </div>
-//       <Canvas
-//         onClick={() => Box()}
-//         camera={{ position: [3, 3, 3] }}>
-
-//         <OrbitControls />
-//         <ambientLight intensity={0.5} />
-//         <spotLight position={[0, 5, 10]} angle={0.3}/>
-//         <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
-//         <fog attach="fog" args={["#d9d9db", 10, 20]} />
-
-//       </Canvas>
-//     </>
-//   )
-
-// }
-
-// import React, { useRef, useState } from 'react'
-// import { Canvas, useFrame } from '@react-three/fiber'
-// import { OrbitControls } from 'drei'
-
-// function Box(props) {
-//   // This reference will give us direct access to the mesh
-//   const ref = useRef()
-//   // Set up state for the hovered and active state
-//   const [hovered, setHover] = useState(false)
-//   const [active, setActive] = useState(false)
-//   // Rotate mesh every frame, this is outside of React without overhead
-//   useFrame(() => {
-//     ref.current.rotation.x = ref.current.rotation.y += 0.01
-//   })
-//   return (
-//     <mesh
-//       {...props}
-//       ref={ref}
-//       scale={active ? 1.5 : 1}
-//       onClick={(e) => setActive(!active)}
-//       onPointerOver={(e) => setHover(true)}
-//       onPointerOut={(e) => setHover(false)}>
-//       <boxGeometry args={[1, 1, 1]} />
-//       <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-//     </mesh>
-//   )
-// }
-
-// export default function App() {
-//   return (
-//     <Canvas>
-//       <ambientLight intensity={0.5} />
-//       <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-//       <pointLight position={[-10, -10, -10]} />
-//       <Box position={[-1.2, 0, 0]} />
-//       <Box position={[1.2, 0, 0]} />
-//     </Canvas>
-//   )
-// }
+export default App;
