@@ -64,6 +64,9 @@ export default function App() {
         <button onClick={() => generateNewBlock()}>
           Add Cube
         </button>
+        <button onClick={() => resetCube()}>
+          reset cube to origin
+        </button>
         <button onClick={() => generateNewCylinder()}>
           Add Cylinder
         </button>
@@ -95,6 +98,16 @@ export default function App() {
     newBoxes.push({position: [0, total * 2 , 0]})
     console.log(total)
     setBoxes([...newBoxes])
+  }
+
+  // reset the cube to certain posistion (0,-5,0) for convenience
+  // only support reset one cube now 
+  // edited by Ruiyang Liu
+  function resetCube(){
+    let temp_box1 = boxes;
+    temp_box1.pop();
+    temp_box1.push({position: [0, -5, 0]})
+    setBoxes([...temp_box1])
   }
 
   function generateNewCylinder() {
