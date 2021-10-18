@@ -1,3 +1,4 @@
+import React from 'react'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import './styles.css'
@@ -20,7 +21,9 @@ function Box() {
 function App() {
   return (
     < >
-      {/* Navigation bar with file, edit, add, etc. */}
+      {/* Navigation bar with file, edit, add, etc.
+          reference: https://react-bootstrap.github.io/components/navbar/
+      */}
       <nav>
         {/*
           bg= light (light theme... there is also a dark theme)
@@ -60,9 +63,9 @@ function App() {
             </Navbar.Collapse>
         </Navbar>
       </nav>
-
-
-      {/*Vertical Splitpane = left side is viewport, right panel is the outliner*/}
+      {/* Vertical Splitpane = left side is viewport, right panel is the outliner
+          reference: https://www.npmjs.com/package/react-split-pane
+      */}
       <SplitPane split="vertical">{/*split can be horizontal or vertical*/}
         <Pane> {/*left pane*/}
         {/**
@@ -86,10 +89,11 @@ function App() {
           </Canvas>
         </Pane>
         {/*right pane with pixel limits(initialSize, minSize, maxSize)*/}
-        <Pane initialSize="350px" minSize="250px" maxSize="350px">{/*right pane*/}
-          This is the outliner
+        <Pane initialSize="350px" minSize="250px" maxSize="350px">
+        This is the outliner
         </Pane>
       </SplitPane>
+
     </>
   );
 }
