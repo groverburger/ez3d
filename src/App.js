@@ -1,6 +1,8 @@
-import React, { useRef, useState } from 'react'
+import ReactDOM from "react-dom"
+import React, { Suspense, useEffect, useRef, useState } from 'react'
 import { Canvas} from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { OrbitControls, TransformControls} from '@react-three/drei'
+import { Controls, useControl } from "react-three-gui"
 import './styles.css'
 import SplitPane from "react-split-pane/lib/SplitPane";
 import Pane from "react-split-pane/lib/Pane";
@@ -9,39 +11,105 @@ import {Navbar, Nav, NavDropdown} from "react-bootstrap";
 // edited by Ruiyang
 // create a box on origin
 // reference: https://codesandbox.io/s/r3f-basic-demo-forked-6q6ww?file=/src/App.js:600-604
+// transform controls added by Eric
+// source code: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
 function Box(props) {
+  //orbit is native to each object (they can stack on eachother, making orbitControls more and more sensitive (bug)
+  const orbit = useRef()
+  const transform = useRef()
+  const mode = useControl("mode", { type: "select", items: ["scale", "rotate", "translate"] })
+
   const mesh = useRef()
+
+  //the effect that allows the user to access the transform interface
+  useEffect(() => {
+    if (transform.current) {
+      const controls = transform.current
+      controls.setMode(mode)
+      const callback = event => (orbit.current.enabled = !event.value)
+      controls.addEventListener("dragging-changed", callback)
+      return () => controls.removeEventListener("dragging-changed", callback)
+    }
+  })
    return (
+    <>
+    <TransformControls ref={transform}>
     <mesh {...props} ref={mesh}>
       <boxBufferGeometry attach="geometry" />
       <meshLambertMaterial attach="material" color="hotpink" />
     </mesh>
+    </TransformControls>
+   
+    <OrbitControls ref={orbit} />
+    </>
   )
 }
 
 //Edited by Gabi with Ruiyang's code above as reference
 //create a cylinder
 //set color to green
+// transform controls added by Eric
+// source code: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
 function Cylinder(props) {
+  const orbit = useRef()
+  const transform = useRef()
+  const mode = useControl("mode", { type: "select", items: ["scale", "rotate", "translate"] })
+
   const mesh = useRef()
+
+  useEffect(() => {
+    if (transform.current) {
+      const controls = transform.current
+      controls.setMode(mode)
+      const callback = event => (orbit.current.enabled = !event.value)
+      controls.addEventListener("dragging-changed", callback)
+      return () => controls.removeEventListener("dragging-changed", callback)
+    }
+  })
    return (
+    <>
+    <TransformControls ref={transform}>
     <mesh {...props} ref={mesh}>
       <cylinderBufferGeometry attach="geometry" />
       <meshLambertMaterial attach="material" color="green" />
     </mesh>
+    </TransformControls>
+    <OrbitControls ref={orbit} />
+    </>
   )
 }
 
 //Edited by Gabi with Ruiyang's code above as reference
 //create a sphere
 //set color to blue
+// transform controls added by Eric
+// source code: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
 function Sphere(props) {
+  const orbit = useRef()
+  const transform = useRef()
+  const mode = useControl("mode", { type: "select", items: ["scale", "rotate", "translate"] })
+
   const mesh = useRef()
+
+  useEffect(() => {
+    if (transform.current) {
+      const controls = transform.current
+      controls.setMode(mode)
+      const callback = event => (orbit.current.enabled = !event.value)
+      controls.addEventListener("dragging-changed", callback)
+      return () => controls.removeEventListener("dragging-changed", callback)
+    }
+  })
    return (
+    <>
+    <TransformControls ref={transform}>
     <mesh {...props} ref={mesh}>
       <sphereBufferGeometry attach="geometry" />
       <meshLambertMaterial attach="material" color="blue" />
     </mesh>
+    </TransformControls>
+    <OrbitControls ref={orbit} />
+    </>
   )
 }
 
@@ -111,11 +179,12 @@ function App() {
          * Box              Includes the Box element into the scene
          */}
           <Canvas camera={{ position: [3, 3, 3] }}>
-            <OrbitControls />
+            
             <ambientLight intensity={0.5} />
             <spotLight position={[0, 5, 10]} angle={0.3}/>
             <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
             <fog attach="fog" args={["#d9d9db", 10, 20]} />
+            
             {boxes.map((props) => (
             <Box {...props} />
             ))}
@@ -125,13 +194,17 @@ function App() {
             {spheres.map((props) => (
             <Sphere {...props} />
             ))}
+            
           </Canvas>
+          
         </Pane>
         {/*right pane with pixel limits(initialSize, minSize, maxSize)*/}
         <Pane initialSize="350px" minSize="250px" maxSize="350px">
         This is the outliner
+        
         </Pane>
       </SplitPane>
+      <Controls />
     </>
   );
 
