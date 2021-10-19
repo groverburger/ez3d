@@ -6,19 +6,50 @@ import SplitPane from "react-split-pane/lib/SplitPane";
 import Pane from "react-split-pane/lib/Pane";
 import {Navbar, Nav, NavDropdown} from "react-bootstrap";
 
-/**
- * Basic implementation to creating a Box element.
- */
-function Box() {
-  return(
-    <mesh>
+// edited by Ruiyang
+// create a box on origin
+// reference: https://codesandbox.io/s/r3f-basic-demo-forked-6q6ww?file=/src/App.js:600-604
+function Box(props) {
+  const mesh = useRef()
+   return (
+    <mesh {...props} ref={mesh}>
       <boxBufferGeometry attach="geometry" />
       <meshLambertMaterial attach="material" color="hotpink" />
     </mesh>
   )
 }
 
+//Edited by Gabi with Ruiyang's code above as reference
+//create a cylinder
+//set color to green
+function Cylinder(props) {
+  const mesh = useRef()
+   return (
+    <mesh {...props} ref={mesh}>
+      <cylinderBufferGeometry attach="geometry" />
+      <meshLambertMaterial attach="material" color="green" />
+    </mesh>
+  )
+}
+
+//Edited by Gabi with Ruiyang's code above as reference
+//create a sphere
+//set color to blue
+function Sphere(props) {
+  const mesh = useRef()
+   return (
+    <mesh {...props} ref={mesh}>
+      <sphereBufferGeometry attach="geometry" />
+      <meshLambertMaterial attach="material" color="blue" />
+    </mesh>
+  )
+}
+
 function App() {
+  const [boxes, setBoxes] = useState([])
+  const [cylinders, setCylinders] = useState([])
+  const [spheres, setSpheres] = useState([])
+
   return (
     < >
       {/* Navigation bar with file, edit, add, etc.
@@ -48,9 +79,9 @@ function App() {
                 <NavDropdown title="Add" id="responsive-nav-dropdown">
                   <NavDropdown.ItemText>Meshes</NavDropdown.ItemText>{/*Non-clickable text*/}
                   <NavDropdown.Divider /> {/*Seperator line in dropdown*/}
-                  <NavDropdown.Item href="#action/3.1">Cube</NavDropdown.Item>{/*Button that will add Cube mesh to scene*/}
-                  <NavDropdown.Item href="#action/3.2">Sphere</NavDropdown.Item>{/*Button that will add Sphere mesh to scene*/}
-                  <NavDropdown.Item href="#action/3.3">Cylinder</NavDropdown.Item>{/*Button that will add Cylinder mesh to scene*/}
+                  <NavDropdown.Item href="#action/3.1" onClick={() => generateNewBlock()}>Cube</NavDropdown.Item>{/*Button that will add Cube mesh to scene*/}
+                  <NavDropdown.Item href="#action/3.2" onClick={() => generateNewSphere()}>Sphere</NavDropdown.Item>{/*Button that will add Sphere mesh to scene*/}
+                  <NavDropdown.Item href="#action/3.3" onClick={() => generateNewCylinder()}>Cylinder</NavDropdown.Item>{/*Button that will add Cylinder mesh to scene*/}
 
                   <NavDropdown.Divider />{/*Seperator line in dropdown*/}
                   <NavDropdown.ItemText>Lights</NavDropdown.ItemText>{/*Non-clickable text*/}
@@ -85,7 +116,15 @@ function App() {
             <spotLight position={[0, 5, 10]} angle={0.3}/>
             <gridHelper position={[0, -0.51, 0]} args={[100, 100, "#787878", "#989898"]}/>
             <fog attach="fog" args={["#d9d9db", 10, 20]} />
-            <Box/>
+            {boxes.map((props) => (
+            <Box {...props} />
+            ))}
+            {cylinders.map((props) => (
+            <Cylinder {...props} />
+            ))}
+            {spheres.map((props) => (
+            <Sphere {...props} />
+            ))}
           </Canvas>
         </Pane>
         {/*right pane with pixel limits(initialSize, minSize, maxSize)*/}
@@ -95,6 +134,44 @@ function App() {
       </SplitPane>
     </>
   );
+
+  // edited by Ruiyang
+  function generateNewBlock() {
+    const total = boxes.length
+    let newBoxes = boxes
+    newBoxes.push({position: [0, 0 , 0]})
+    console.log(total)
+    setBoxes([...newBoxes])
+  }
+
+//edited by Gabi
+//cylinder creation function
+  function generateNewCylinder() {
+
+    //total = number of cylinders
+    const total = cylinders.length
+    let newCylinders = cylinders
+
+    //push a new cylinder onto the list in center of scene
+    newCylinders.push({position: [0, 0, 0]})
+    console.log(total)
+    setCylinders([...newCylinders])
+  }
+
+  //edited by Gabi
+  //sphere creation function
+    function generateNewSphere() {
+
+      //total = number of spheres
+      const total = cylinders.length
+      let newSpheres = spheres
+
+      //push a new cylinder onto the list in center of scene
+      newSpheres.push({position: [0, 0, 0]})
+      console.log(total)
+      setSpheres([...newSpheres])
+    }
+
 }
 
 export default App;
