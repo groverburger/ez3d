@@ -1,0 +1,21 @@
+.navbar {
+  z-index: 2;
+  height: 3rem;
+  background-color: #fcfcfc;
+}
+
+.brand {
+  margin-left: 1.5rem;
+  font-weight: 400;
+}
+
+.me-auto div {
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+}
+
+#add-dropdown::after,
+#file-dropdown::after,
+#edit-dropdown::after {
+  display: none;
+}
