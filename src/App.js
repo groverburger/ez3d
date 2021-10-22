@@ -215,13 +215,13 @@ export default function App() {
           Pane            The split windows.
                           initialSize = limits (initialSize, minSize, maxSize)
       */}
-      <SplitPane split='vertical'>
-        <Pane>
+      <SplitPane className='splitpane' split='vertical'>
+        <Pane className='pane1'>
           <Canvas camera={{ position: [3, 3, 3] }}>
             <OrbitControls />
             <ambientLight intensity={0.5} />
             <spotLight position={[0, 5, 10]} angle={0.3} />
-            <fog attach='fog' args={['#d9d9db', 10, 20]} />
+            <fog attach='fog' args={['#e4e4ea', 10, 20]} />
 
             {/* Anything put into the array will be added onto the
                 canvas. The arrays are inside an object. To access
@@ -250,12 +250,12 @@ export default function App() {
             {toggle ? (
               <gridHelper
                 position={[0, -0.51, 0]}
-                args={[100, 100, '#787878', '#989898']}
+                args={[100, 100, '#89898e', '#adadb4']}
               />
             ) : null}
           </Canvas>
         </Pane>
-        <Pane initialSize='350px' minSize='250px' maxSize='350px'>
+        <Pane className='pane2' initialSize='350px' minSize='250px' maxSize='350px'>
           <Toggle onChange={(event) => setToggle(event.target.checked)} />
         </Pane>
       </SplitPane>

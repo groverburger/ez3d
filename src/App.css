@@ -1,6 +1,15 @@
+* {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+}
+
 /* The controls window */
 .kdvZHM {
   z-index: 1;
-  top: 0.3rem;
-  right: 24rem;
+  top: 0.09rem;
+  right: 26rem;
+}
+
+.pane2 {
+  background-color: #fcfcfc;
 }
