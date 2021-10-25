@@ -153,10 +153,10 @@ function Sphere(props) {
  *                          This particular provider saves the state of the shapes needed
  *                          to be generated.
  *
- * toggle, setToggle        A hook that saves the on or off state of the switch. The toggle
+ * grid, setGrid            A hook that saves the on or off state of the switch. The grid
  *                          parameter is a variable that holds the current state. Its default
- *                          is true. The setToggle parameter is a function that changes the
- *                          state of toggle.
+ *                          is true. The setGrid parameter is a function that changes the
+ *                          state of grid.
  *
  * shapes, setShapes        A hook that determines the number of shapes we should generate.
  *                          The shapes parameter is an object that contains the arrays for
@@ -244,7 +244,7 @@ export default function App() {
               <Sphere key='{props}' {...props} />
             ))}
 
-            {/* If toggle is true, add the grid onto the canvas. Else,
+            {/* If grid is true, add the grid onto the canvas. Else,
                 do not put anything into the canvas.
             */}
             {grid ? (
