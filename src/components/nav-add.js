@@ -25,7 +25,7 @@ export default function NavAdd() {
   const [shapes, setShapes] = value;
 
   return (
-    <div>
+    <div className='navbar-items'>
       <NavDropdown title='Add' id='add-dropdown'>
         <NavDropdown.ItemText>Meshes</NavDropdown.ItemText>
         <NavDropdown.Divider />

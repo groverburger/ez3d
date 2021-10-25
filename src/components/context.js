@@ -12,7 +12,7 @@ import { createContext } from 'react';
  *            https://stackoverflow.com/questions/58451029/usestate-object-set
  *            https://stackoverflow.com/questions/60305746/how-do-i-update-an-object-state-in-react-via-hooks
  */
-export const Context = createContext(false);
+export const GridContext = createContext(false);
 export const ShapeContext = createContext({});
 
 // Here as a backup just in case the array in the objects is too complicated.

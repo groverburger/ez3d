@@ -5,7 +5,7 @@ import './navbar.css';
 
 export default function NavEdit() {
   return (
-    <div>
+    <div className='navbar-items'>
       <NavDropdown title='Edit' id='edit-dropdown'>
         <NavDropdown.Item href='#action/3.0'>
           Let's Get This Bread

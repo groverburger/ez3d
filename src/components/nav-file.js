@@ -5,7 +5,7 @@ import './navbar.css';
 
 export default function NavFile() {
   return (
-    <div>
+    <div className='navbar-items'>
       <NavDropdown title='File' id='file-dropdown'>
         <NavDropdown.Item href='#action/2.0'>
           Let's Get This Bread

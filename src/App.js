@@ -3,14 +3,14 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, TransformControls } from '@react-three/drei';
 import { Controls, useControl } from 'react-three-gui';
 import { Navbar, Nav } from 'react-bootstrap';
-import { ShapeContext, Context } from './components/context';
+import { ShapeContext, GridContext } from './components/context';
 
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane';
 import NavFile from './components/nav-file';
 import NavEdit from './components/nav-edit';
 import NavAdd from './components/nav-add';
-import Toggle from './components/toggle';
+import Outliner from './components/outliner';
 
 import './App.css';
 import './components/navbar.css';
@@ -167,7 +167,7 @@ function Sphere(props) {
  *                          array.
  */
 export default function App() {
-  const [toggle, setToggle] = useState(true);
+  const [grid, setGrid] = useState(true);
   const [shapes, setShapes] = useState({
     boxes: [],
     cylinders: [],
@@ -216,12 +216,12 @@ export default function App() {
                           initialSize = limits (initialSize, minSize, maxSize)
       */}
       <SplitPane className='splitpane' split='vertical'>
-        <Pane className='pane1'>
+        <Pane className='pane-canvas'>
           <Canvas camera={{ position: [3, 3, 3] }}>
             <OrbitControls />
             <ambientLight intensity={0.5} />
             <spotLight position={[0, 5, 10]} angle={0.3} />
-            <fog attach='fog' args={['#e4e4ea', 10, 20]} />
+            <fog attach='fog' args={['#e6e6e9', 10, 40]} />
 
             {/* Anything put into the array will be added onto the
                 canvas. The arrays are inside an object. To access
@@ -247,7 +247,7 @@ export default function App() {
             {/* If toggle is true, add the grid onto the canvas. Else,
                 do not put anything into the canvas.
             */}
-            {toggle ? (
+            {grid ? (
               <gridHelper
                 position={[0, -0.51, 0]}
                 args={[100, 100, '#89898e', '#adadb4']}
@@ -255,8 +255,17 @@ export default function App() {
             ) : null}
           </Canvas>
         </Pane>
-        <Pane className='pane2' initialSize='350px' minSize='250px' maxSize='350px'>
-          <Toggle onChange={(event) => setToggle(event.target.checked)} />
+
+        {/* The outliner menu */}
+        <Pane
+          className='pane-outliner'
+          initialSize='350px'
+          minSize='250px'
+          maxSize='350px'
+        >
+          <GridContext.Provider value={[grid, setGrid]}>
+            <Outliner />
+          </GridContext.Provider>
         </Pane>
       </SplitPane>
     </>
