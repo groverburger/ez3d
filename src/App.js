@@ -102,38 +102,9 @@ function Box(props) {
 }
 
 /**
- * Edited by Gabi (using Ruiyang's code above as reference)
- * Create a cylinder on origin.
- *
- * Edited by Eric
- * Transform controls.
- * Reference: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
- *
- * Edited by Antonio
- * Added hotkeys for the transform controls. The state value is to tell the toolbar
- * what is the currently selected. The parameter transform contains the strings of
- * the transform modes (translate, scale, rotate).
+ * Cylinder Implementation
  */
 function Cylinder(props) {
-  // const orbit = useRef();
-  // const transform = useRef();
-  // const mode = useControl('mode', {
-  //   type: 'select',
-  //   items: ['scale', 'rotate', 'translate'],
-  // });
-
-  // const mesh = useRef();
-
-  // useEffect(() => {
-  //   if (transform.current) {
-  //     const controls = transform.current;
-  //     controls.setMode(mode);
-  //     const callback = (event) => (orbit.current.enabled = !event.value);
-  //     controls.addEventListener('dragging-changed', callback);
-  //     return () => controls.removeEventListener('dragging-changed', callback);
-  //   }
-  // });
-
   const orbit = useRef();
   const trans = useRef();
   const mesh = useRef();
@@ -199,38 +170,9 @@ function Cylinder(props) {
 }
 
 /**
- * Edited by Gabi (using Ruiyang's code above as reference)
- * Create a sphere on origin.
- *
- * Edited by Eric
- * Transform controls.
- * Reference: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
- *
- * Edited by Antonio
- * Added hotkeys for the transform controls. The state value is to tell the toolbar
- * what is the currently selected. The parameter transform contains the strings of
- * the transform modes (translate, scale, rotate).
+ * Sphere Implementation
  */
 function Sphere(props) {
-  // const orbit = useRef();
-  // const transform = useRef();
-  // const mode = useControl('mode', {
-  //   type: 'select',
-  //   items: ['scale', 'rotate', 'translate'],
-  // });
-
-  // const mesh = useRef();
-
-  // useEffect(() => {
-  //   if (transform.current) {
-  //     const controls = transform.current;
-  //     controls.setMode(mode);
-  //     const callback = (event) => (orbit.current.enabled = !event.value);
-  //     controls.addEventListener('dragging-changed', callback);
-  //     return () => controls.removeEventListener('dragging-changed', callback);
-  //   }
-  // });
-
   const orbit = useRef();
   const trans = useRef();
   const mesh = useRef();
@@ -302,23 +244,26 @@ function Sphere(props) {
  *            https://stackoverflow.com/questions/58451029/usestate-object-set
  *            https://stackoverflow.com/questions/60305746/how-do-i-update-an-object-state-in-react-via-hooks
  *
- * ShapeContext.Provider    All components under this component can receive and respond to
- *                          the global state value that is set in the 'value' parameter.
- *                          This particular provider saves the state of the shapes needed
- *                          to be generated.
+ * grid, setGrid              A hook that saves the on or off state of the switch. The grid
+ *                            parameter is a variable that holds the current state. Its default
+ *                            is true. The setGrid parameter is a function that changes the
+ *                            state of grid.
+ * 
+ * transform, setTransform    A hook that determines what transform control to use. The
+ *                            transform parameter is a string of one of the transform control
+ *                            modes: translate, scale, or rotate. The setTransform parameter
+ *                            is a function that changes the mode of the transform control.
+ *                            This hook is linked to the toolbar, therefore whatever button
+ *                            is currently active, it will use setTransform to update the
+ *                            transform parameter to have the currently selected mode's string.
  *
- * grid, setGrid            A hook that saves the on or off state of the switch. The grid
- *                          parameter is a variable that holds the current state. Its default
- *                          is true. The setGrid parameter is a function that changes the
- *                          state of grid.
- *
- * shapes, setShapes        A hook that determines the number of shapes we should generate.
- *                          The shapes parameter is an object that contains the arrays for
- *                          each shape. The setShapes parameter is a function that adds
- *                          another shape to the relevant arrays. Basically, instead of
- *                          having three different arrays for the shapes, we can instead
- *                          have one object in which we can call upon to get the relevant
- *                          array.
+ * shapes, setShapes          A hook that determines the number of shapes we should generate.
+ *                            The shapes parameter is an object that contains the arrays for
+ *                            each shape. The setShapes parameter is a function that adds
+ *                            another shape to the relevant arrays. Basically, instead of
+ *                            having three different arrays for the shapes, we can instead
+ *                            have one object in which we can call upon to get the relevant
+ *                            array.
  */
 export default function App() {
   const [grid, setGrid] = useState(true);
@@ -331,23 +276,28 @@ export default function App() {
 
   return (
     <>
-      {/* The control menu for the shapes */}
+      {/* Control Menu for the Shapes */}
       <Controls />
 
       {/* Navigation bar with file, edit, add, etc.
-          Reference: https://react-bootstrap.github.io/components/navbar/
-
-          Navbar          bg = light (light theme... there is also a dark theme)
-                          expand = small (how far the window closes until menu icon)
-                          fixed = top (fixed navbar along the top of the screen, scrolls with page)
-
-          Navbar.Brand    Title of the website. It also has a link attached
-                          to it if user clicks on the EZ-3D.
-
-          NavFile         Contains the relevant code for the File dropdown.
-          NavEdit         Contains the relevant code for the Edit dropdown.
-          NavAdd          Contains the relevant code for the Add dropdown.
-      */}
+        * Reference: https://react-bootstrap.github.io/components/navbar/
+        *
+        * ShapeContext.Provider    All components under this component can receive and respond to
+        *                          the global state value that is set in the 'value' parameter.
+        *                          This particular provider saves the state of the shapes needed
+        *                          to be generated.
+        *
+        * Navbar                   bg = light (light theme... there is also a dark theme)
+        *                          expand = small (how far the window closes until menu icon)
+        *                          fixed = top (fixed navbar along the top of the screen, scrolls with page)
+        *
+        * Navbar.Brand             Title of the website. It also has a link attached
+        *                          to it if user clicks on the EZ-3D.
+        *
+        * NavFile                  Contains the relevant code for the File dropdown.
+        * NavEdit                  Contains the relevant code for the Edit dropdown.
+        * NavAdd                   Contains the relevant code for the Add dropdown.
+        */}
       <ShapeContext.Provider value={[shapes, setShapes]}>
         <Navbar className='navbar'>
           <Navbar.Brand className='brand' href='/'>
@@ -362,14 +312,14 @@ export default function App() {
       </ShapeContext.Provider>
 
       {/* Splits the window into two. The left side is
-          the viewport and the right side is the outliner.
-          Reference: https://www.npmjs.com/package/react-split-pane
-
-          SplitPane       split = vertical (split window vertically)
-
-          Pane            The split windows.
-                          initialSize = limits (initialSize, minSize, maxSize)
-      */}
+        * the viewport and the right side is the outliner.
+        * Reference: https://www.npmjs.com/package/react-split-pane
+        *
+        * SplitPane    split = vertical (split window vertically)
+        *
+        * Pane         The split windows.
+        *              initialSize = limits (initialSize, minSize, maxSize)
+        */}
       <SplitPane className='splitpane' split='vertical'>
         <Pane className='pane-canvas'>
           <TransformContext.Provider value={[transform, setTransform]}>
@@ -381,25 +331,25 @@ export default function App() {
             <fog attach='fog' args={['#dddde0', 10, 40]} />
 
             {/* If there are no objects on the canvas, then include
-                OrbitControls. Otherwise, don't put anything as the
-                shapes themselves has OrbitControls. If there are
-                multiple OrbitControls, then we lose the ability to
-                stop OrbitControls when we're using the transforms
-                controls.
-            */}
+              * OrbitControls. Otherwise, don't put anything as the
+              * shapes themselves has OrbitControls. If there are
+              * multiple OrbitControls, then we lose the ability to
+              * stop OrbitControls when we're using the transforms
+              * controls.
+              */}
             {Object.keys(shapes).every((key) => {
               return shapes[key].length === 0;
             }) ? (<OrbitControls />) : null}
 
             {/* Anything put into the array will be added onto the
-                canvas. The arrays are inside an object. To access
-                the array, use {obj}.{shape} where obj is the name
-                of the object and shape is the name of the array in
-                the object. In this case, shapes is the name of the
-                object and its parameters are boxes, cylinders, and
-                spheres. If we wanted to access the array for the
-                boxes, we would use shapes.boxes.
-            */}
+              * canvas. The arrays are inside an object. To access
+              * the array, use {obj}.{shape} where obj is the name
+              * of the object and shape is the name of the array in
+              * the object. In this case, shapes is the name of the
+              * object and its parameters are boxes, cylinders, and
+              * spheres. If we wanted to access the array for the
+              * boxes, we would use shapes.boxes.
+              */}
             <TransformContext.Provider value={[transform, setTransform]}>
               {shapes.boxes.map((props) => (
                 <Box key='{props}' {...props} />
@@ -415,8 +365,8 @@ export default function App() {
             </TransformContext.Provider>
 
             {/* If grid is true, add the grid onto the canvas. Else,
-                do not put anything into the canvas.
-            */}
+              * do not put anything into the canvas.
+              */}
             {grid ? (
               <gridHelper
                 position={[0, -0.51, 0]}
@@ -426,23 +376,24 @@ export default function App() {
           </Canvas>
         </Pane>
 
-        {/* The outliner menu */}
+        {/* Outliner Menu */}
         <Pane
           className='pane-outliner'
           initialSize='350px'
           minSize='250px'
           maxSize='350px'
         >
-          {/*  This will divide the List of assets in scene from the Other scene options */}
+          {/* This will divide the List of assets in scene from the Other scene options */}
           <SplitPane className='splitpane' split='horizontal'>
-            {/*Top Pane*/}
+            {/* Top Pane */}
             <Pane
               className='pane-outliner'
               initialSize='350px'
               minSize='250px'
             >
             </Pane>
-            {/*Bottom Pane*/}
+
+            {/* Bottom Pane */}
             <Pane>
               <GridContext.Provider value={[grid, setGrid]}>
                 <Outliner />
@@ -454,10 +405,3 @@ export default function App() {
     </>
   );
 }
-
-// Here as a backup just in case the array in the objects is too complicated.
-//
-// import { BoxContext } from './context';
-// const [boxes, setBoxes] = useState([]);
-// <BoxContext.Provider value={[boxes, setBoxes]}></BoxContext.Provider>
-// {boxes.map((props) => (<Box {...props} />))}

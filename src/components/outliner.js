@@ -22,9 +22,6 @@ export default function Outliner() {
           <input className='camera' />
         </div>
       </div>
-      {/* <div className='outliner-bottom'>
-        <label className='outliner-title'>Project</label>
-      </div> */}
     </>
   );
 }
