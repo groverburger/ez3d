@@ -263,9 +263,20 @@ export default function App() {
           minSize='250px'
           maxSize='350px'
         >
-          <GridContext.Provider value={[grid, setGrid]}>
-            <Outliner />
-          </GridContext.Provider>
+          <SplitPane className='splitpane' split='horizontal'>
+            <Pane
+              className='pane-outliner'
+              initialSize='350px'
+              minSize='250px'
+            >
+
+            </Pane>
+            <Pane>
+              <GridContext.Provider value={[grid, setGrid]}>
+                <Outliner />
+              </GridContext.Provider>
+            </Pane>
+          </SplitPane>
         </Pane>
       </SplitPane>
     </>
