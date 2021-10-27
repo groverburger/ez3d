@@ -88,7 +88,7 @@ function App() {
             <Box/>
           </Canvas>
         </Pane>
-<<<<<<< Updated upstream
+
         {/*right pane with pixel limits(initialSize, minSize, maxSize)*/}
         <Pane initialSize="350px" minSize="250px" maxSize="350px">
         This is the outliner
@@ -115,7 +115,7 @@ function App() {
               </GridContext.Provider>
             </Pane>
           </SplitPane>
->>>>>>> Stashed changes
+
         </Pane>
       </SplitPane>
 
