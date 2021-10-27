@@ -24,7 +24,7 @@ import './components/navbar.css';
  * Edited by Eric
  * Transform controls.
  * Reference: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
- * 
+ *
  * Edited by Antonio
  * Added hotkeys for the transform controls. The state value is to tell the toolbar
  * what is the currently selected. The parameter transform contains the strings of
@@ -59,17 +59,17 @@ function Box(props) {
             controls.mode = 'translate';
             setTransform(controls.mode);
             break;
-          
+
           case 'e':
             controls.mode = 'scale';
             setTransform(controls.mode);
             break;
-          
+
           case 'r':
             controls.mode = 'rotate';
             setTransform(controls.mode);
             break;
-          
+
           default:
             break;
         }
@@ -108,7 +108,7 @@ function Box(props) {
  * Edited by Eric
  * Transform controls.
  * Reference: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
- * 
+ *
  * Edited by Antonio
  * Added hotkeys for the transform controls. The state value is to tell the toolbar
  * what is the currently selected. The parameter transform contains the strings of
@@ -156,17 +156,17 @@ function Cylinder(props) {
             controls.mode = 'translate';
             setTransform(controls.mode);
             break;
-          
+
           case 'e':
             controls.mode = 'scale';
             setTransform(controls.mode);
             break;
-          
+
           case 'r':
             controls.mode = 'rotate';
             setTransform(controls.mode);
             break;
-          
+
           default:
             break;
         }
@@ -205,7 +205,7 @@ function Cylinder(props) {
  * Edited by Eric
  * Transform controls.
  * Reference: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
- * 
+ *
  * Edited by Antonio
  * Added hotkeys for the transform controls. The state value is to tell the toolbar
  * what is the currently selected. The parameter transform contains the strings of
@@ -253,17 +253,17 @@ function Sphere(props) {
             controls.mode = 'translate';
             setTransform(controls.mode);
             break;
-          
+
           case 'e':
             controls.mode = 'scale';
             setTransform(controls.mode);
             break;
-          
+
           case 'r':
             controls.mode = 'rotate';
             setTransform(controls.mode);
             break;
-          
+
           default:
             break;
         }
@@ -433,9 +433,22 @@ export default function App() {
           minSize='250px'
           maxSize='350px'
         >
-          <GridContext.Provider value={[grid, setGrid]}>
-            <Outliner />
-          </GridContext.Provider>
+          {/*  This will divide the List of assets in scene from the Other scene options */}
+          <SplitPane className='splitpane' split='horizontal'>
+            {/*Top Pane*/}
+            <Pane
+              className='pane-outliner'
+              initialSize='350px'
+              minSize='250px'
+            >
+            </Pane>
+            {/*Bottom Pane*/}
+            <Pane>
+              <GridContext.Provider value={[grid, setGrid]}>
+                <Outliner />
+              </GridContext.Provider>
+            </Pane>
+          </SplitPane>
         </Pane>
       </SplitPane>
     </>
