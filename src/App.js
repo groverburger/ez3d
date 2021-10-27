@@ -256,16 +256,29 @@ export default function App() {
           </Canvas>
         </Pane>
 
-        {/* The outliner menu */}
+        {/* The outliner menu(right pane) that will have a nested splitpane*/}
         <Pane
           className='pane-outliner'
           initialSize='350px'
           minSize='250px'
           maxSize='350px'
         >
-          <GridContext.Provider value={[grid, setGrid]}>
-            <Outliner />
-          </GridContext.Provider>
+          {/*  This will divide the List of assets in scene from the Other scene options */}
+          <SplitPane className='splitpane' split='horizontal'>
+            {/*Top Pane*/}
+            <Pane
+              className='pane-outliner'
+              initialSize='350px'
+              minSize='250px'
+            >
+            </Pane>
+            {/*Bottom Pane*/}
+            <Pane>
+              <GridContext.Provider value={[grid, setGrid]}>
+                <Outliner />
+              </GridContext.Provider>
+            </Pane>
+          </SplitPane>
         </Pane>
       </SplitPane>
     </>
