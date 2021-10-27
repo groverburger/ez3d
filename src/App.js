@@ -88,9 +88,34 @@ function App() {
             <Box/>
           </Canvas>
         </Pane>
+<<<<<<< Updated upstream
         {/*right pane with pixel limits(initialSize, minSize, maxSize)*/}
         <Pane initialSize="350px" minSize="250px" maxSize="350px">
         This is the outliner
+=======
+
+        {/* The outliner menu */}
+        <Pane
+          className='pane-outliner'
+          initialSize='350px'
+          minSize='250px'
+          maxSize='350px'
+        >
+          <SplitPane className='splitpane' split='horizontal'>
+            <Pane
+              className='pane-outliner'
+              initialSize='350px'
+              minSize='250px'
+            >
+
+            </Pane>
+            <Pane>
+              <GridContext.Provider value={[grid, setGrid]}>
+                <Outliner />
+              </GridContext.Provider>
+            </Pane>
+          </SplitPane>
+>>>>>>> Stashed changes
         </Pane>
       </SplitPane>
 
