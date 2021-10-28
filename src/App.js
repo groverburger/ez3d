@@ -34,6 +34,8 @@ import './components/navbar.css';
  * Orbit is native to each object (they can stack on each other,
  * making OrbitControls more and more sensitive)
  */
+
+var transforming = false;
 function Box(props) {
   const orbit = useRef();
   const trans = useRef();
@@ -41,6 +43,8 @@ function Box(props) {
 
   const value = useContext(TransformContext);
   const [transform, setTransform] = value;
+
+  console.log("this is the orbit.current: ", orbit.current);
 
   useEffect(() => {
     if (trans.current) {
@@ -74,10 +78,12 @@ function Box(props) {
             break;
         }
       }
-
+      orbit.current.enabled = false;
       const callback = (event) => {
-        (orbit.current.enabled = !event.value);
+        orbit.current.enabled = event.value;
+        console.log("transforming is: ", transforming);
       }
+      
 
       controls.addEventListener('dragging-changed', callback);
       document.addEventListener('keydown', handleKeyDown);
@@ -273,6 +279,7 @@ export default function App() {
     cylinders: [],
     spheres: [],
   });
+  
 
   return (
     <>
@@ -336,10 +343,12 @@ export default function App() {
               * multiple OrbitControls, then we lose the ability to
               * stop OrbitControls when we're using the transforms
               * controls.
-              */}
-            {Object.keys(shapes).every((key) => {
+              * 
+              * was: {(Object.keys(shapes).every((key) => {
               return shapes[key].length === 0;
-            }) ? (<OrbitControls />) : null}
+            }) && transforming == false) ? (<OrbitControls />) : null}
+              */}
+            {transforming == false ? (<OrbitControls />) : null}
 
             {/* Anything put into the array will be added onto the
               * canvas. The arrays are inside an object. To access
@@ -352,7 +361,7 @@ export default function App() {
               */}
             <TransformContext.Provider value={[transform, setTransform]}>
               {shapes.boxes.map((props) => (
-                <Box key='{props}' {...props} />
+                <Box key='{props}' {...props}/>
               ))}
 
               {shapes.cylinders.map((props) => (
