@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, TransformControls } from '@react-three/drei';
 import { Controls, useControl } from 'react-three-gui';
 import { Navbar, Nav } from 'react-bootstrap';
-import { ShapeContext, GridContext, TransformContext } from './components/context';
+import { ShapeContext, GridContext, TransformContext ,TransformDragContext} from './components/context';
 
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane';
@@ -35,7 +35,15 @@ import './components/navbar.css';
  * making OrbitControls more and more sensitive)
  */
 
-var transforming = false;
+//function to set dragging to false at startup
+//orbitalcontrols will only activate when transformDrag is false
+function DragInit(){
+  const dragValue = useContext(TransformDragContext);
+  const [transformDrag, setTransformDrag] = dragValue;
+  setTransformDrag(false);
+  return null;
+}
+
 function Box(props) {
   const orbit = useRef();
   const trans = useRef();
@@ -44,7 +52,9 @@ function Box(props) {
   const value = useContext(TransformContext);
   const [transform, setTransform] = value;
 
-  console.log("this is the orbit.current: ", orbit.current);
+  //get the useState for the transformDrag global variable
+  const dragValue = useContext(TransformDragContext);
+  const [transformDrag, setTransformDrag] = dragValue;
 
   useEffect(() => {
     if (trans.current) {
@@ -78,10 +88,14 @@ function Box(props) {
             break;
         }
       }
+
+      //disable the shape's OrbitControl
       orbit.current.enabled = false;
+
       const callback = (event) => {
-        orbit.current.enabled = event.value;
-        console.log("transforming is: ", transforming);
+        //when dragging on TransformControls, set transformDrag to true.
+        setTransformDrag(event.value);
+        
       }
       
 
@@ -118,6 +132,9 @@ function Cylinder(props) {
   const value = useContext(TransformContext);
   const [transform, setTransform] = value;
 
+  const dragValue = useContext(TransformDragContext);
+  const [transformDrag, setTransformDrag] = dragValue;
+
   useEffect(() => {
     if (trans.current) {
       const controls = trans.current;
@@ -149,8 +166,12 @@ function Cylinder(props) {
         }
       }
 
+      orbit.current.enabled = false;
+
       const callback = (event) => {
-        (orbit.current.enabled = !event.value);
+
+        setTransformDrag(event.value);
+        
       }
 
       controls.addEventListener('dragging-changed', callback);
@@ -186,6 +207,9 @@ function Sphere(props) {
   const value = useContext(TransformContext);
   const [transform, setTransform] = value;
 
+  const dragValue = useContext(TransformDragContext);
+  const [transformDrag, setTransformDrag] = dragValue;
+
   useEffect(() => {
     if (trans.current) {
       const controls = trans.current;
@@ -217,8 +241,12 @@ function Sphere(props) {
         }
       }
 
+      orbit.current.enabled = false;
+
       const callback = (event) => {
-        (orbit.current.enabled = !event.value);
+
+        setTransformDrag(event.value);
+        
       }
 
       controls.addEventListener('dragging-changed', callback);
@@ -274,6 +302,7 @@ function Sphere(props) {
 export default function App() {
   const [grid, setGrid] = useState(true);
   const [transform, setTransform] = useState('');
+  const [transformDrag = false, setTransformDrag] = useState(true); 
   const [shapes, setShapes] = useState({
     boxes: [],
     cylinders: [],
@@ -336,7 +365,11 @@ export default function App() {
             <ambientLight intensity={0.5} />
             <spotLight position={[0, 5, 10]} angle={0.3} />
             <fog attach='fog' args={['#dddde0', 10, 40]} />
-
+            {/* Contains global variable for transformDrag */}
+            <TransformDragContext.Provider   value = {[transformDrag, setTransformDrag]}>
+            <DragInit>
+          
+            </DragInit>
             {/* If there are no objects on the canvas, then include
               * OrbitControls. Otherwise, don't put anything as the
               * shapes themselves has OrbitControls. If there are
@@ -348,7 +381,8 @@ export default function App() {
               return shapes[key].length === 0;
             }) && transforming == false) ? (<OrbitControls />) : null}
               */}
-            {transforming == false ? (<OrbitControls />) : null}
+            
+            {transformDrag != true ? (<OrbitControls />) : null}
 
             {/* Anything put into the array will be added onto the
               * canvas. The arrays are inside an object. To access
@@ -359,6 +393,7 @@ export default function App() {
               * spheres. If we wanted to access the array for the
               * boxes, we would use shapes.boxes.
               */}
+            
             <TransformContext.Provider value={[transform, setTransform]}>
               {shapes.boxes.map((props) => (
                 <Box key='{props}' {...props}/>
@@ -372,6 +407,7 @@ export default function App() {
                 <Sphere key='{props}' {...props} />
               ))}
             </TransformContext.Provider>
+            </TransformDragContext.Provider>
 
             {/* If grid is true, add the grid onto the canvas. Else,
               * do not put anything into the canvas.
