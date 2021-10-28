@@ -14,7 +14,5 @@ import { createContext } from 'react';
  */
 export const GridContext = createContext(false);
 export const ShapeContext = createContext({});
-
-// Here as a backup just in case the array in the objects is too complicated.
-//
-// export const BoxContext = createContext([]);
+export const TransformContext = createContext('');
+export const TransformDragContext = createContext(false);

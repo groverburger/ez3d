@@ -3,11 +3,16 @@
   font-size: 0.9rem;
 }
 
+.canvas {
+  position: absolute;
+}
+
 /* The controls window */
 .kdvZHM {
   z-index: 1;
   top: 0.09rem;
   right: 26rem;
+  box-shadow: 0 0 0 0;
 }
 
 .pane-outliner {

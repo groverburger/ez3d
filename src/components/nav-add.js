@@ -5,14 +5,10 @@ import { ShapeContext } from './context';
 import './navbar.css';
 
 /**
- * Contains the functionality for the Add dropdown.
- * We use the saved state value of the generated
- * shapes and add onto that when generating a new
- * shape. The saved state value is an object of
- * arrays that holds all the positions for any
- * generated shape. Each array corresponds to their
- * respective shape. For more information, look at
- * shapes and setShapes in App.js and ShapeContext
+ * Contains the functionality for the Add dropdown. We use the saved state value of the generated
+ * shapes and add onto that when generating a new shape. The saved state value is an object of
+ * arrays that holds all the positions for any generated shape. Each array corresponds to their
+ * respective shape. For more information, look at shapes and setShapes in App.js and ShapeContext
  * in context.js.
  *
  * Reference: https://stackoverflow.com/questions/66727049/exporting-a-state-from-hook-function-to-another-component
@@ -59,12 +55,10 @@ export default function NavAdd() {
    * Function for generating a new block.
    *
    * Edited by Antonio
-   * Instead of pushing the position into an array
-   * for each shape, we instead push an array into
-   * an object that holds arrays. Now we only have
-   * to call on the object to access the arrays
-   * rather than call the array three different times
-   * for each shape.
+   * Instead of pushing the position into an array for each shape,
+   * we instead push an array into an object that holds arrays. Now
+   * we only have to call on the object to access the arrays rather
+   * than call the array three different times for each shape.
    */
   function generateNewBlock() {
     const total = shapes.boxes.length;
@@ -75,16 +69,7 @@ export default function NavAdd() {
   }
 
   /**
-   * Edited by Gabi
-   * Function for generating a new cylinder.
-   *
-   * Edited by Antonio
-   * Instead of pushing the position into an array
-   * for each shape, we instead push an array into
-   * an object that holds arrays. Now we only have
-   * to call on the object to access the arrays
-   * rather than call the array three different times
-   * for each shape.
+   * Generate New Cylinder
    */
   function generateNewCylinder() {
     const total = shapes.cylinders.length;
@@ -95,16 +80,7 @@ export default function NavAdd() {
   }
 
   /**
-   * Edited by Gabi
-   * Function for generating a new sphere.
-   *
-   * Edited by Antonio
-   * Instead of pushing the position into an array
-   * for each shape, we instead push an array into
-   * an object that holds arrays. Now we only have
-   * to call on the object to access the arrays
-   * rather than call the array three different times
-   * for each shape.
+   * Generate New Sphere
    */
   function generateNewSphere() {
     const total = shapes.spheres.length;
@@ -114,10 +90,3 @@ export default function NavAdd() {
     setShapes((prevShapes) => ({ ...prevShapes, spheres: newSpheres }));
   }
 }
-
-// Here as a backup just in case the array in the objects is too complicated.
-//
-// import { BoxContext } from './context';
-// value = useContext(BoxContext);
-// [boxes, setBoxes] = value;
-// setShapes([...newBoxes]);

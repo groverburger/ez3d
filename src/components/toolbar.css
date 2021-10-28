@@ -1,0 +1,38 @@
+.toolbar {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  margin: 2rem;
+  box-shadow: 0.4rem 0.4rem 0.5rem #d9d9d9;
+}
+
+.btn-light.toolbar-items {
+  padding: 0.7rem;
+  padding-right: 0.8rem;
+  padding-left: 0.8rem;
+  border: 0;
+  z-index: 1;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.btn-light.toolbar-items:hover:not(.active) {
+  z-index: 1;
+  background-color: #eaeaee;
+  color: rgba(0, 0, 0, 0.9);
+  transition: all 0.3s ease-in-out;
+}
+
+.btn-check.toolbar-items:active + .btn-light.toolbar-items,
+.btn-check.toolbar-items:checked + .btn-light.toolbar-items,
+.btn-light.toolbar-items.active, .btn-light.toolbar-items:active,
+.show > .btn-light.toolbar-items.dropdown-toggle {
+  z-index: 2;
+  background-color: hotpink;
+  color: #fcfcfc;
+}
+
+.btn-light:hover, .btn-light:focus, .btn-light:active, 
+.btn-light:active:focus:not(:disabled):not(.disabled),
+.btn:focus, .btn:active, .btn:hover {
+    box-shadow: none !important;
+}
