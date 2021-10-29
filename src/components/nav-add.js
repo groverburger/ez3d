@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { ShapeContext } from './context';
-
 import './navbar.css';
 
 /**
