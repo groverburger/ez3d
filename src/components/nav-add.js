@@ -25,7 +25,10 @@ export default function NavAdd() {
       <NavDropdown title='Add' id='add-dropdown'>
         <NavDropdown.ItemText>Meshes</NavDropdown.ItemText>
         <NavDropdown.Divider />
-        <NavDropdown.Item href='#action/1.0' onClick={() => generateNewBlock()}>
+        <NavDropdown.Item
+          href='#action/1.0'
+          onClick={() => generateNewBlock()}
+        >
           Cube
         </NavDropdown.Item>
         <NavDropdown.Item
@@ -61,9 +64,9 @@ export default function NavAdd() {
    * than call the array three different times for each shape.
    */
   function generateNewBlock() {
-    const total = shapes.boxes.length;
     let newBoxes = shapes.boxes;
     newBoxes.push({ position: [0, 0, 0] });
+    const total = shapes.boxes.length;
     console.log(total);
     setShapes((prevShapes) => ({ ...prevShapes, boxes: newBoxes }));
   }
@@ -72,9 +75,9 @@ export default function NavAdd() {
    * Generate New Cylinder
    */
   function generateNewCylinder() {
-    const total = shapes.cylinders.length;
     let newCylinders = shapes.cylinders;
     newCylinders.push({ position: [0, 0, 0] });
+    const total = shapes.cylinders.length;
     console.log(total);
     setShapes((prevShapes) => ({ ...prevShapes, cylinders: newCylinders }));
   }
@@ -83,9 +86,9 @@ export default function NavAdd() {
    * Generate New Sphere
    */
   function generateNewSphere() {
-    const total = shapes.spheres.length;
     let newSpheres = shapes.spheres;
     newSpheres.push({ position: [0, 0, 0] });
+    const total = shapes.spheres.length;
     console.log(total);
     setShapes((prevShapes) => ({ ...prevShapes, spheres: newSpheres }));
   }
