@@ -11,6 +11,7 @@ import NavFile from './components/nav-file';
 import NavEdit from './components/nav-edit';
 import NavAdd from './components/nav-add';
 import Outliner from './components/outliner';
+import ObjectList from './components/object-list';
 import Toolbar from './components/toolbar';
 
 import './App.css';
@@ -95,9 +96,9 @@ function Box(props) {
       const callback = (event) => {
         //when dragging on TransformControls, set transformDrag to true.
         setTransformDrag(event.value);
-        
+
       }
-      
+
 
       controls.addEventListener('dragging-changed', callback);
       document.addEventListener('keydown', handleKeyDown);
@@ -171,7 +172,7 @@ function Cylinder(props) {
       const callback = (event) => {
 
         setTransformDrag(event.value);
-        
+
       }
 
       controls.addEventListener('dragging-changed', callback);
@@ -246,7 +247,7 @@ function Sphere(props) {
       const callback = (event) => {
 
         setTransformDrag(event.value);
-        
+
       }
 
       controls.addEventListener('dragging-changed', callback);
@@ -282,7 +283,7 @@ function Sphere(props) {
  *                            parameter is a variable that holds the current state. Its default
  *                            is true. The setGrid parameter is a function that changes the
  *                            state of grid.
- * 
+ *
  * transform, setTransform    A hook that determines what transform control to use. The
  *                            transform parameter is a string of one of the transform control
  *                            modes: translate, scale, or rotate. The setTransform parameter
@@ -302,13 +303,13 @@ function Sphere(props) {
 export default function App() {
   const [grid, setGrid] = useState(true);
   const [transform, setTransform] = useState('');
-  const [transformDrag = false, setTransformDrag] = useState(true); 
+  const [transformDrag = false, setTransformDrag] = useState(true);
   const [shapes, setShapes] = useState({
     boxes: [],
     cylinders: [],
     spheres: [],
   });
-  
+
 
   return (
     <>
@@ -368,7 +369,7 @@ export default function App() {
             {/* Contains global variable for transformDrag */}
             <TransformDragContext.Provider   value = {[transformDrag, setTransformDrag]}>
             <DragInit>
-          
+
             </DragInit>
             {/* If there are no objects on the canvas, then include
               * OrbitControls. Otherwise, don't put anything as the
@@ -376,12 +377,12 @@ export default function App() {
               * multiple OrbitControls, then we lose the ability to
               * stop OrbitControls when we're using the transforms
               * controls.
-              * 
+              *
               * was: {(Object.keys(shapes).every((key) => {
               return shapes[key].length === 0;
             }) && transforming == false) ? (<OrbitControls />) : null}
               */}
-            
+
             {transformDrag != true ? (<OrbitControls />) : null}
 
             {/* Anything put into the array will be added onto the
@@ -393,7 +394,7 @@ export default function App() {
               * spheres. If we wanted to access the array for the
               * boxes, we would use shapes.boxes.
               */}
-            
+
             <TransformContext.Provider value={[transform, setTransform]}>
               {shapes.boxes.map((props) => (
                 <Box key='{props}' {...props}/>
@@ -436,6 +437,7 @@ export default function App() {
               initialSize='350px'
               minSize='250px'
             >
+              <ObjectList />
             </Pane>
 
             {/* Bottom Pane */}

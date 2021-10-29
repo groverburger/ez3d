@@ -1,0 +1,49 @@
+/* Object List's Resizer */
+.sc-htpNat.fXAXjb.sc-bdVaJa.cjjWdp {
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  background-color: #e4e4ea;
+}
+
+.sc-bwzfXH.hEACtv.sc-bdVaJa.cjjWdp {
+  height: 1px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  background-color: #b5b5c0;
+}
+
+.outliner-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.outliner-title {
+  margin: 2rem;
+  margin-bottom: 1.5rem;
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.outliner-items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.outliner-items:hover {
+  background-color: #f1f1f3;
+}
+
+.camera {
+  width: 3.5rem;
+  border: 1px solid #d1d1d6;
+}
+
+.camera:focus {
+  outline-color: #d1d1d6;
+}
