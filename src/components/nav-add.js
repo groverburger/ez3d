@@ -3,6 +3,14 @@ import { NavDropdown } from 'react-bootstrap';
 import { ShapeContext } from './context';
 import './navbar.css';
 
+// record the number of each shape
+// will be imported in object-list
+var objLen = {
+  cube : 0,
+  cylinders : 0,
+  sphere : 0
+};
+export {objLen};
 /**
  * Contains the functionality for the Add dropdown. We use the saved state value of the generated
  * shapes and add onto that when generating a new shape. The saved state value is an object of
@@ -65,6 +73,7 @@ export default function NavAdd() {
     newBoxes.push({ position: [0, 0, 0] });
     console.log(total);
     setShapes((prevShapes) => ({ ...prevShapes, boxes: newBoxes }));
+    objLen.cube += 1;
   }
 
   /**
@@ -76,6 +85,7 @@ export default function NavAdd() {
     newCylinders.push({ position: [0, 0, 0] });
     console.log(total);
     setShapes((prevShapes) => ({ ...prevShapes, cylinders: newCylinders }));
+    objLen.cylinders += 1;
   }
 
   /**
@@ -87,5 +97,6 @@ export default function NavAdd() {
     newSpheres.push({ position: [0, 0, 0] });
     console.log(total);
     setShapes((prevShapes) => ({ ...prevShapes, spheres: newSpheres }));
+    objLen.sphere += 1;
   }
 }
