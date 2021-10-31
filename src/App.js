@@ -1,9 +1,9 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, TransformControls } from '@react-three/drei';
-import { Controls, useControl } from 'react-three-gui';
+import { Controls } from 'react-three-gui';
 import { Navbar, Nav } from 'react-bootstrap';
-import { ShapeContext, GridContext, TransformContext ,TransformDragContext} from './components/context';
+import { ShapeContext, GridContext, TransformContext, TransformDragContext } from './components/context';
 
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane';
@@ -22,7 +22,7 @@ import './components/navbar.css';
  * Reference: https://codesandbox.io/s/r3f-basic-demo-forked-6q6ww?file=/src/App.js:600-604
  *
  * Edited by Eric
- * Transform controls.
+ * Transform controls. Fixed BUG: No control over OrbitControls when there are multiple shapes.
  * Reference: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
  *
  * Edited by Antonio
@@ -34,16 +34,6 @@ import './components/navbar.css';
  * Orbit is native to each object (they can stack on each other,
  * making OrbitControls more and more sensitive)
  */
-
-//function to set dragging to false at startup
-//orbitalcontrols will only activate when transformDrag is false
-function DragInit(){
-  const dragValue = useContext(TransformDragContext);
-  const [transformDrag, setTransformDrag] = dragValue;
-  setTransformDrag(false);
-  return null;
-}
-
 function Box(props) {
   const orbit = useRef();
   const trans = useRef();
@@ -52,9 +42,9 @@ function Box(props) {
   const value = useContext(TransformContext);
   const [transform, setTransform] = value;
 
-  //get the useState for the transformDrag global variable
+  // Get the useState for the transformDrag global variable
   const dragValue = useContext(TransformDragContext);
-  const [transformDrag, setTransformDrag] = dragValue;
+  const setTransformDrag = dragValue;
 
   useEffect(() => {
     if (trans.current) {
@@ -89,15 +79,13 @@ function Box(props) {
         }
       }
 
-      //disable the shape's OrbitControl
+      // Disable the shape's OrbitControls
       orbit.current.enabled = false;
 
+      // When dragging on TransformControls, set transformDrag to true.
       const callback = (event) => {
-        //when dragging on TransformControls, set transformDrag to true.
         setTransformDrag(event.value);
-        
       }
-      
 
       controls.addEventListener('dragging-changed', callback);
       document.addEventListener('keydown', handleKeyDown);
@@ -133,7 +121,7 @@ function Cylinder(props) {
   const [transform, setTransform] = value;
 
   const dragValue = useContext(TransformDragContext);
-  const [transformDrag, setTransformDrag] = dragValue;
+  const setTransformDrag = dragValue;
 
   useEffect(() => {
     if (trans.current) {
@@ -169,9 +157,7 @@ function Cylinder(props) {
       orbit.current.enabled = false;
 
       const callback = (event) => {
-
         setTransformDrag(event.value);
-        
       }
 
       controls.addEventListener('dragging-changed', callback);
@@ -208,7 +194,7 @@ function Sphere(props) {
   const [transform, setTransform] = value;
 
   const dragValue = useContext(TransformDragContext);
-  const [transformDrag, setTransformDrag] = dragValue;
+  const setTransformDrag = dragValue;
 
   useEffect(() => {
     if (trans.current) {
@@ -244,9 +230,7 @@ function Sphere(props) {
       orbit.current.enabled = false;
 
       const callback = (event) => {
-
         setTransformDrag(event.value);
-        
       }
 
       controls.addEventListener('dragging-changed', callback);
@@ -302,7 +286,7 @@ function Sphere(props) {
 export default function App() {
   const [grid, setGrid] = useState(true);
   const [transform, setTransform] = useState('');
-  const [transformDrag = false, setTransformDrag] = useState(true); 
+  const [transformDrag, setTransformDrag] = useState(false); 
   const [shapes, setShapes] = useState({
     boxes: [],
     cylinders: [],
@@ -319,7 +303,7 @@ export default function App() {
         * Reference: https://react-bootstrap.github.io/components/navbar/
         *
         * ShapeContext.Provider    All components under this component can receive and respond to
-        *                          the global state value that is set in the 'value' parameter.
+        *                          the global state value that is set in the value parameter.
         *                          This particular provider saves the state of the shapes needed
         *                          to be generated.
         *
@@ -358,31 +342,15 @@ export default function App() {
         */}
       <SplitPane className='splitpane' split='vertical'>
         <Pane className='pane-canvas'>
+          {/* Toolbar Menu for selecting transform controls. */}
           <TransformContext.Provider value={[transform, setTransform]}>
             <Toolbar />
           </TransformContext.Provider>
+
           <Canvas className='canvas' camera={{ position: [3, 3, 3] }}>
             <ambientLight intensity={0.5} />
             <spotLight position={[0, 5, 10]} angle={0.3} />
             <fog attach='fog' args={['#dddde0', 10, 40]} />
-            {/* Contains global variable for transformDrag */}
-            <TransformDragContext.Provider   value = {[transformDrag, setTransformDrag]}>
-            <DragInit>
-          
-            </DragInit>
-            {/* If there are no objects on the canvas, then include
-              * OrbitControls. Otherwise, don't put anything as the
-              * shapes themselves has OrbitControls. If there are
-              * multiple OrbitControls, then we lose the ability to
-              * stop OrbitControls when we're using the transforms
-              * controls.
-              * 
-              * was: {(Object.keys(shapes).every((key) => {
-              return shapes[key].length === 0;
-            }) && transforming == false) ? (<OrbitControls />) : null}
-              */}
-            
-            {transformDrag != true ? (<OrbitControls />) : null}
 
             {/* Anything put into the array will be added onto the
               * canvas. The arrays are inside an object. To access
@@ -392,21 +360,26 @@ export default function App() {
               * object and its parameters are boxes, cylinders, and
               * spheres. If we wanted to access the array for the
               * boxes, we would use shapes.boxes.
+              * 
+              * Contains global variables for transform and
+              * transformDrag.
               */}
-            
-            <TransformContext.Provider value={[transform, setTransform]}>
-              {shapes.boxes.map((props) => (
-                <Box key='{props}' {...props}/>
-              ))}
+            <TransformDragContext.Provider value={setTransformDrag}>
+              <TransformContext.Provider value={[transform, setTransform]}>
+                {!transformDrag ? (<OrbitControls />) : null}
 
-              {shapes.cylinders.map((props) => (
-                <Cylinder key='{props}' {...props} />
-              ))}
+                {shapes.boxes.map((props) => (
+                  <Box key='{props}' {...props}/>
+                ))}
 
-              {shapes.spheres.map((props) => (
-                <Sphere key='{props}' {...props} />
-              ))}
-            </TransformContext.Provider>
+                {shapes.cylinders.map((props) => (
+                  <Cylinder key='{props}' {...props} />
+                ))}
+
+                {shapes.spheres.map((props) => (
+                  <Sphere key='{props}' {...props} />
+                ))}
+              </TransformContext.Provider>
             </TransformDragContext.Provider>
 
             {/* If grid is true, add the grid onto the canvas. Else,
@@ -428,7 +401,7 @@ export default function App() {
           minSize='250px'
           maxSize='350px'
         >
-          {/* This will divide the List of assets in scene from the Other scene options */}
+          {/* This will divide the list of assets in scene from the other scene options. */}
           <SplitPane className='splitpane' split='horizontal'>
             {/* Top Pane */}
             <Pane
@@ -440,7 +413,7 @@ export default function App() {
 
             {/* Bottom Pane */}
             <Pane>
-              <GridContext.Provider value={[grid, setGrid]}>
+              <GridContext.Provider value={setGrid}>
                 <Outliner />
               </GridContext.Provider>
             </Pane>

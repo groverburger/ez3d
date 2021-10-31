@@ -7,7 +7,7 @@ import './outliner.css';
 
 export default function Outliner() {
   const value = useContext(GridContext);
-  const [grid, setGrid] = value;
+  const setGrid = value;
 
   return (
     <>
