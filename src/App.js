@@ -16,26 +16,7 @@ import Toolbar from './components/toolbar';
 import './App.css';
 import './components/navbar.css';
 
-/**
- * Edited by Ruiyang
- * Create a box on origin.
- * Reference: https://codesandbox.io/s/r3f-basic-demo-forked-6q6ww?file=/src/App.js:600-604
- *
- * Edited by Eric
- * Transform controls. Fixed BUG: No control over OrbitControls when there are multiple shapes.
- * Reference: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
- *
- * Edited by Antonio
- * Added hotkeys for the transform controls. The state value is to tell the toolbar
- * what is the currently selected. The parameter transform contains the strings of
- * the transform modes (translate, scale, rotate).
- *
- * BUG!
- * Orbit is native to each object (they can stack on each other,
- * making OrbitControls more and more sensitive)
- */
-function Box(props) {
-  const orbit = useRef();
+function ModelRenderer(props) {
   const trans = useRef();
   const mesh = useRef();
 
@@ -79,9 +60,6 @@ function Box(props) {
         }
       }
 
-      // Disable the shape's OrbitControls
-      orbit.current.enabled = false;
-
       // When dragging on TransformControls, set transformDrag to true.
       const callback = (event) => {
         setTransformDrag(event.value);
@@ -99,158 +77,8 @@ function Box(props) {
   return (
     <>
       <TransformControls ref={trans}>
-        <mesh {...props} ref={mesh}>
-          <boxBufferGeometry attach='geometry' />
-          <meshLambertMaterial attach='material' color='hotpink' />
-        </mesh>
+        <mesh {...props} ref={mesh}> </mesh>
       </TransformControls>
-      <OrbitControls ref={orbit} />
-    </>
-  );
-}
-
-/**
- * Cylinder Implementation
- */
-function Cylinder(props) {
-  const orbit = useRef();
-  const trans = useRef();
-  const mesh = useRef();
-
-  const value = useContext(TransformContext);
-  const [transform, setTransform] = value;
-
-  const dragValue = useContext(TransformDragContext);
-  const setTransformDrag = dragValue;
-
-  useEffect(() => {
-    if (trans.current) {
-      const controls = trans.current;
-
-      if (!transform) {
-        controls.mode = 'translate';
-        setTransform(controls.mode);
-      }
-
-      const handleKeyDown = (event) => {
-        switch (event.key) {
-          case 'w':
-            controls.mode = 'translate';
-            setTransform(controls.mode);
-            break;
-
-          case 'e':
-            controls.mode = 'scale';
-            setTransform(controls.mode);
-            break;
-
-          case 'r':
-            controls.mode = 'rotate';
-            setTransform(controls.mode);
-            break;
-
-          default:
-            break;
-        }
-      }
-
-      orbit.current.enabled = false;
-
-      const callback = (event) => {
-        setTransformDrag(event.value);
-      }
-
-      controls.addEventListener('dragging-changed', callback);
-      document.addEventListener('keydown', handleKeyDown);
-      return () => {
-        controls.removeEventListener('dragging-changed', callback);
-        document.removeEventListener('keydown', handleKeyDown);
-      }
-    }
-  });
-
-  return (
-    <>
-      <TransformControls ref={trans}>
-        <mesh {...props} ref={mesh}>
-          <cylinderBufferGeometry attach='geometry' />
-          <meshLambertMaterial attach='material' color='green' />
-        </mesh>
-      </TransformControls>
-      <OrbitControls ref={orbit} />
-    </>
-  );
-}
-
-/**
- * Sphere Implementation
- */
-function Sphere(props) {
-  const orbit = useRef();
-  const trans = useRef();
-  const mesh = useRef();
-
-  const value = useContext(TransformContext);
-  const [transform, setTransform] = value;
-
-  const dragValue = useContext(TransformDragContext);
-  const setTransformDrag = dragValue;
-
-  useEffect(() => {
-    if (trans.current) {
-      const controls = trans.current;
-
-      if (!transform) {
-        controls.mode = 'translate';
-        setTransform(controls.mode);
-      }
-
-      const handleKeyDown = (event) => {
-        switch (event.key) {
-          case 'w':
-            controls.mode = 'translate';
-            setTransform(controls.mode);
-            break;
-
-          case 'e':
-            controls.mode = 'scale';
-            setTransform(controls.mode);
-            break;
-
-          case 'r':
-            controls.mode = 'rotate';
-            setTransform(controls.mode);
-            break;
-
-          default:
-            break;
-        }
-      }
-
-      orbit.current.enabled = false;
-
-      const callback = (event) => {
-        setTransformDrag(event.value);
-      }
-
-      controls.addEventListener('dragging-changed', callback);
-      document.addEventListener('keydown', handleKeyDown);
-      return () => {
-        controls.removeEventListener('dragging-changed', callback);
-        document.removeEventListener('keydown', handleKeyDown);
-      }
-    }
-  });
-
-  return (
-    <>
-      <TransformControls ref={trans}>
-        <mesh {...props} ref={mesh}>
-          <sphereBufferGeometry attach='geometry' />
-          <meshLambertMaterial attach='material' color='blue' />
-        </mesh>
-      </TransformControls>
-      <OrbitControls ref={orbit} />
     </>
   );
 }
@@ -288,10 +116,9 @@ export default function App() {
   const [transform, setTransform] = useState('');
   const [transformDrag, setTransformDrag] = useState(false); 
   const [shapes, setShapes] = useState({
-    boxes: [],
-    cylinders: [],
-    spheres: [],
+    models: [],
   });
+  const orbitControl = useRef();
   
 
   return (
@@ -366,18 +193,10 @@ export default function App() {
               */}
             <TransformDragContext.Provider value={setTransformDrag}>
               <TransformContext.Provider value={[transform, setTransform]}>
-                {!transformDrag ? (<OrbitControls />) : null}
+                {!transformDrag ? (<OrbitControls ref={orbitControl}/>) : null}
 
-                {shapes.boxes.map((props) => (
-                  <Box key='{props}' {...props}/>
-                ))}
-
-                {shapes.cylinders.map((props) => (
-                  <Cylinder key='{props}' {...props} />
-                ))}
-
-                {shapes.spheres.map((props) => (
-                  <Sphere key='{props}' {...props} />
+                {shapes.models.map((props) => (
+                  <ModelRenderer key='{props}' {...props}/>
                 ))}
               </TransformContext.Provider>
             </TransformDragContext.Provider>

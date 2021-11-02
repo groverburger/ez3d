@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { ShapeContext } from './context';
+import * as THREE from 'three';
 
 import './navbar.css';
 
@@ -17,8 +18,24 @@ import './navbar.css';
  *            https://stackoverflow.com/questions/60305746/how-do-i-update-an-object-state-in-react-via-hooks
  */
 export default function NavAdd() {
-  const value = useContext(ShapeContext);
-  const [shapes, setShapes] = value;
+  const [shapes, setShapes] = useContext(ShapeContext);
+
+  // adds a new model to the scene with the specified vertices
+  const addModel = (vertices) => {
+    const modelData = {
+      position: [0,0,0],
+      geometry: new THREE.BufferGeometry(),
+      material: new THREE.MeshBasicMaterial({ color: 0x4488ff }),
+      vertices: vertices,
+    }
+    modelData.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    modelData.data = modelData
+
+    setShapes((shapes) => {
+      shapes.models.push(modelData)
+      return {models: shapes.models}
+    })
+  }
 
   return (
     <div className='navbar-items'>
@@ -27,19 +44,83 @@ export default function NavAdd() {
         <NavDropdown.Divider />
         <NavDropdown.Item
           href='#action/1.0'
-          onClick={() => generateNewBlock()}
+          onClick={() => {
+            addModel(new Float32Array([
+               1,  1,  1,
+               1, -1,  1,
+               1,  1, -1,
+               1, -1, -1,
+               1,  1, -1,
+               1, -1,  1,
+
+               1,  1,  1,
+               1,  1, -1,
+              -1,  1,  1,
+              -1,  1, -1,
+              -1,  1,  1,
+               1,  1, -1,
+
+               1,  1,  1,
+              -1,  1,  1,
+               1, -1,  1,
+              -1, -1,  1,
+               1, -1,  1,
+              -1,  1,  1,
+
+              -1, -1, -1,
+              -1, -1,  1,
+              -1,  1, -1,
+              -1,  1,  1,
+              -1,  1, -1,
+              -1, -1,  1,
+
+              -1, -1, -1,
+               1, -1, -1,
+              -1, -1,  1,
+               1, -1,  1,
+              -1, -1,  1,
+               1, -1, -1,
+
+              -1, -1, -1,
+              -1,  1, -1,
+               1, -1, -1,
+               1,  1, -1,
+               1, -1, -1,
+              -1,  1, -1,
+            ]))
+          }}
         >
           Cube
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.1'
-          onClick={() => generateNewSphere()}
+          onClick={() => {
+            addModel(new Float32Array([
+              -1, -1,  1,
+               1, -1,  1,
+               1,  1,  1,
+
+               1,  1,  1,
+              -1,  1,  1,
+              -1, -1,  1,
+            ]))
+          }}
         >
           Sphere
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={() => generateNewCylinder()}
+          onClick={() => {
+            addModel(new Float32Array([
+              -1, -1,  1,
+               1, -1,  1,
+               1,  1,  1,
+
+               1,  1,  1,
+              -1,  1,  1,
+              -1, -1,  1,
+            ]))
+          }}
         >
           Cylinder
         </NavDropdown.Item>
@@ -52,44 +133,4 @@ export default function NavAdd() {
       </NavDropdown>
     </div>
   );
-
-  /**
-   * Edited by Ruiyang
-   * Function for generating a new block.
-   *
-   * Edited by Antonio
-   * Instead of pushing the position into an array for each shape,
-   * we instead push an array into an object that holds arrays. Now
-   * we only have to call on the object to access the arrays rather
-   * than call the array three different times for each shape.
-   */
-  function generateNewBlock() {
-    let newBoxes = shapes.boxes;
-    newBoxes.push({ position: [0, 0, 0] });
-    const total = shapes.boxes.length;
-    console.log(total);
-    setShapes((prevShapes) => ({ ...prevShapes, boxes: newBoxes }));
-  }
-
-  /**
-   * Generate New Cylinder
-   */
-  function generateNewCylinder() {
-    let newCylinders = shapes.cylinders;
-    newCylinders.push({ position: [0, 0, 0] });
-    const total = shapes.cylinders.length;
-    console.log(total);
-    setShapes((prevShapes) => ({ ...prevShapes, cylinders: newCylinders }));
-  }
-
-  /**
-   * Generate New Sphere
-   */
-  function generateNewSphere() {
-    let newSpheres = shapes.spheres;
-    newSpheres.push({ position: [0, 0, 0] });
-    const total = shapes.spheres.length;
-    console.log(total);
-    setShapes((prevShapes) => ({ ...prevShapes, spheres: newSpheres }));
-  }
 }
