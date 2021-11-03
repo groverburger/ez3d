@@ -9,11 +9,11 @@ import './toolbar.css';
 
 export default function Toolbar() {
   const icons = {
-    'translate': <TranslateIcon />,
-    'scale': <ScaleIcon />,
-    'rotate': <RotateIcon />,
+    translate: <TranslateIcon />,
+    scale: <ScaleIcon />,
+    rotate: <RotateIcon />,
   };
-  
+
   const value = useContext(TransformContext);
   const [transform, setTransform] = value;
   const select = ['translate', 'scale', 'rotate'];
@@ -21,12 +21,17 @@ export default function Toolbar() {
   return (
     <div className='toolbar'>
       <ButtonGroup vertical>
-        {select.map(type => (
-          <Button className='btn-light toolbar-items' key={type} active={transform === type}
-          onClick={() => {
-            setTransform(type)
-          }}>{icons[type]}</Button>)
-        )}
+        {select.map((type) => (
+          <Button
+            className='btn-light toolbar-items'
+            key={type}
+            active={transform === type}
+            onClick={() => {
+              setTransform(type);
+            }}>
+            {icons[type]}
+          </Button>
+        ))}
       </ButtonGroup>
     </div>
   );

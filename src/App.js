@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, TransformControls } from '@react-three/drei';
 import { Controls } from 'react-three-gui';
 import { Navbar, Nav } from 'react-bootstrap';
-import { ShapeContext, GridContext, TransformContext, TransformDragContext } from './components/context';
+import { ShapeContext, GridContext, TransformContext, TransformDragContext} from './components/context';
 
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane';
@@ -30,8 +30,6 @@ function ModelRenderer(props) {
   useEffect(() => {
     if (trans.current) {
       const controls = trans.current;
-      
-      
 
       if (!transform) {
         controls.mode = 'translate';
@@ -64,26 +62,47 @@ function ModelRenderer(props) {
           default:
             break;
         }
-      }
+      };
 
       // When dragging on TransformControls, set transformDrag to true.
       const callback = (event) => {
         setTransformDrag(event.value);
-      }
+      };
 
       controls.addEventListener('dragging-changed', callback);
       document.addEventListener('keydown', handleKeyDown);
       return () => {
         controls.removeEventListener('dragging-changed', callback);
         document.removeEventListener('keydown', handleKeyDown);
-      }
+      };
     }
   });
 
   return (
     <>
       <TransformControls ref={trans}>
-        <mesh {...props} ref={mesh}> </mesh>
+        <mesh {...props.positions} ref={mesh}>
+          {props.mesh === 'box' ? (
+            <>
+              <boxBufferGeometry attach='geometry' />
+              <meshLambertMaterial attach='material' color='hotpink' />
+            </>
+          ) : null}
+
+          {props.mesh === 'cylinder' ? (
+            <>
+              <cylinderBufferGeometry attach='geometry' />
+              <meshLambertMaterial attach='material' color='green' />
+            </>
+          ) : null}
+
+          {props.mesh === 'sphere' ? (
+            <>
+              <sphereBufferGeometry attach='geometry' />
+              <meshLambertMaterial attach='material' color='blue' />
+            </>
+          ) : null}
+        </mesh>
       </TransformControls>
     </>
   );
@@ -100,7 +119,7 @@ function ModelRenderer(props) {
  *                            parameter is a variable that holds the current state. Its default
  *                            is true. The setGrid parameter is a function that changes the
  *                            state of grid.
- * 
+ *
  * transform, setTransform    A hook that determines what transform control to use. The
  *                            transform parameter is a string of one of the transform control
  *                            modes: translate, scale, or rotate. The setTransform parameter
@@ -120,37 +139,35 @@ function ModelRenderer(props) {
 export default function App() {
   const [grid, setGrid] = useState(true);
   const [transform, setTransform] = useState('');
-  const [transformDrag, setTransformDrag] = useState(false); 
+  const [transformDrag, setTransformDrag] = useState(false);
   const [shapes, setShapes] = useState({
-    models: [],
+    boxes: [],
+    cylinders: [],
+    spheres: [],
   });
   const orbitControl = useRef();
-  
 
   return (
     <>
-      {/* Control Menu for the Shapes */}
-      <Controls />
-
       {/* Navigation bar with file, edit, add, etc.
-        * Reference: https://react-bootstrap.github.io/components/navbar/
-        *
-        * ShapeContext.Provider    All components under this component can receive and respond to
-        *                          the global state value that is set in the value parameter.
-        *                          This particular provider saves the state of the shapes needed
-        *                          to be generated.
-        *
-        * Navbar                   bg = light (light theme... there is also a dark theme)
-        *                          expand = small (how far the window closes until menu icon)
-        *                          fixed = top (fixed navbar along the top of the screen, scrolls with page)
-        *
-        * Navbar.Brand             Title of the website. It also has a link attached
-        *                          to it if user clicks on the EZ-3D.
-        *
-        * NavFile                  Contains the relevant code for the File dropdown.
-        * NavEdit                  Contains the relevant code for the Edit dropdown.
-        * NavAdd                   Contains the relevant code for the Add dropdown.
-        */}
+       * Reference: https://react-bootstrap.github.io/components/navbar/
+       *
+       * ShapeContext.Provider    All components under this component can receive and respond to
+       *                          the global state value that is set in the value parameter.
+       *                          This particular provider saves the state of the shapes needed
+       *                          to be generated.
+       *
+       * Navbar                   bg = light (light theme... there is also a dark theme)
+       *                          expand = small (how far the window closes until menu icon)
+       *                          fixed = top (fixed navbar along the top of the screen, scrolls with page)
+       *
+       * Navbar.Brand             Title of the website. It also has a link attached
+       *                          to it if user clicks on the EZ-3D.
+       *
+       * NavFile                  Contains the relevant code for the File dropdown.
+       * NavEdit                  Contains the relevant code for the Edit dropdown.
+       * NavAdd                   Contains the relevant code for the Add dropdown.
+       */}
       <ShapeContext.Provider value={[shapes, setShapes]}>
         <Navbar className='navbar'>
           <Navbar.Brand className='brand' href='/'>
@@ -165,14 +182,14 @@ export default function App() {
       </ShapeContext.Provider>
 
       {/* Splits the window into two. The left side is
-        * the viewport and the right side is the outliner.
-        * Reference: https://www.npmjs.com/package/react-split-pane
-        *
-        * SplitPane    split = vertical (split window vertically)
-        *
-        * Pane         The split windows.
-        *              initialSize = limits (initialSize, minSize, maxSize)
-        */}
+       * the viewport and the right side is the outliner.
+       * Reference: https://www.npmjs.com/package/react-split-pane
+       *
+       * SplitPane    split = vertical (split window vertically)
+       *
+       * Pane         The split windows.
+       *              initialSize = limits (initialSize, minSize, maxSize)
+       */}
       <SplitPane className='splitpane' split='vertical'>
         <Pane className='pane-canvas'>
           {/* Toolbar Menu for selecting transform controls. */}
@@ -186,30 +203,50 @@ export default function App() {
             <fog attach='fog' args={['#dddde0', 10, 40]} />
 
             {/* Anything put into the array will be added onto the
-              * canvas. The arrays are inside an object. To access
-              * the array, use {obj}.{shape} where obj is the name
-              * of the object and shape is the name of the array in
-              * the object. In this case, shapes is the name of the
-              * object and its parameters are boxes, cylinders, and
-              * spheres. If we wanted to access the array for the
-              * boxes, we would use shapes.boxes.
-              * 
-              * Contains global variables for transform and
-              * transformDrag.
-              */}
+             * canvas. The arrays are inside an object. To access
+             * the array, use {obj}.{shape} where obj is the name
+             * of the object and shape is the name of the array in
+             * the object. In this case, shapes is the name of the
+             * object and its parameters are boxes, cylinders, and
+             * spheres. If we wanted to access the array for the
+             * boxes, we would use shapes.boxes.
+             *
+             * Contains global variables for transform and
+             * transformDrag.
+             */}
             <TransformDragContext.Provider value={setTransformDrag}>
               <TransformContext.Provider value={[transform, setTransform]}>
-                {!transformDrag ? (<OrbitControls ref={orbitControl}/>) : null}
+                {!transformDrag ? <OrbitControls ref={orbitControl} /> : null}
 
-                {shapes.models.map((props) => (
-                  <ModelRenderer key='{props}' {...props}/>
+                {shapes.boxes.map((positions) => (
+                  <ModelRenderer
+                    key='{positions}'
+                    positions={{ ...positions }}
+                    mesh='box'
+                  />
+                ))}
+
+                {shapes.cylinders.map((positions) => (
+                  <ModelRenderer
+                    key='{positions}'
+                    positions={{ ...positions }}
+                    mesh='cylinder'
+                  />
+                ))}
+
+                {shapes.spheres.map((positions) => (
+                  <ModelRenderer
+                    key='{positions}'
+                    positions={{ ...positions }}
+                    mesh='sphere'
+                  />
                 ))}
               </TransformContext.Provider>
             </TransformDragContext.Provider>
 
             {/* If grid is true, add the grid onto the canvas. Else,
-              * do not put anything into the canvas.
-              */}
+             * do not put anything into the canvas.
+             */}
             {grid ? (
               <gridHelper
                 position={[0, -0.51, 0]}
@@ -232,8 +269,7 @@ export default function App() {
             <Pane
               className='pane-outliner'
               initialSize='350px'
-              minSize='250px'
-            >
+              minSize='250px'>
             </Pane>
 
             {/* Bottom Pane */}
