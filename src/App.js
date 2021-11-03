@@ -30,6 +30,8 @@ function ModelRenderer(props) {
   useEffect(() => {
     if (trans.current) {
       const controls = trans.current;
+      
+      
 
       if (!transform) {
         controls.mode = 'translate';
@@ -53,6 +55,10 @@ function ModelRenderer(props) {
           case 'r':
             controls.mode = 'rotate';
             setTransform(controls.mode);
+            break;
+
+          case 't':
+            trans.current.visible = !trans.current.visible;
             break;
 
           default:
