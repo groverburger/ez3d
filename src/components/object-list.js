@@ -21,7 +21,7 @@ export default function ObjectList() {
       <div className='object-list-top'>
         <label className='object-list-title'>Object List</label>
         {objList.map((mesh) => (
-          <div key={Math.random()} className='object-list-items'>
+          <div key='{mesh}' className='object-list-items'>
             <label> {mesh.name} </label>
           </div>
         ))}

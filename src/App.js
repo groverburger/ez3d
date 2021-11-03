@@ -159,7 +159,7 @@ function ModelRenderer(props) {
 export default function App() {
   const [grid, setGrid] = useState(true);
   const [transform, setTransform] = useState('');
-  const [transformDrag = false, setTransformDrag] = useState(false);
+  const [transformDrag, setTransformDrag] = useState(false);
   const [shapes, setShapes] = useState({
     boxes: [],
     cylinders: [],
@@ -233,7 +233,7 @@ export default function App() {
 
                 {shapes.boxes.map((positions) => (
                   <ModelRenderer
-                    key={Math.random()}
+                    key='{positions}'
                     positions={{ ...positions }}
                     mesh='box'
                   />
@@ -241,7 +241,7 @@ export default function App() {
 
                 {shapes.cylinders.map((positions) => (
                   <ModelRenderer
-                    key={Math.random()}
+                    key='{positions}'
                     positions={{ ...positions }}
                     mesh='cylinder'
                   />
@@ -249,7 +249,7 @@ export default function App() {
 
                 {shapes.spheres.map((positions) => (
                   <ModelRenderer
-                    key={Math.random()}
+                    key='{positions}'
                     positions={{ ...positions }}
                     mesh='sphere'
                   />
