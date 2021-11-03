@@ -437,7 +437,10 @@ export default function App() {
               initialSize='350px'
               minSize='250px'
             >
-              <ObjectList />
+              {/* ShapeContext.Provider allows ObjectList to access the array of shapes*/}
+              <ShapeContext.Provider value={[shapes, setShapes]}>
+                <ObjectList />
+              </ShapeContext.Provider>
             </Pane>
 
             {/* Bottom Pane */}
