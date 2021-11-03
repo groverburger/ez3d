@@ -13,8 +13,7 @@ export default function ObjectList() {
   const [shapes, setShapes] = value;
   var total = shapes.boxes.length + shapes.cylinders.length + shapes.spheres.length;
   var objList = [];
-  var i;
-  for( i = 0; i < total; i++){
+  for(let i = 0; i < total; i++){
     objList.push({name: "Object" + (i)});
   }
   return (
@@ -22,7 +21,6 @@ export default function ObjectList() {
 
       <div className='ObjectList-top'>
         <label className='object-list-title'>Object List</label>
-
           {objList.map(mesh => (
             <div className='object-list-items'>
               <label> {mesh.name}</label>
