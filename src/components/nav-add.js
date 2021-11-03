@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { ShapeContext } from './context';
+
 import './navbar.css';
+
 /**
- * Contains the functionality for the Add dropdown. We use the saved state value of the generated
- * shapes and add onto that when generating a new shape. The saved state value is an object of
- * arrays that holds all the positions for any generated shape. Each array corresponds to their
- * respective shape. For more information, look at shapes and setShapes in App.js and ShapeContext
- * in context.js.
+ * Contains the functionality for the Add dropdown. We use the saved state value of the generated shapes and add
+ * onto that when generating a new shape. The saved state value is an object of arrays that holds all the positions
+ * for any generated shape. Each array corresponds to their respective shape. For more information, look at shapes
+ * and setShapes in App.js and ShapeContext in context.js.
  *
  * Reference: https://stackoverflow.com/questions/66727049/exporting-a-state-from-hook-function-to-another-component
  *            https://tyrannosaurustech.com/blog/global-state-management-with-react-hooks-and-context/
@@ -21,8 +22,6 @@ export default function NavAdd() {
   return (
     <div className='navbar-items'>
       <NavDropdown title='Add' id='add-dropdown'>
-        <NavDropdown.ItemText>Meshes</NavDropdown.ItemText>
-        <NavDropdown.Divider />
         <NavDropdown.Item href='#action/1.0' onClick={() => generateNewBlock()}>
           Cube
         </NavDropdown.Item>
@@ -39,11 +38,9 @@ export default function NavAdd() {
           Cylinder
         </NavDropdown.Item>
         <NavDropdown.Divider />
-        <NavDropdown.ItemText>Lights</NavDropdown.ItemText>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href='#action/1.3'>Point</NavDropdown.Item>
-        <NavDropdown.Item href='#action/1.4'>Direction</NavDropdown.Item>
-        <NavDropdown.Item href='#action/1.5'>Ambient</NavDropdown.Item>
+        <NavDropdown.Item href='#action/1.3'>Point Light</NavDropdown.Item>
+        <NavDropdown.Item href='#action/1.4'>Direction Light</NavDropdown.Item>
+        <NavDropdown.Item href='#action/1.5'>Ambient Light</NavDropdown.Item>
       </NavDropdown>
     </div>
   );
@@ -53,10 +50,9 @@ export default function NavAdd() {
    * Function for generating a new block.
    *
    * Edited by Antonio
-   * Instead of pushing the position into an array for each shape,
-   * we instead push an array into an object that holds arrays. Now
-   * we only have to call on the object to access the arrays rather
-   * than call the array three different times for each shape.
+   * Instead of pushing the position into an array for each shape, we instead push an array into an object that holds
+   * arrays. Now we only have to call on the object to access the arrays rather than call the array three different
+   * times for each shape.
    */
   function generateNewBlock() {
     const total = shapes.boxes.length;
@@ -75,7 +71,6 @@ export default function NavAdd() {
     newCylinders.push({ position: [0, 0, 0] });
     console.log(total);
     setShapes((prevShapes) => ({ ...prevShapes, cylinders: newCylinders }));
-
   }
 
   /**
@@ -87,6 +82,5 @@ export default function NavAdd() {
     newSpheres.push({ position: [0, 0, 0] });
     console.log(total);
     setShapes((prevShapes) => ({ ...prevShapes, spheres: newSpheres }));
-
   }
 }

@@ -10,6 +10,39 @@
   background-color: #fcfcfc;
 }
 
+.navbar-expand .navbar-nav .dropdown-menu {
+  top: 3.3rem;
+  border: 0;
+  background-color: #fcfcfc;
+}
+
+div .dropdown-item {
+  color: #4f4f4f;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+div .dropdown-item:hover {
+  background-color: #f1f1f3;
+}
+
+div .dropdown-item.active,
+.dropdown-item:active {
+  background-color: transparent;
+  color: #4f4f4f;
+}
+
+div .dropdown-item.active:hover,
+.dropdown-item:active:hover {
+  background-color: #f1f1f3;
+  color: #4f4f4f;
+}
+
+div .dropdown-divider {
+  border-top: 1px solid #e4e4ea;
+  box-shadow: 0.4rem 0.4rem 0.5rem #d9d9d9;
+}
+
 .brand {
   font-family: 'Montserrat', sans-serif;
   font-weight: 400;

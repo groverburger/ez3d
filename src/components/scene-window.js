@@ -3,21 +3,21 @@ import { GridContext } from './context';
 
 import Toggle from './toggle';
 
-import './outliner.css';
+import './scene-window.css';
 
-export default function Outliner() {
+export default function SceneWindow() {
   const value = useContext(GridContext);
-  const [grid, setGrid] = value;
+  const setGrid = value;
 
   return (
     <>
-      <div className='outliner-top'>
-        <label className='outliner-title'>Scene</label>
-        <div className='outliner-items'>
+      <div className='scene-window-top'>
+        <label className='scene-window-title'>Scene</label>
+        <div className='scene-window-items'>
           <label>Grid</label>
           <Toggle onChange={(event) => setGrid(event.target.checked)} />
         </div>
-        <div className='outliner-items'>
+        <div className='scene-window-items'>
           <label>Camera</label>
           <input className='camera' />
         </div>
