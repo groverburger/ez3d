@@ -11,14 +11,23 @@ export default function ObjectList() {
 
   const value = useContext(ShapeContext);
   const [shapes, setShapes] = value;
+  var total = shapes.boxes.length + shapes.cylinders.length + shapes.spheres.length;
+  var objList = [];
+  var i;
+  for( i = 0; i < total; i++){
+    objList.push({name: "Object" + (i)});
+  }
   return (
     <>
 
       <div className='ObjectList-top'>
         <label className='object-list-title'>Object List</label>
-        <div className='object-list-items'>
-          <label> {"Object" + (shapes.boxes.length + shapes.cylinders.length + shapes.spheres.length)}</label>
-        </div>
+
+          {objList.map(mesh => (
+            <div className='object-list-items'>
+              <label> {mesh.name}</label>
+            </div>
+          ))}
       </div>
     </>
   );
