@@ -4,17 +4,26 @@ import { OrbitControls, TransformControls } from '@react-three/drei';
 import { Controls } from 'react-three-gui';
 import { Navbar, Nav } from 'react-bootstrap';
 import {
-  ShapeContext,
   GridContext,
+  LightContext,
+  RangeContext,
+  ShapeContext,
   TransformContext,
   TransformDragContext,
 } from './components/context';
+
+import {
+  AmbientLight,
+  DirectionalLight,
+  PointLight,
+} from './components/lights';
 
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane';
 import NavFile from './components/nav-file';
 import NavEdit from './components/nav-edit';
 import NavAdd from './components/nav-add';
+import LightWindow from './components/light-window';
 import SceneWindow from './components/scene-window';
 import ObjectList from './components/object-list';
 import Toolbar from './components/toolbar';
@@ -104,7 +113,7 @@ function ModelRenderer(props) {
 
   return (
     <>
-      <TransformControls ref={trans}>
+      <TransformControls size={0.3} ref={trans}>
         <mesh {...props.positions} ref={mesh}>
           {props.mesh === 'box' ? (
             <>
@@ -128,6 +137,62 @@ function ModelRenderer(props) {
           ) : null}
         </mesh>
       </TransformControls>
+    </>
+  );
+}
+
+function LightRenderer(props) {
+  const lightValue = useContext(LightContext);
+  const setLights = lightValue;
+
+  const rangeValue = useContext(RangeContext);
+  const range = rangeValue;
+
+  const handleLightClick = (type) => {
+    setLights((prevLights) => {
+      return { ...prevLights, type: type, window: true };
+    });
+  };
+
+  const handleWindowClose = (type) => {
+    setLights((prevLights) => {
+      return { ...prevLights, type: type, window: false };
+    });
+  };
+
+  return (
+    <>
+      <RangeContext.Provider value={range}>
+        {props.type === 'ambient' ? (
+          <>
+            <AmbientLight
+              {...props}
+              onClick={() => handleLightClick(props.type)}
+              onClose={() => handleWindowClose(props.type)}
+            />
+          </>
+        ) : null}
+
+        {props.type === 'directional' ? (
+          <>
+            <DirectionalLight
+              {...props}
+              onClick={() => handleLightClick(props.type)}
+              onClose={() => handleWindowClose(props.type)}
+            />
+          </>
+        ) : null}
+
+        {props.type === 'point' ? (
+          <>
+            <PointLight
+              {...props}
+              onClick={() => handleLightClick(props.type)}
+              onClose={() => handleWindowClose(props.type)}
+            />
+          </>
+        ) : null}
+      </RangeContext.Provider>
     </>
   );
 }
@@ -165,6 +230,14 @@ export default function App() {
     cylinders: [],
     spheres: [],
   });
+  const [lights, setLights] = useState({
+    ambient: [],
+    directional: [],
+    point: [],
+    type: '',
+    window: false,
+  });
+  const [range, setRange] = useState(100);
 
   const orbitControl = useRef();
 
@@ -188,18 +261,20 @@ export default function App() {
        * NavEdit                  Contains the relevant code for the Edit dropdown.
        * NavAdd                   Contains the relevant code for the Add dropdown.
        */}
-      <ShapeContext.Provider value={[shapes, setShapes]}>
-        <Navbar className='navbar'>
-          <Navbar.Brand className='brand' href='/'>
-            EZ-3D
-          </Navbar.Brand>
-          <Nav className='me-auto'>
-            <NavFile />
-            <NavEdit />
-            <NavAdd />
-          </Nav>
-        </Navbar>
-      </ShapeContext.Provider>
+      <LightContext.Provider value={setLights}>
+        <ShapeContext.Provider value={[shapes, setShapes]}>
+          <Navbar className='navbar'>
+            <Navbar.Brand className='brand' href='/'>
+              EZ-3D
+            </Navbar.Brand>
+            <Nav className='me-auto'>
+              <NavFile />
+              <NavEdit />
+              <NavAdd />
+            </Nav>
+          </Navbar>
+        </ShapeContext.Provider>
+      </LightContext.Provider>
 
       {/* Splits the window into two. The left side is the viewport and the right side is the outliner.
        * Reference: https://www.npmjs.com/package/react-split-pane
@@ -221,6 +296,8 @@ export default function App() {
             <spotLight position={[0, 5, 10]} angle={0.3} />
             <fog attach='fog' args={['#dddde0', 10, 40]} />
 
+            {!transformDrag ? <OrbitControls ref={orbitControl} /> : null}
+
             {/* Anything put into the array will be added onto the canvas. The arrays are inside an object. To
              *  access the array, use {obj}.{shape} where obj is the name of the object and shape is the name of the
              *  array in the object. In this case, shapes is the name of the object and its parameters are boxes,
@@ -229,8 +306,6 @@ export default function App() {
              */}
             <TransformDragContext.Provider value={setTransformDrag}>
               <TransformContext.Provider value={[transform, setTransform]}>
-                {!transformDrag ? <OrbitControls ref={orbitControl} /> : null}
-
                 {shapes.boxes.map((positions) => (
                   <ModelRenderer
                     key='{positions}'
@@ -255,6 +330,34 @@ export default function App() {
                   />
                 ))}
               </TransformContext.Provider>
+
+              <RangeContext.Provider value={range}>
+                <LightContext.Provider value={setLights}>
+                  {lights.ambient.map((properties) => (
+                    <LightRenderer
+                      key='{properties}'
+                      properties={{ ...properties }}
+                      type='ambient'
+                    />
+                  ))}
+
+                  {lights.directional.map((properties) => (
+                    <LightRenderer
+                      key='{properties}'
+                      properties={{ ...properties }}
+                      type='directional'
+                    />
+                  ))}
+
+                  {lights.point.map((properties) => (
+                    <LightRenderer
+                      key='{properties}'
+                      properties={{ ...properties }}
+                      type='point'
+                    />
+                  ))}
+                </LightContext.Provider>
+              </RangeContext.Provider>
             </TransformDragContext.Provider>
 
             {/* If grid is true, add the grid onto the canvas. Else, do not put anything into the canvas. */}
@@ -283,16 +386,22 @@ export default function App() {
               minSize='250px'
             >
               {/* ShapeContext.Provider allows ObjectList to access the array of shapes. */}
-              <ShapeContext.Provider value={shapes}>
-                <ObjectList />
-              </ShapeContext.Provider>
+              <LightContext.Provider value={lights}>
+                <ShapeContext.Provider value={shapes}>
+                  <ObjectList />
+                </ShapeContext.Provider>
+              </LightContext.Provider>
             </Pane>
 
             {/* Bottom Pane */}
             <Pane className='scene-window-pane'>
-              <GridContext.Provider value={setGrid}>
-                <SceneWindow />
-              </GridContext.Provider>
+              <LightContext.Provider value={lights}>
+                <RangeContext.Provider value={[range, setRange]}>
+                  <GridContext.Provider value={setGrid}>
+                    {lights.window ? <LightWindow /> : <SceneWindow />}
+                  </GridContext.Provider>
+                </RangeContext.Provider>
+              </LightContext.Provider>
             </Pane>
           </SplitPane>
         </Pane>

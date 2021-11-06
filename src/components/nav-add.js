@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { NavDropdown } from 'react-bootstrap';
-import { ShapeContext } from './context';
+import { ShapeContext, LightContext } from './context';
 
 import './navbar.css';
 
@@ -19,68 +19,133 @@ export default function NavAdd() {
   const value = useContext(ShapeContext);
   const [shapes, setShapes] = value;
 
+  const lightValue = useContext(LightContext);
+  const setLights = lightValue;
+
   return (
     <div className='navbar-items'>
       <NavDropdown title='Add' id='add-dropdown'>
-        <NavDropdown.Item href='#action/1.0' onClick={() => generateNewBlock()}>
+        <NavDropdown.Item
+          href='#action/1.0'
+          onClick={(event) => generateNewShape(event)}
+        >
           Cube
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.1'
-          onClick={() => generateNewSphere()}
+          onClick={(event) => generateNewShape(event)}
         >
           Sphere
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={() => generateNewCylinder()}
+          onClick={(event) => generateNewShape(event)}
         >
           Cylinder
         </NavDropdown.Item>
         <NavDropdown.Divider />
-        <NavDropdown.Item href='#action/1.3'>Point Light</NavDropdown.Item>
-        <NavDropdown.Item href='#action/1.4'>Direction Light</NavDropdown.Item>
-        <NavDropdown.Item href='#action/1.5'>Ambient Light</NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.3'
+          onClick={(event) => generateNewLight(event)}
+        >
+          Ambient Light
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.4'
+          onClick={(event) => generateNewLight(event)}
+        >
+          Directional Light
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.5'
+          onClick={(event) => generateNewLight(event)}
+        >
+          Point Light
+        </NavDropdown.Item>
       </NavDropdown>
     </div>
   );
 
   /**
    * Edited by Ruiyang
-   * Function for generating a new block.
+   * Function for generating a new shapes.
    *
    * Edited by Antonio
    * Instead of pushing the position into an array for each shape, we instead push an array into an object that holds
    * arrays. Now we only have to call on the object to access the arrays rather than call the array three different
    * times for each shape.
    */
-  function generateNewBlock() {
-    const total = shapes.boxes.length;
-    let newBoxes = shapes.boxes;
-    newBoxes.push({ position: [0, 0, 0] });
-    console.log(total);
-    setShapes((prevShapes) => ({ ...prevShapes, boxes: newBoxes }));
+  function generateNewShape(event) {
+    switch (event.target.innerHTML) {
+      case 'Cube':
+        const totalCubes = shapes.boxes.length;
+        let newBoxes = shapes.boxes;
+        newBoxes.push({ position: [0, 0, 0] });
+        console.log(totalCubes);
+        setShapes((prevShapes) => ({ ...prevShapes, boxes: newBoxes }));
+        break;
+
+      case 'Cylinder':
+        const totalCylinders = shapes.cylinders.length;
+        let newCylinders = shapes.cylinders;
+        newCylinders.push({ position: [0, 0, 0] });
+        console.log(totalCylinders);
+        setShapes((prevShapes) => ({ ...prevShapes, cylinders: newCylinders }));
+        break;
+
+      case 'Sphere':
+        const totalSpheres = shapes.spheres.length;
+        let newSpheres = shapes.spheres;
+        newSpheres.push({ position: [0, 0, 0] });
+        console.log(totalSpheres);
+        setShapes((prevShapes) => ({ ...prevShapes, spheres: newSpheres }));
+        break;
+
+      default:
+        break;
+    }
   }
 
-  /**
-   * Generate New Cylinder
-   */
-  function generateNewCylinder() {
-    const total = shapes.cylinders.length;
-    let newCylinders = shapes.cylinders;
-    newCylinders.push({ position: [0, 0, 0] });
-    console.log(total);
-    setShapes((prevShapes) => ({ ...prevShapes, cylinders: newCylinders }));
-  }
+  function generateNewLight(event) {
+    switch (event.target.innerHTML) {
+      case 'Ambient Light':
+        const newAmbient = {
+          intensity: 1,
+          color: 'white',
+        };
 
-  /**
-   * Generate New Sphere
-   */
-  function generateNewSphere() {
-    const total = shapes.spheres.length;
-    let newSpheres = shapes.spheres;
-    newSpheres.push({ position: [0, 0, 0] });
-    console.log(total);
-    setShapes((prevShapes) => ({ ...prevShapes, spheres: newSpheres }));
+        setLights((prevLights) => {
+          prevLights.ambient.push(newAmbient);
+          return { ...prevLights, ambient: prevLights.ambient };
+        });
+        break;
+
+      case 'Directional Light':
+        const newDirectional = {
+          intensity: 1,
+          color: 'white',
+        };
+
+        setLights((prevLights) => {
+          prevLights.directional.push(newDirectional);
+          return { ...prevLights, directional: prevLights.directional };
+        });
+        break;
+
+      case 'Point Light':
+        const newPoint = {
+          intensity: 1,
+          color: 'white',
+        };
+
+        setLights((prevLights) => {
+          prevLights.point.push(newPoint);
+          return { ...prevLights, point: prevLights.point };
+        });
+        break;
+
+      default:
+        break;
+    }
   }
 }

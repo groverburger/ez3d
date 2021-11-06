@@ -11,6 +11,8 @@ import { createContext } from 'react';
  *            https://stackoverflow.com/questions/60305746/how-do-i-update-an-object-state-in-react-via-hooks
  */
 export const GridContext = createContext(false);
+export const LightContext = createContext({});
 export const ShapeContext = createContext({});
+export const RangeContext = createContext(100);
 export const TransformContext = createContext('');
 export const TransformDragContext = createContext(false);
