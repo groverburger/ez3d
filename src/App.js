@@ -1,15 +1,15 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, TransformControls } from '@react-three/drei';
-import { Controls } from 'react-three-gui';
 import { Navbar, Nav } from 'react-bootstrap';
+
 import {
   GridContext,
   LightContext,
   RangeContext,
   ShapeContext,
   TransformContext,
-  TransformDragContext,
+  useStore,
 } from './components/context';
 
 import {
@@ -31,38 +31,15 @@ import Toolbar from './components/toolbar';
 import './App.css';
 import './components/navbar.css';
 
-/**
- * Edited by Ruiyang
- * Create a box on origin.
- * Reference: https://codesandbox.io/s/r3f-basic-demo-forked-6q6ww?file=/src/App.js:600-604
- *
- * Edited by Eric
- * Transform controls.
- * Reference: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
- *
- * Edited by Antonio
- * Added hotkeys for the transform controls. The state value is to tell the toolbar
- * what is the currently selected. The parameter transform contains the strings of
- * the transform modes (translate, scale, rotate).
- *
- * BUG!
- * Orbit is native to each object (they can stack on each other,
- * making OrbitControls more and more sensitive)
- */
-function ModelRenderer(props) {
-  const trans = useRef();
-  const mesh = useRef();
-
+function Controls(props) {
   const value = useContext(TransformContext);
   const [transform, setTransform] = value;
 
-  // Get the useState for the transformDrag global variable
-  const dragValue = useContext(TransformDragContext);
-  const setTransformDrag = dragValue;
+  const transformRef = useRef();
 
   useEffect(() => {
-    if (trans.current) {
-      const controls = trans.current;
+    if (transformRef.current) {
+      const controls = transformRef.current;
 
       if (!transform) {
         controls.mode = 'translate';
@@ -97,46 +74,68 @@ function ModelRenderer(props) {
         }
       };
 
-      // When dragging on TransformControls, set transformDrag to true.
-      const callback = (event) => {
-        setTransformDrag(event.value);
-      };
-
-      controls.addEventListener('dragging-changed', callback);
       document.addEventListener('keydown', handleKeyDown);
       return () => {
-        controls.removeEventListener('dragging-changed', callback);
         document.removeEventListener('keydown', handleKeyDown);
       };
     }
   });
 
   return (
+    <TransformControls size={0.4} object={props.object} ref={transformRef} />
+  );
+}
+
+/**
+ * Edited by Ruiyang
+ * Create a box on origin.
+ * Reference: https://codesandbox.io/s/r3f-basic-demo-forked-6q6ww?file=/src/App.js:600-604
+ *
+ * Edited by Eric
+ * Transform controls.
+ * Reference: https://codesandbox.io/s/react-three-fiber-gestures-hc8gm?file=/src/index.js
+ *
+ * Edited by Antonio
+ * Added hotkeys for the transform controls. The state value is to tell the toolbar
+ * what is the currently selected. The parameter transform contains the strings of
+ * the transform modes (translate, scale, rotate).
+ *
+ * BUG!
+ * Orbit is native to each object (they can stack on each other,
+ * making OrbitControls more and more sensitive)
+ */
+function ModelRenderer(props) {
+  const mesh = useRef();
+  const setTarget = useStore((state) => state.setTarget);
+
+  return (
     <>
-      <TransformControls size={0.3} ref={trans}>
-        <mesh {...props.positions} ref={mesh}>
-          {props.mesh === 'box' ? (
-            <>
-              <boxBufferGeometry attach='geometry' />
-              <meshLambertMaterial attach='material' color='hotpink' />
-            </>
-          ) : null}
+      <mesh
+        {...props.positions}
+        onClick={(event) => setTarget(event.object)}
+        ref={mesh}
+      >
+        {props.mesh === 'box' ? (
+          <>
+            <boxBufferGeometry attach='geometry' />
+            <meshLambertMaterial attach='material' color='hotpink' />
+          </>
+        ) : null}
 
-          {props.mesh === 'cylinder' ? (
-            <>
-              <cylinderBufferGeometry attach='geometry' />
-              <meshLambertMaterial attach='material' color='green' />
-            </>
-          ) : null}
+        {props.mesh === 'cylinder' ? (
+          <>
+            <cylinderBufferGeometry attach='geometry' />
+            <meshLambertMaterial attach='material' color='green' />
+          </>
+        ) : null}
 
-          {props.mesh === 'sphere' ? (
-            <>
-              <sphereBufferGeometry attach='geometry' />
-              <meshLambertMaterial attach='material' color='blue' />
-            </>
-          ) : null}
-        </mesh>
-      </TransformControls>
+        {props.mesh === 'sphere' ? (
+          <>
+            <sphereBufferGeometry attach='geometry' />
+            <meshLambertMaterial attach='material' color='blue' />
+          </>
+        ) : null}
+      </mesh>
     </>
   );
 }
@@ -146,7 +145,7 @@ function LightRenderer(props) {
   const setLights = lightValue;
 
   const rangeValue = useContext(RangeContext);
-  const range = rangeValue;
+  const [range, setRange] = rangeValue;
 
   const handleLightClick = (type) => {
     setLights((prevLights) => {
@@ -162,7 +161,7 @@ function LightRenderer(props) {
 
   return (
     <>
-      <RangeContext.Provider value={range}>
+      <RangeContext.Provider value={[range, setRange]}>
         {props.type === 'ambient' ? (
           <>
             <AmbientLight
@@ -224,7 +223,6 @@ function LightRenderer(props) {
 export default function App() {
   const [grid, setGrid] = useState(true);
   const [transform, setTransform] = useState('');
-  const [transformDrag, setTransformDrag] = useState(false);
   const [shapes, setShapes] = useState({
     boxes: [],
     cylinders: [],
@@ -239,7 +237,7 @@ export default function App() {
   });
   const [range, setRange] = useState(100);
 
-  const orbitControl = useRef();
+  const { target } = useStore();
 
   return (
     <>
@@ -296,7 +294,7 @@ export default function App() {
             <spotLight position={[0, 5, 10]} angle={0.3} />
             <fog attach='fog' args={['#dddde0', 10, 40]} />
 
-            {!transformDrag ? <OrbitControls ref={orbitControl} /> : null}
+            <OrbitControls makeDefault />
 
             {/* Anything put into the array will be added onto the canvas. The arrays are inside an object. To
              *  access the array, use {obj}.{shape} where obj is the name of the object and shape is the name of the
@@ -304,61 +302,61 @@ export default function App() {
              *  cylinders, and spheres. If we wanted to access the array for the boxes, we would use shapes.boxes.
              *  Contains global variables for transform and transformDrag.
              */}
-            <TransformDragContext.Provider value={setTransformDrag}>
-              <TransformContext.Provider value={[transform, setTransform]}>
-                {shapes.boxes.map((positions) => (
-                  <ModelRenderer
-                    key='{positions}'
-                    positions={{ ...positions }}
-                    mesh='box'
+            <TransformContext.Provider value={[transform, setTransform]}>
+              {target && <Controls object={target} />}
+
+              {shapes.boxes.map((positions) => (
+                <ModelRenderer
+                  key='{positions}'
+                  positions={{ ...positions }}
+                  mesh='box'
+                />
+              ))}
+
+              {shapes.cylinders.map((positions) => (
+                <ModelRenderer
+                  key='{positions}'
+                  positions={{ ...positions }}
+                  mesh='cylinder'
+                />
+              ))}
+
+              {shapes.spheres.map((positions) => (
+                <ModelRenderer
+                  key='{positions}'
+                  positions={{ ...positions }}
+                  mesh='sphere'
+                />
+              ))}
+            </TransformContext.Provider>
+
+            <RangeContext.Provider value={[range, setRange]}>
+              <LightContext.Provider value={setLights}>
+                {lights.ambient.map((properties) => (
+                  <LightRenderer
+                    key='{properties}'
+                    properties={{ ...properties }}
+                    type='ambient'
                   />
                 ))}
 
-                {shapes.cylinders.map((positions) => (
-                  <ModelRenderer
-                    key='{positions}'
-                    positions={{ ...positions }}
-                    mesh='cylinder'
+                {lights.directional.map((properties) => (
+                  <LightRenderer
+                    key='{properties}'
+                    properties={{ ...properties }}
+                    type='directional'
                   />
                 ))}
 
-                {shapes.spheres.map((positions) => (
-                  <ModelRenderer
-                    key='{positions}'
-                    positions={{ ...positions }}
-                    mesh='sphere'
+                {lights.point.map((properties) => (
+                  <LightRenderer
+                    key='{properties}'
+                    properties={{ ...properties }}
+                    type='point'
                   />
                 ))}
-              </TransformContext.Provider>
-
-              <RangeContext.Provider value={range}>
-                <LightContext.Provider value={setLights}>
-                  {lights.ambient.map((properties) => (
-                    <LightRenderer
-                      key='{properties}'
-                      properties={{ ...properties }}
-                      type='ambient'
-                    />
-                  ))}
-
-                  {lights.directional.map((properties) => (
-                    <LightRenderer
-                      key='{properties}'
-                      properties={{ ...properties }}
-                      type='directional'
-                    />
-                  ))}
-
-                  {lights.point.map((properties) => (
-                    <LightRenderer
-                      key='{properties}'
-                      properties={{ ...properties }}
-                      type='point'
-                    />
-                  ))}
-                </LightContext.Provider>
-              </RangeContext.Provider>
-            </TransformDragContext.Provider>
+              </LightContext.Provider>
+            </RangeContext.Provider>
 
             {/* If grid is true, add the grid onto the canvas. Else, do not put anything into the canvas. */}
             {grid ? (
