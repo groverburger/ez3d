@@ -12,80 +12,10 @@ import NavEdit from './components/nav-edit';
 import NavAdd from './components/nav-add';
 import Outliner from './components/outliner';
 import Toolbar from './components/toolbar';
+import ModelRenderer from './components/modelRenderer';
 
 import './App.css';
 import './components/navbar.css';
-
-function ModelRenderer(props) {
-  const trans = useRef();
-  const mesh = useRef();
-
-  const [transform, setTransform] = useContext(TransformContext);
-
-  // Get the useState for the transformDrag global variable
-  const setTransformDrag = useContext(TransformDragContext);
-
-  useEffect(() => {
-    if (trans.current) {
-      const controls = trans.current;
-      
-      
-
-      if (!transform) {
-        controls.mode = 'translate';
-        setTransform(controls.mode);
-      } else {
-        controls.mode = transform;
-      }
-
-      const handleKeyDown = (event) => {
-        switch (event.key) {
-          case 'w':
-            controls.mode = 'translate';
-            setTransform(controls.mode);
-            break;
-
-          case 'e':
-            controls.mode = 'scale';
-            setTransform(controls.mode);
-            break;
-
-          case 'r':
-            controls.mode = 'rotate';
-            setTransform(controls.mode);
-            break;
-
-          case 't':
-            trans.current.visible = !trans.current.visible;
-            break;
-
-          default:
-            break;
-        }
-      }
-
-      // When dragging on TransformControls, set transformDrag to true.
-      const callback = (event) => {
-        setTransformDrag(event.value);
-      }
-
-      controls.addEventListener('dragging-changed', callback);
-      document.addEventListener('keydown', handleKeyDown);
-      return () => {
-        controls.removeEventListener('dragging-changed', callback);
-        document.removeEventListener('keydown', handleKeyDown);
-      }
-    }
-  });
-
-  return (
-    <>
-      <TransformControls ref={trans}>
-        <mesh {...props} ref={mesh}> </mesh>
-      </TransformControls>
-    </>
-  );
-}
 
 /**
  * Contains the Canvas, the Navbar, and the Panes.

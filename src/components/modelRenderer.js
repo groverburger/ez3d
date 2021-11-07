@@ -5,7 +5,6 @@ import { Controls } from 'react-three-gui';
 import { Navbar, Nav } from 'react-bootstrap';
 import {
   ShapeContext,
-  SelectedShapeContext,
   GridContext,
   TransformContext,
   TransformDragContext
@@ -16,7 +15,6 @@ export default function ModelRenderer(props) {
   const mesh = useRef();
 
   const [transform, setTransform] = useContext(TransformContext);
-  const [selectedShapes, setSelectedShapes] = useContext(SelectedShapeContext);
 
   // Get the useState for the transformDrag global variable
   const setTransformDrag = useContext(TransformDragContext);
@@ -24,6 +22,8 @@ export default function ModelRenderer(props) {
   useEffect(() => {
     if (trans.current) {
       const controls = trans.current;
+      
+      
 
       if (!transform) {
         controls.mode = 'translate';
@@ -59,29 +59,24 @@ export default function ModelRenderer(props) {
       }
 
       // When dragging on TransformControls, set transformDrag to true.
-      const dragChange = (event) => {
+      const callback = (event) => {
         setTransformDrag(event.value);
       }
 
-      controls.addEventListener('dragging-changed', dragChange);
+      controls.addEventListener('dragging-changed', callback);
       document.addEventListener('keydown', handleKeyDown);
       return () => {
-        controls.removeEventListener('dragging-changed', dragChange);
+        controls.removeEventListener('dragging-changed', callback);
         document.removeEventListener('keydown', handleKeyDown);
       }
     }
   });
 
-  const select = (object) => {
-    console.log(object)
-  }
-
   return (
     <>
       <TransformControls ref={trans}>
-        <mesh {...props} ref={mesh} onPointerDown={select}> </mesh>
+        <mesh {...props} ref={mesh}> </mesh>
       </TransformControls>
     </>
   );
 }
-
