@@ -13,13 +13,21 @@ import create from 'zustand';
  *            https://codesandbox.io/s/mixing-controls-forked-is5sv?file=/src/App.js
  *            https://github.com/pmndrs/zustand
  */
-export const GridContext = createContext(false);
+export const GridContext = createContext(true);
 export const LightContext = createContext({});
 export const ShapeContext = createContext({});
 export const RangeContext = createContext(100);
 export const TransformContext = createContext('');
 
-export const useStore = create((set) => ({
-  target: null,
-  setTarget: (target) => set({ target }),
+export const useTransform = create((set) => ({
+  targetToTransform: null,
+  setTargetToTransform: (targetToTransform) => set({ targetToTransform }),
+}));
+
+export const useLight = create((set) => ({
+  targetLight: null,
+  setTargetLight: (targetLight) => set({ targetLight }),
+
+  intensity: 1,
+  setIntensity: (intensity) => set({ intensity }),
 }));

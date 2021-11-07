@@ -1,36 +1,29 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useHelper } from '@react-three/drei';
 import { DirectionalLightHelper, PointLightHelper } from 'three';
-import { RangeContext, LightContext, useStore } from './context';
+import { useTransform, useLight } from './context';
 
 export const AmbientLight = (props) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
-  const rangeValue = useContext(RangeContext);
-  const [range, setRange] = rangeValue;
-
-  const lightRef = useRef();
-
-  useEffect(() => {
-    if (lightRef.current) {
-      const light = lightRef.current;
-      console.log(light);
-
-      light.intensity = range / 100;
-    }
-  });
+  const setTargetLight = useLight((state) => state.setTargetLight);
+  const setIntensity = useLight((state) => state.setIntensity);
 
   return (
     <mesh
       scale={[0.1, 0.1, 0.1]}
       position={[0, 2, 0]}
-      onClick={() => handleLightClick(props.type)}
+      onClick={(event) => {
+        setTargetLight(event.object.children[0]);
+        setIntensity(event.object.children[0].intensity);
+        handleLightClick(props.type);
+      }}
       onPointerMissed={() => handleWindowClose(props.type)}
     >
       <sphereBufferGeometry attach='geometry' />
-      <meshLambertMaterial attach='material' {...props.properties.color} />
-      <ambientLight {...props.properties} ref={lightRef} />
+      <meshLambertMaterial attach='material' color='white' />
+      <ambientLight {...props.positions} color='white' />
     </mesh>
   );
 };
@@ -39,41 +32,30 @@ export const DirectionalLight = (props) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
-  const setTarget = useStore((state) => state.setTarget);
-
-  const rangeValue = useContext(RangeContext);
-  const [range, setRange] = rangeValue;
+  const setTargetToTransform = useTransform(
+    (state) => state.setTargetToTransform
+  );
+  const setTargetLight = useLight((state) => state.setTargetLight);
+  const setIntensity = useLight((state) => state.setIntensity);
 
   const lightRef = useRef();
   useHelper(lightRef, DirectionalLightHelper, 5);
-
-  useEffect(() => {
-    if (lightRef.current) {
-      const light = lightRef.current;
-
-      console.log(light);
-
-      light.intensity = range / 100;
-    }
-  });
 
   return (
     <mesh
       scale={[0.1, 0.1, 0.1]}
       position={[0, 2, 0]}
       onClick={(event) => {
-        setTarget(event.object);
+        setTargetToTransform(event.object);
+        setTargetLight(event.object.children[0]);
+        setIntensity(event.object.children[0].intensity);
         handleLightClick(props.type);
       }}
       onPointerMissed={() => handleWindowClose(props.type)}
     >
       <sphereBufferGeometry attach='geometry' />
-      <meshLambertMaterial attach='material' {...props.properties.color} />
-      <directionalLight
-        {...props.properties}
-        position={[0, -2.5, 0]}
-        ref={lightRef}
-      />
+      <meshLambertMaterial attach='material' color='white' />
+      <directionalLight {...props.positions} color='white' ref={lightRef} />
     </mesh>
   );
 };
@@ -82,37 +64,30 @@ export const PointLight = (props) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
-  const setTarget = useStore((state) => state.setTarget);
-
-  const rangeValue = useContext(RangeContext);
-  const [range, setRange] = rangeValue;
+  const setTargetToTransform = useTransform(
+    (state) => state.setTargetToTransform
+  );
+  const setTargetLight = useLight((state) => state.setTargetLight);
+  const setIntensity = useLight((state) => state.setIntensity);
 
   const lightRef = useRef();
   useHelper(lightRef, PointLightHelper, 5);
-
-  useEffect(() => {
-    if (lightRef.current) {
-      const light = lightRef.current;
-
-      console.log(light);
-
-      light.intensity = range / 100;
-    }
-  });
 
   return (
     <mesh
       scale={[0.1, 0.1, 0.1]}
       position={[0, 2, 0]}
       onClick={(event) => {
-        setTarget(event.object);
+        setTargetToTransform(event.object);
+        setTargetLight(event.object.children[0]);
+        setIntensity(event.object.children[0].intensity);
         handleLightClick(props.type);
       }}
       onPointerMissed={() => handleWindowClose(props.type)}
     >
       <sphereBufferGeometry attach='geometry' />
-      <meshLambertMaterial attach='material' {...props.properties.color} />
-      <pointLight {...props.properties} position={[0, 0, 0]} ref={lightRef} />
+      <meshLambertMaterial attach='material' color='white' />
+      <pointLight {...props.positions} color='white' ref={lightRef} />
     </mesh>
   );
 };

@@ -6,10 +6,9 @@ import { Navbar, Nav } from 'react-bootstrap';
 import {
   GridContext,
   LightContext,
-  RangeContext,
   ShapeContext,
   TransformContext,
-  useStore,
+  useTransform,
 } from './components/context';
 
 import {
@@ -106,13 +105,15 @@ function Controls(props) {
  */
 function ModelRenderer(props) {
   const mesh = useRef();
-  const setTarget = useStore((state) => state.setTarget);
+  const setTargetToTransform = useTransform(
+    (state) => state.setTargetToTransform
+  );
 
   return (
     <>
       <mesh
         {...props.positions}
-        onClick={(event) => setTarget(event.object)}
+        onClick={(event) => setTargetToTransform(event.object)}
         ref={mesh}
       >
         {props.mesh === 'box' ? (
@@ -144,9 +145,6 @@ function LightRenderer(props) {
   const lightValue = useContext(LightContext);
   const setLights = lightValue;
 
-  const rangeValue = useContext(RangeContext);
-  const [range, setRange] = rangeValue;
-
   const handleLightClick = (type) => {
     setLights((prevLights) => {
       return { ...prevLights, type: type, window: true };
@@ -161,37 +159,35 @@ function LightRenderer(props) {
 
   return (
     <>
-      <RangeContext.Provider value={[range, setRange]}>
-        {props.type === 'ambient' ? (
-          <>
-            <AmbientLight
-              {...props}
-              onClick={() => handleLightClick(props.type)}
-              onClose={() => handleWindowClose(props.type)}
-            />
-          </>
-        ) : null}
+      {props.type === 'ambient' ? (
+        <>
+          <AmbientLight
+            {...props}
+            onClick={() => handleLightClick(props.type)}
+            onClose={() => handleWindowClose(props.type)}
+          />
+        </>
+      ) : null}
 
-        {props.type === 'directional' ? (
-          <>
-            <DirectionalLight
-              {...props}
-              onClick={() => handleLightClick(props.type)}
-              onClose={() => handleWindowClose(props.type)}
-            />
-          </>
-        ) : null}
+      {props.type === 'directional' ? (
+        <>
+          <DirectionalLight
+            {...props}
+            onClick={() => handleLightClick(props.type)}
+            onClose={() => handleWindowClose(props.type)}
+          />
+        </>
+      ) : null}
 
-        {props.type === 'point' ? (
-          <>
-            <PointLight
-              {...props}
-              onClick={() => handleLightClick(props.type)}
-              onClose={() => handleWindowClose(props.type)}
-            />
-          </>
-        ) : null}
-      </RangeContext.Provider>
+      {props.type === 'point' ? (
+        <>
+          <PointLight
+            {...props}
+            onClick={() => handleLightClick(props.type)}
+            onClose={() => handleWindowClose(props.type)}
+          />
+        </>
+      ) : null}
     </>
   );
 }
@@ -235,9 +231,8 @@ export default function App() {
     type: '',
     window: false,
   });
-  const [range, setRange] = useState(100);
 
-  const { target } = useStore();
+  const { targetToTransform } = useTransform();
 
   return (
     <>
@@ -303,11 +298,11 @@ export default function App() {
              *  Contains global variables for transform and transformDrag.
              */}
             <TransformContext.Provider value={[transform, setTransform]}>
-              {target && <Controls object={target} />}
+              {targetToTransform && <Controls object={targetToTransform} />}
 
               {shapes.boxes.map((positions) => (
                 <ModelRenderer
-                  key='{positions}'
+                  key='{box}'
                   positions={{ ...positions }}
                   mesh='box'
                 />
@@ -315,7 +310,7 @@ export default function App() {
 
               {shapes.cylinders.map((positions) => (
                 <ModelRenderer
-                  key='{positions}'
+                  key='{cylinder}'
                   positions={{ ...positions }}
                   mesh='cylinder'
                 />
@@ -323,48 +318,46 @@ export default function App() {
 
               {shapes.spheres.map((positions) => (
                 <ModelRenderer
-                  key='{positions}'
+                  key='{sphere}'
                   positions={{ ...positions }}
                   mesh='sphere'
                 />
               ))}
             </TransformContext.Provider>
 
-            <RangeContext.Provider value={[range, setRange]}>
-              <LightContext.Provider value={setLights}>
-                {lights.ambient.map((properties) => (
-                  <LightRenderer
-                    key='{properties}'
-                    properties={{ ...properties }}
-                    type='ambient'
-                  />
-                ))}
+            <LightContext.Provider value={setLights}>
+              {lights.ambient.map((positions) => (
+                <LightRenderer
+                  key='{ambient}'
+                  positions={{ ...positions }}
+                  type='ambient'
+                />
+              ))}
 
-                {lights.directional.map((properties) => (
-                  <LightRenderer
-                    key='{properties}'
-                    properties={{ ...properties }}
-                    type='directional'
-                  />
-                ))}
+              {lights.directional.map((positions) => (
+                <LightRenderer
+                  key='{directional}'
+                  positions={{ ...positions }}
+                  type='directional'
+                />
+              ))}
 
-                {lights.point.map((properties) => (
-                  <LightRenderer
-                    key='{properties}'
-                    properties={{ ...properties }}
-                    type='point'
-                  />
-                ))}
-              </LightContext.Provider>
-            </RangeContext.Provider>
+              {lights.point.map((positions) => (
+                <LightRenderer
+                  key='{point}'
+                  positions={{ ...positions }}
+                  type='point'
+                />
+              ))}
+            </LightContext.Provider>
 
-            {/* If grid is true, add the grid onto the canvas. Else, do not put anything into the canvas. */}
-            {grid ? (
+            {/* If grid is true, add the grid onto the canvas. */}
+            {grid && (
               <gridHelper
                 position={[0, -0.51, 0]}
                 args={[100, 100, '#89898e', '#adadb4']}
               />
-            ) : null}
+            )}
           </Canvas>
         </Pane>
 
@@ -394,11 +387,9 @@ export default function App() {
             {/* Bottom Pane */}
             <Pane className='scene-window-pane'>
               <LightContext.Provider value={lights}>
-                <RangeContext.Provider value={[range, setRange]}>
-                  <GridContext.Provider value={setGrid}>
-                    {lights.window ? <LightWindow /> : <SceneWindow />}
-                  </GridContext.Provider>
-                </RangeContext.Provider>
+                <GridContext.Provider value={setGrid}>
+                  {lights.window ? <LightWindow /> : <SceneWindow />}
+                </GridContext.Provider>
               </LightContext.Provider>
             </Pane>
           </SplitPane>

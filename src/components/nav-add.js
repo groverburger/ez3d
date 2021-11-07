@@ -109,10 +109,7 @@ export default function NavAdd() {
   function generateNewLight(event) {
     switch (event.target.innerHTML) {
       case 'Ambient Light':
-        const newAmbient = {
-          intensity: 1,
-          color: 'white',
-        };
+        const newAmbient = { position: [0, 0, 0] };
 
         setLights((prevLights) => {
           prevLights.ambient.push(newAmbient);
@@ -121,10 +118,7 @@ export default function NavAdd() {
         break;
 
       case 'Directional Light':
-        const newDirectional = {
-          intensity: 1,
-          color: 'white',
-        };
+        const newDirectional = { position: [0, -2.5, 0] };
 
         setLights((prevLights) => {
           prevLights.directional.push(newDirectional);
@@ -133,10 +127,7 @@ export default function NavAdd() {
         break;
 
       case 'Point Light':
-        const newPoint = {
-          intensity: 1,
-          color: 'white',
-        };
+        const newPoint = { position: [0, 0, 0] };
 
         setLights((prevLights) => {
           prevLights.point.push(newPoint);

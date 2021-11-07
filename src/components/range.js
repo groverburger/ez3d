@@ -1,24 +1,28 @@
-import React, { useContext } from 'react';
-import { RangeContext } from './context';
+import React from 'react';
+import { useLight } from './context';
 
 import './range.css';
 
 export default function Range() {
-  const value = useContext(RangeContext);
-  const [range, setRange] = value;
+  const { targetLight, intensity, setIntensity } = useLight();
+
+  const handleRangeChange = (event) => {
+    targetLight.intensity = event.target.value / 100;
+    setIntensity(targetLight.intensity);
+  };
 
   return (
     <div className='range-container'>
       <div className='slider-value'>
-        <span>{`${range}%`}</span>
+        <span>{`${Math.floor(intensity * 100)}%`}</span>
       </div>
       <div className='field'>
         <input
           type='range'
           min='0'
           max='100'
-          defaultValue={range}
-          onChange={(event) => setRange(event.target.value)}
+          defaultValue={Math.floor(intensity * 100)}
+          onChange={(event) => handleRangeChange(event)}
           steps='1'
         />
       </div>
