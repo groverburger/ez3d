@@ -27,6 +27,7 @@ export default function NavAdd() {
       geometry: new THREE.BufferGeometry(),
       material: new THREE.MeshBasicMaterial({ color: 0x4488ff }),
       vertices: vertices,
+      uuid: Math.random(),
     }
     modelData.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     modelData.data = modelData

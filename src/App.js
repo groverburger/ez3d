@@ -20,12 +20,10 @@ function ModelRenderer(props) {
   const trans = useRef();
   const mesh = useRef();
 
-  const value = useContext(TransformContext);
-  const [transform, setTransform] = value;
+  const [transform, setTransform] = useContext(TransformContext);
 
   // Get the useState for the transformDrag global variable
-  const dragValue = useContext(TransformDragContext);
-  const setTransformDrag = dragValue;
+  const setTransformDrag = useContext(TransformDragContext);
 
   useEffect(() => {
     if (trans.current) {
@@ -202,7 +200,7 @@ export default function App() {
                 {!transformDrag ? (<OrbitControls ref={orbitControl}/>) : null}
 
                 {shapes.models.map((props) => (
-                  <ModelRenderer key='{props}' {...props}/>
+                  <ModelRenderer key={props.uuid} {...props}/>
                 ))}
               </TransformContext.Provider>
             </TransformDragContext.Provider>
