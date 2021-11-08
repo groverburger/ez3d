@@ -1,0 +1,40 @@
+.object-list-pane {
+  overflow-y: auto;
+}
+
+.object-list-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.object-list-title {
+  margin: 2rem;
+  margin-bottom: 1.5rem;
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.object-list-items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.object-list-items:hover {
+  background-color: #f1f1f3;
+}
+
+.camera {
+  width: 3.5rem;
+  border: 1px solid #d1d1d6;
+}
+
+.camera:focus {
+  outline-color: #d1d1d6;
+}
+

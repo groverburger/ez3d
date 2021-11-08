@@ -13,6 +13,8 @@ import Outliner from './components/outliner';
 import Toolbar from './components/toolbar';
 import ModelRenderer from './components/modelRenderer';
 import ModelControls from './components/modelControls';
+import ObjectList from './components/object-list';
+import ViewCube from './components/viewcube';
 
 import './App.css';
 import './components/navbar.css';
@@ -58,6 +60,7 @@ export default class App extends React.Component {
             <Toolbar owner={this}/>
 
             <Canvas className='canvas' camera={{position: [3, 3, 3]}}>
+              <ViewCube/>
               <ambientLight intensity={0.5} />
               <spotLight position={[0, 5, 10]} angle={0.3} />
               <fog attach='fog' args={['#dddde0', 10, 40]} />
@@ -70,7 +73,9 @@ export default class App extends React.Component {
 
           <Pane className='pane-outliner' initialSize='350px' minSize='250px' maxSize='350px' >
             <SplitPane className='splitpane' split='horizontal'>
-              <Pane className='pane-outliner' initialSize='350px' minSize='250px'/>
+              <Pane className='pane-outliner' initialSize='350px' minSize='250px'>
+                <ObjectList owner={this}/>
+              </Pane>
 
               <Pane>
                 <Outliner owner={this}/>
