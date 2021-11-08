@@ -14,6 +14,7 @@ export default function NavAdd(props) {
       uuid: Math.random(),
     }
     modelData.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    modelData.geometry.computeVertexNormals()
     modelData.data = modelData
 
     // this is a hack, we're currently not calling setState and instead forcing an update manually

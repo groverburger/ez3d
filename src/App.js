@@ -64,8 +64,7 @@ export default class App extends React.Component {
               <ambientLight intensity={0.5} />
               <spotLight position={[0, 5, 10]} angle={0.3} />
               <fog attach='fog' args={['#dddde0', 10, 40]} />
-              {this.state.selected && this.state.selected.type == "model" && <ModelControls owner={this} object={this.state.selected.object}/>}
-              {!this.state.selected && <OrbitControls/>}
+              {this.state.selected ? <ModelControls owner={this}/> : <OrbitControls/>}
               {this.state.models.map(data => <ModelRenderer owner={this} key={data.uuid} {...data}/>)}
               {this.state.showGrid && <gridHelper position={[0, -0.5, 0]} args={[100, 100, '#89898e', '#adadb4']}/>}
             </Canvas>

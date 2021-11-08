@@ -42,5 +42,5 @@ export default function ModelControls(props) {
     return () => { document.removeEventListener("keydown", handleKeyDown) }
   })
 
-  return <TransformControls size={0.4} object={props.object} ref={transformRef}/>
+  return <TransformControls size={0.4} object={props.owner.state.selected} ref={transformRef}/>
 }
