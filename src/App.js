@@ -27,13 +27,13 @@ export default class App extends React.Component {
     this.state = {
       showGrid: true,
       models: [],
-      selectedModel: null,
+      selected: null,
       selectionMode: "translate",
     }
 
     // pressing space deselects model, for debug purposes
     document.addEventListener("keydown", event => {
-      if (event.key == " ") this.setState({selectedModel: null})
+      if (event.key == " ") this.setState({selected: null})
     })
   }
 
@@ -61,7 +61,8 @@ export default class App extends React.Component {
               <ambientLight intensity={0.5} />
               <spotLight position={[0, 5, 10]} angle={0.3} />
               <fog attach='fog' args={['#dddde0', 10, 40]} />
-              {this.state.selectedModel ? <ModelControls owner={this} object={this.state.selectedModel}/> : <OrbitControls/>}
+              {this.state.selected && this.state.selected.type == "model" && <ModelControls owner={this} object={this.state.selected.object}/>}
+              {!this.state.selected && <OrbitControls/>}
               {this.state.models.map(data => <ModelRenderer owner={this} key={data.uuid} {...data}/>)}
               {this.state.showGrid && <gridHelper position={[0, -0.5, 0]} args={[100, 100, '#89898e', '#adadb4']}/>}
             </Canvas>

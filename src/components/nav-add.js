@@ -10,7 +10,6 @@ export default function NavAdd(props) {
     const modelData = {
       position: [0,0,0],
       geometry: new THREE.BufferGeometry(),
-      material: new THREE.MeshBasicMaterial({ color: 0x4488ff }),
       vertices: vertices,
       uuid: Math.random(),
     }
