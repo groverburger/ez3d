@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 
-import './navbar.css';
+import '../styles/navbar.css';
 
 export default function NavEdit() {
   return (
@@ -12,7 +12,8 @@ export default function NavEdit() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-          }}>
+          }}
+        >
           <div style={{ margin: '0' }}>Undo</div>
           <div style={{ margin: '0', color: '#4f4f4f4f' }}>Ctrl + Z</div>
         </NavDropdown.Item>
@@ -22,7 +23,8 @@ export default function NavEdit() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-          }}>
+          }}
+        >
           <div style={{ margin: '0' }}>Redo</div>
           <div style={{ margin: '0', color: '#4f4f4f4f' }}>Ctrl + Y</div>
         </NavDropdown.Item>
@@ -32,7 +34,8 @@ export default function NavEdit() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-          }}>
+          }}
+        >
           <div style={{ margin: '0' }}>Duplicate</div>
           <div style={{ margin: '0', color: '#4f4f4f4f' }}>Ctrl + D</div>
         </NavDropdown.Item>
@@ -42,7 +45,8 @@ export default function NavEdit() {
           style={{
             display: 'flex',
             justifyContent: 'space-between',
-          }}>
+          }}
+        >
           <div style={{ margin: '0' }}>Delete</div>
           <div style={{ margin: '0', color: '#4f4f4f4f' }}>Del</div>
         </NavDropdown.Item>

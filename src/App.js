@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, TransformControls } from '@react-three/drei';
+import { OrbitControls } from '@react-three/drei';
 import { Navbar, Nav } from 'react-bootstrap';
 
 import {
@@ -26,64 +26,11 @@ import LightWindow from './components/light-window';
 import SceneWindow from './components/scene-window';
 import ObjectList from './components/object-list';
 import Toolbar from './components/toolbar';
+import Controls from './components/controls';
+import Viewcube from './components/viewcube';
 
 import './App.css';
-import './components/navbar.css';
-
-function Controls(props) {
-  const value = useContext(TransformContext);
-  const [transform, setTransform] = value;
-
-  const transformRef = useRef();
-
-  useEffect(() => {
-    if (transformRef.current) {
-      const controls = transformRef.current;
-
-      if (!transform) {
-        controls.mode = 'translate';
-        setTransform(controls.mode);
-      } else {
-        controls.mode = transform;
-      }
-
-      const handleKeyDown = (event) => {
-        switch (event.key) {
-          case 'w':
-            controls.mode = 'translate';
-            setTransform(controls.mode);
-            break;
-
-          case 'e':
-            controls.mode = 'scale';
-            setTransform(controls.mode);
-            break;
-
-          case 'r':
-            controls.mode = 'rotate';
-            setTransform(controls.mode);
-            break;
-
-          case 't':
-            controls.visible = !controls.visible;
-            break;
-
-          default:
-            break;
-        }
-      };
-
-      document.addEventListener('keydown', handleKeyDown);
-      return () => {
-        document.removeEventListener('keydown', handleKeyDown);
-      };
-    }
-  });
-
-  return (
-    <TransformControls size={0.4} object={props.object} ref={transformRef} />
-  );
-}
+import './styles/navbar.css';
 
 /**
  * Edited by Ruiyang
@@ -285,6 +232,8 @@ export default function App() {
           </TransformContext.Provider>
 
           <Canvas className='canvas' camera={{ position: [3, 3, 3] }}>
+            <Viewcube />
+
             <ambientLight intensity={0.5} />
             <spotLight position={[0, 5, 10]} angle={0.3} />
             <fog attach='fog' args={['#dddde0', 10, 40]} />

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 
-import './navbar.css';
+import '../styles/navbar.css';
 
 export default function NavFile() {
   return (

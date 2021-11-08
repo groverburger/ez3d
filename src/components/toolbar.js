@@ -5,7 +5,7 @@ import { ReactComponent as ScaleIcon } from '../icons/scale.svg';
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { TransformContext } from './context';
 
-import './toolbar.css';
+import '../styles/toolbar.css';
 
 export default function Toolbar() {
   const icons = {
@@ -28,7 +28,8 @@ export default function Toolbar() {
             active={transform === type}
             onClick={() => {
               setTransform(type);
-            }}>
+            }}
+          >
             {icons[type]}
           </Button>
         ))}

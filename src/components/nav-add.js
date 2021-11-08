@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import { ShapeContext, LightContext } from './context';
 
-import './navbar.css';
+import '../styles/navbar.css';
 
 /**
  * Contains the functionality for the Add dropdown. We use the saved state value of the generated shapes and add

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { ShapeContext } from './context';
 
-import './object-list.css';
+import '../styles/object-list.css';
 
 /* ObjectList populates the top pane of the outliner with a list of Meshes in the scene. The saved state value is
  * an object of arrays that holds all the positions for any generated shape. Each array corresponds to their

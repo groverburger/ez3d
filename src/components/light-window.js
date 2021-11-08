@@ -3,7 +3,7 @@ import { LightContext } from './context';
 
 import Range from './range';
 
-import './light-window.css';
+import '../styles/light-window.css';
 
 export default function LightWindow() {
   const lightValue = useContext(LightContext);

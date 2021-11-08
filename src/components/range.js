@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLight } from './context';
 
-import './range.css';
+import '../styles/range.css';
 
 export default function Range() {
   const { targetLight, intensity, setIntensity } = useLight();

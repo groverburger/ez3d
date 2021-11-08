@@ -3,7 +3,7 @@ import { GridContext } from './context';
 
 import Toggle from './toggle';
 
-import './scene-window.css';
+import '../styles/scene-window.css';
 
 export default function SceneWindow() {
   const value = useContext(GridContext);
