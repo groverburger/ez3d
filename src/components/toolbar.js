@@ -14,8 +14,7 @@ export default function Toolbar() {
     'rotate': <RotateIcon />,
   };
   
-  const value = useContext(TransformContext);
-  const [transform, setTransform] = value;
+  const [transform, setTransform] = useContext(TransformContext);
   const select = ['translate', 'scale', 'rotate'];
 
   return (

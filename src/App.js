@@ -3,7 +3,13 @@ import { Canvas } from '@react-three/fiber';
 import { OrbitControls, TransformControls } from '@react-three/drei';
 import { Controls } from 'react-three-gui';
 import { Navbar, Nav } from 'react-bootstrap';
-import { ShapeContext, GridContext, TransformContext, TransformDragContext } from './components/context';
+import {
+  ShapeContext,
+  SelectedShapeContext,
+  GridContext,
+  TransformContext,
+  TransformDragContext
+} from './components/context';
 
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane';
@@ -49,11 +55,9 @@ export default function App() {
   const [grid, setGrid] = useState(true);
   const [transform, setTransform] = useState('');
   const [transformDrag, setTransformDrag] = useState(false); 
-  const [shapes, setShapes] = useState({
-    models: [],
-  });
   const orbitControl = useRef();
-  
+  const [shapes, setShapes] = useState({models: []});
+  const [selectedShapes, setSelectedShapes] = useState({models: []});
 
   return (
     <>
@@ -127,11 +131,13 @@ export default function App() {
               */}
             <TransformDragContext.Provider value={setTransformDrag}>
               <TransformContext.Provider value={[transform, setTransform]}>
-                {!transformDrag ? (<OrbitControls ref={orbitControl}/>) : null}
+                <SelectedShapeContext.Provider value={[selectedShapes, setSelectedShapes]}>
+                  {!transformDrag ? (<OrbitControls ref={orbitControl}/>) : null}
 
-                {shapes.models.map((props) => (
-                  <ModelRenderer key={props.uuid} {...props}/>
-                ))}
+                  {shapes.models.map((props) => (
+                    <ModelRenderer key={props.uuid} {...props}/>
+                  ))}
+                </SelectedShapeContext.Provider>
               </TransformContext.Provider>
             </TransformDragContext.Provider>
 

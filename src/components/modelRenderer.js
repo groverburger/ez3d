@@ -5,6 +5,7 @@ import { Controls } from 'react-three-gui';
 import { Navbar, Nav } from 'react-bootstrap';
 import {
   ShapeContext,
+  SelectedShapeContext,
   GridContext,
   TransformContext,
   TransformDragContext
@@ -15,6 +16,7 @@ export default function ModelRenderer(props) {
   const mesh = useRef();
 
   const [transform, setTransform] = useContext(TransformContext);
+  const [selectedShapes, setSelectedShapes] = useContext(SelectedShapeContext);
 
   // Get the useState for the transformDrag global variable
   const setTransformDrag = useContext(TransformDragContext);
@@ -23,8 +25,6 @@ export default function ModelRenderer(props) {
     if (trans.current) {
       const controls = trans.current;
       
-      
-
       if (!transform) {
         controls.mode = 'translate';
         setTransform(controls.mode);
@@ -49,10 +49,6 @@ export default function ModelRenderer(props) {
             setTransform(controls.mode);
             break;
 
-          case 't':
-            trans.current.visible = !trans.current.visible;
-            break;
-
           default:
             break;
         }
@@ -72,11 +68,39 @@ export default function ModelRenderer(props) {
     }
   });
 
+  const select = () => {
+    setSelectedShapes(selectedShapes => {
+      selectedShapes.models = [props]
+      console.log("select")
+      return selectedShapes
+    })
+  }
+
+  const render = () => {
+    console.log("render")
+    return (
+      <mesh {...props} ref={mesh} onPointerDown={select}> </mesh>
+    )
+  }
+
+  const renderWithControls = () => {
+    console.log("with controls")
+    return (
+      <TransformControls ref={trans}>
+        {render()}
+      </TransformControls>
+    )
+  }
+
   return (
     <>
-      <TransformControls ref={trans}>
-        <mesh {...props} ref={mesh}> </mesh>
-      </TransformControls>
+      {(() => {
+        if (selectedShapes.models[0] == props) {
+          return renderWithControls()
+        } else {
+          return render()
+        }
+      })()}
     </>
-  );
+  )
 }

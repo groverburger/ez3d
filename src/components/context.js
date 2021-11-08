@@ -14,5 +14,6 @@ import { createContext } from 'react';
  */
 export const GridContext = createContext(false);
 export const ShapeContext = createContext({});
+export const SelectedShapeContext = createContext({});
 export const TransformContext = createContext('');
 export const TransformDragContext = createContext(false);
