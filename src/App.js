@@ -17,6 +17,9 @@ import ModelControls from './components/modelControls';
 import './App.css';
 import './components/navbar.css';
 
+// App is a now a class so that it can store its own data in one convenient place
+// now we can pass around references to the App to access its own data
+
 export default class App extends React.Component {
   constructor(props) {
     super(props)
@@ -24,13 +27,13 @@ export default class App extends React.Component {
     this.state = {
       showGrid: true,
       models: [],
-      selectedModels: [],
+      selectedModel: null,
       selectionMode: "translate",
     }
 
-    // pressing space gets rid of all the selected models, for debug purposes
+    // pressing space deselects model, for debug purposes
     document.addEventListener("keydown", event => {
-      if (event.key == " ") this.setState({selectedModels: []})
+      if (event.key == " ") this.setState({selectedModel: null})
     })
   }
 
@@ -54,13 +57,11 @@ export default class App extends React.Component {
           <Pane className='pane-canvas'>
             <Toolbar owner={this}/>
 
-            <Canvas className='canvas' camera={{ position: [3, 3, 3] }} id="theCanvas">
+            <Canvas className='canvas' camera={{position: [3, 3, 3]}}>
               <ambientLight intensity={0.5} />
               <spotLight position={[0, 5, 10]} angle={0.3} />
               <fog attach='fog' args={['#dddde0', 10, 40]} />
-              {console.log(this.state.selectedModels)}
-              {this.state.selectedModels.length == 0 && <OrbitControls/>}
-              {this.state.selectedModels.map(object => <ModelControls owner={this} object={object}/>)}
+              {this.state.selectedModel ? <ModelControls owner={this} object={this.state.selectedModel}/> : <OrbitControls/>}
               {this.state.models.map(data => <ModelRenderer owner={this} key={data.uuid} {...data}/>)}
               {this.state.showGrid && <gridHelper position={[0, -0.5, 0]} args={[100, 100, '#89898e', '#adadb4']}/>}
             </Canvas>

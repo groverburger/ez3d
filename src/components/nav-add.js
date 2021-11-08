@@ -4,20 +4,8 @@ import * as THREE from 'three';
 
 import './navbar.css';
 
-/**
- * Contains the functionality for the Add dropdown. We use the saved state value of the generated
- * shapes and add onto that when generating a new shape. The saved state value is an object of
- * arrays that holds all the positions for any generated shape. Each array corresponds to their
- * respective shape. For more information, look at shapes and setShapes in App.js and ShapeContext
- * in context.js.
- *
- * Reference: https://stackoverflow.com/questions/66727049/exporting-a-state-from-hook-function-to-another-component
- *            https://tyrannosaurustech.com/blog/global-state-management-with-react-hooks-and-context/
- *            https://stackoverflow.com/questions/58451029/usestate-object-set
- *            https://stackoverflow.com/questions/60305746/how-do-i-update-an-object-state-in-react-via-hooks
- */
 export default function NavAdd(props) {
-  // adds a new model to the scene with the specified vertices
+  // adds a new model to the App's models list with the specified vertices
   const addModel = vertices => {
     const modelData = {
       position: [0,0,0],
@@ -29,7 +17,7 @@ export default function NavAdd(props) {
     modelData.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     modelData.data = modelData
 
-    // NOTE this is unsafe, not calling setState and instead forcing an update manually
+    // this is a hack, we're currently not calling setState and instead forcing an update manually
     props.owner.state.models.push(modelData)
     props.owner.forceUpdate()
   }
