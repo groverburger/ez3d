@@ -11,7 +11,8 @@ import NavEdit from './components/nav-edit';
 import NavAdd from './components/nav-add';
 import Outliner from './components/outliner';
 import Toolbar from './components/toolbar';
-import MeshRenderer from './components/modelRenderer';
+import ModelRenderer from './components/modelRenderer';
+import ModelControls from './components/modelControls';
 
 import './App.css';
 import './components/navbar.css';
@@ -26,6 +27,11 @@ export default class App extends React.Component {
       selectedModels: [],
       selectionMode: "translate",
     }
+
+    // pressing space gets rid of all the selected models, for debug purposes
+    document.addEventListener("keydown", event => {
+      if (event.key == " ") this.setState({selectedModels: []})
+    })
   }
 
   render() {
@@ -52,9 +58,11 @@ export default class App extends React.Component {
               <ambientLight intensity={0.5} />
               <spotLight position={[0, 5, 10]} angle={0.3} />
               <fog attach='fog' args={['#dddde0', 10, 40]} />
+              {console.log(this.state.selectedModels)}
               {this.state.selectedModels.length == 0 && <OrbitControls/>}
-              {this.state.models.map(data => <MeshRenderer owner={this} key={data.uuid} {...data}/>)}
-              {this.state.showGrid && <gridHelper position={[0, -0.51, 0]} args={[100, 100, '#89898e', '#adadb4']}/>}
+              {this.state.selectedModels.map(object => <ModelControls owner={this} object={object}/>)}
+              {this.state.models.map(data => <ModelRenderer owner={this} key={data.uuid} {...data}/>)}
+              {this.state.showGrid && <gridHelper position={[0, -0.5, 0]} args={[100, 100, '#89898e', '#adadb4']}/>}
             </Canvas>
           </Pane>
 
