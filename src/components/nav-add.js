@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
-import { ShapeContext } from './context';
 import * as THREE from 'three';
 
 import './navbar.css';
@@ -17,11 +16,9 @@ import './navbar.css';
  *            https://stackoverflow.com/questions/58451029/usestate-object-set
  *            https://stackoverflow.com/questions/60305746/how-do-i-update-an-object-state-in-react-via-hooks
  */
-export default function NavAdd() {
-  const [shapes, setShapes] = useContext(ShapeContext);
-
+export default function NavAdd(props) {
   // adds a new model to the scene with the specified vertices
-  const addModel = (vertices) => {
+  const addModel = vertices => {
     const modelData = {
       position: [0,0,0],
       geometry: new THREE.BufferGeometry(),
@@ -32,10 +29,9 @@ export default function NavAdd() {
     modelData.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     modelData.data = modelData
 
-    setShapes((shapes) => {
-      shapes.models.push(modelData)
-      return {models: shapes.models}
-    })
+    // NOTE this is unsafe, not calling setState and instead forcing an update manually
+    props.owner.state.models.push(modelData)
+    props.owner.forceUpdate()
   }
 
   return (

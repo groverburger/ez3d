@@ -1,32 +1,39 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { ReactComponent as TranslateIcon } from '../icons/translate.svg';
 import { ReactComponent as RotateIcon } from '../icons/rotate.svg';
 import { ReactComponent as ScaleIcon } from '../icons/scale.svg';
 import { ButtonGroup, Button } from 'react-bootstrap';
-import { TransformContext } from './context';
 
 import './toolbar.css';
 
-export default function Toolbar() {
-  const icons = {
-    'translate': <TranslateIcon />,
-    'scale': <ScaleIcon />,
-    'rotate': <RotateIcon />,
-  };
-  
-  const [transform, setTransform] = useContext(TransformContext);
-  const select = ['translate', 'scale', 'rotate'];
+const icons = {
+  'translate': <TranslateIcon/>,
+  'scale': <ScaleIcon/>,
+  'rotate': <RotateIcon/>,
+}
 
-  return (
-    <div className='toolbar'>
-      <ButtonGroup vertical>
-        {select.map(type => (
-          <Button className='btn-light toolbar-items' key={type} active={transform === type}
-          onClick={() => {
-            setTransform(type)
-          }}>{icons[type]}</Button>)
-        )}
-      </ButtonGroup>
-    </div>
-  );
+const select = ['translate', 'scale', 'rotate']
+
+export default class Toolbar extends React.Component {
+  constructor(props) {
+    super(props)
+    this.click = this.click.bind(this)
+  }
+
+  click() {
+  }
+
+  render() {
+    return (
+      <div className='toolbar'>
+        <ButtonGroup vertical>
+          {select.map(type => (
+            <Button className='btn-light toolbar-items' key={type} active={false} onClick={this.click}>
+              {icons[type]}
+            </Button>)
+          )}
+        </ButtonGroup>
+      </div>
+    )
+  }
 }
