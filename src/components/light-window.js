@@ -1,18 +1,14 @@
-import React, { useContext } from 'react';
-import { LightContext } from './context';
-
+import { useLight } from './context';
 import Range from './range';
-
 import '../styles/light-window.css';
 
 export default function LightWindow() {
-  const lightValue = useContext(LightContext);
-  const lights = lightValue;
+  const { windowInfo } = useLight();
 
   return (
     <>
       <div className='light-window-top'>
-        {lights.type === 'ambient' ? (
+        {windowInfo.lightType === 'ambient' ? (
           <>
             <label className='light-window-title'>Ambient Light</label>
             <div className='light-window-items'>
@@ -22,7 +18,7 @@ export default function LightWindow() {
           </>
         ) : null}
 
-        {lights.type === 'directional' ? (
+        {windowInfo.lightType === 'directional' ? (
           <>
             <label className='light-window-title'>Directional Light</label>
             <div className='light-window-items'>
@@ -32,7 +28,7 @@ export default function LightWindow() {
           </>
         ) : null}
 
-        {lights.type === 'point' ? (
+        {windowInfo.lightType === 'point' ? (
           <>
             <label className='light-window-title'>Point Light</label>
             <div className='light-window-items'>

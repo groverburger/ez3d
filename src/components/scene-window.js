@@ -1,13 +1,9 @@
-import React, { useContext } from 'react';
-import { GridContext } from './context';
-
+import { useGrid } from './context';
 import Toggle from './toggle';
-
 import '../styles/scene-window.css';
 
 export default function SceneWindow() {
-  const value = useContext(GridContext);
-  const setGrid = value;
+  const { setGrid } = useGrid();
 
   return (
     <>

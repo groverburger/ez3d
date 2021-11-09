@@ -1,6 +1,4 @@
-import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
-
 import '../styles/navbar.css';
 
 export default function NavEdit() {

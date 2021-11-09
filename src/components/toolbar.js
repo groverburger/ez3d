@@ -1,9 +1,8 @@
-import React, { useContext } from 'react';
 import { ReactComponent as TranslateIcon } from '../icons/translate.svg';
 import { ReactComponent as RotateIcon } from '../icons/rotate.svg';
 import { ReactComponent as ScaleIcon } from '../icons/scale.svg';
 import { ButtonGroup, Button } from 'react-bootstrap';
-import { TransformContext } from './context';
+import { useTransform } from './context';
 
 import '../styles/toolbar.css';
 
@@ -13,10 +12,9 @@ export default function Toolbar() {
     scale: <ScaleIcon />,
     rotate: <RotateIcon />,
   };
-
-  const value = useContext(TransformContext);
-  const [transform, setTransform] = value;
   const select = ['translate', 'scale', 'rotate'];
+
+  const { transformType, setTransformType } = useTransform();
 
   return (
     <div className='toolbar'>
@@ -25,9 +23,9 @@ export default function Toolbar() {
           <Button
             className='btn-light toolbar-items'
             key={type}
-            active={transform === type}
+            active={transformType === type}
             onClick={() => {
-              setTransform(type);
+              setTransformType(type);
             }}
           >
             {icons[type]}

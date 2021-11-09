@@ -1,6 +1,4 @@
-import React from 'react';
 import { useLight } from './context';
-
 import '../styles/range.css';
 
 export default function Range() {

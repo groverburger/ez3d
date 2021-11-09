@@ -7,8 +7,10 @@ export const AmbientLight = (props) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
-  const setTargetLight = useLight((state) => state.setTargetLight);
-  const setIntensity = useLight((state) => state.setIntensity);
+  const { setTargetLight, setIntensity } = useLight();
+
+  const propsCopy = Object.assign({}, props);
+  delete propsCopy.type;
 
   return (
     <mesh
@@ -23,7 +25,7 @@ export const AmbientLight = (props) => {
     >
       <sphereBufferGeometry attach='geometry' />
       <meshLambertMaterial attach='material' color='white' />
-      <ambientLight {...props.positions} color='white' />
+      <ambientLight {...propsCopy} color='white' />
     </mesh>
   );
 };
@@ -32,14 +34,14 @@ export const DirectionalLight = (props) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
-  const setTargetToTransform = useTransform(
-    (state) => state.setTargetToTransform
-  );
-  const setTargetLight = useLight((state) => state.setTargetLight);
-  const setIntensity = useLight((state) => state.setIntensity);
+  const { setTargetLight, setIntensity } = useLight();
+  const { setTargetToTransform } = useTransform();
 
   const lightRef = useRef();
   useHelper(lightRef, DirectionalLightHelper, 5);
+
+  const propsCopy = Object.assign({}, props);
+  delete propsCopy.type;
 
   return (
     <mesh
@@ -55,7 +57,7 @@ export const DirectionalLight = (props) => {
     >
       <sphereBufferGeometry attach='geometry' />
       <meshLambertMaterial attach='material' color='white' />
-      <directionalLight {...props.positions} color='white' ref={lightRef} />
+      <directionalLight {...propsCopy} color='white' ref={lightRef} />
     </mesh>
   );
 };
@@ -64,14 +66,14 @@ export const PointLight = (props) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
-  const setTargetToTransform = useTransform(
-    (state) => state.setTargetToTransform
-  );
-  const setTargetLight = useLight((state) => state.setTargetLight);
-  const setIntensity = useLight((state) => state.setIntensity);
+  const { setTargetLight, setIntensity } = useLight();
+  const { setTargetToTransform } = useTransform();
 
   const lightRef = useRef();
   useHelper(lightRef, PointLightHelper, 5);
+
+  const propsCopy = Object.assign({}, props);
+  delete propsCopy.type;
 
   return (
     <mesh
@@ -87,7 +89,7 @@ export const PointLight = (props) => {
     >
       <sphereBufferGeometry attach='geometry' />
       <meshLambertMaterial attach='material' color='white' />
-      <pointLight {...props.positions} color='white' ref={lightRef} />
+      <pointLight {...propsCopy} color='white' ref={lightRef} />
     </mesh>
   );
 };

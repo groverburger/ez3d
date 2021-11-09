@@ -1,6 +1,4 @@
-import React, { useContext } from 'react';
-import { ShapeContext } from './context';
-
+import { useModel } from './context';
 import '../styles/object-list.css';
 
 /* ObjectList populates the top pane of the outliner with a list of Meshes in the scene. The saved state value is
@@ -8,10 +6,9 @@ import '../styles/object-list.css';
  * respective shape. For more information, look at shapes and setShapes in App.js and ShapeContext in context.js.
  */
 export default function ObjectList() {
-  const value = useContext(ShapeContext);
-  const shapes = value;
-  var total =
-    shapes.boxes.length + shapes.cylinders.length + shapes.spheres.length;
+  const { modelList } = useModel();
+
+  var total = modelList.length;
   var objList = [];
   for (let i = 0; i < total; i++) {
     objList.push({ name: `Object ${i}` });
