@@ -16,6 +16,7 @@ export default function Toolbar() {
 
   const { transformType, setTransformType } = useTransform();
 
+  // When the button is clicked, setTransformType the type that the button represents
   return (
     <div className='toolbar'>
       <ButtonGroup vertical>

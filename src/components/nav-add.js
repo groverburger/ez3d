@@ -50,6 +50,7 @@ export default function NavAdd() {
     </div>
   );
 
+  // When generating a new shape, push an object containing the properties of the new shape to the model list
   function generateNewShape(event) {
     const totalModels = modelList.length;
 
@@ -76,6 +77,7 @@ export default function NavAdd() {
     console.log(totalModels);
   }
 
+  // When generating a new shape, push an object containing the properties of the new light to the light list
   function generateNewLight(event) {
     const totalLights = lightList.length;
 

@@ -5,6 +5,7 @@ import '../styles/light-window.css';
 export default function LightWindow() {
   const { windowInfo } = useLight();
 
+  // If the window info is of a type, then label the window as such
   return (
     <>
       <div className='light-window-top'>

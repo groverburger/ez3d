@@ -5,6 +5,8 @@ export default function ModelRenderer(props) {
   const meshRef = useRef();
   const { setTargetToTransform } = useTransform();
 
+  // Make a copy of the properties in the model list so that we can delete the type property.
+  // This is done because we can't pass the object as a position prop if there are more than one properties
   const propsCopy = Object.assign({}, props.data);
   delete propsCopy.type;
 
