@@ -2,6 +2,7 @@ import Range from './range';
 import '../styles/light-window.css';
 
 export default function LightWindow(props) {
+  // If the lights type is of a type, then label the window as such
   return (
     <>
       <div className='light-window-top'>

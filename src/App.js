@@ -40,9 +40,9 @@ export default class App extends React.Component {
       selectionMode: 'translate',
     };
 
-    // pressing space deselects model, for debug purposes
+    // Pressing space deselects model, for debug purposes
     document.addEventListener('keydown', (event) => {
-      if (event.key == ' ') this.setState({ selected: null });
+      if (event.key === ' ') this.setState({ selected: null });
     });
   }
 

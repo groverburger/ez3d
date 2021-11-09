@@ -1,4 +1,3 @@
-import React from 'react';
 import { AmbientLight, DirectionalLight, PointLight } from './lights';
 
 export default function LightRenderer(props) {

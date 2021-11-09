@@ -14,6 +14,7 @@ const icons = {
 
 const select = ['translate', 'scale', 'rotate'];
 
+// When the button is clicked, set selection mode to the type that the button represents
 export default class Toolbar extends React.Component {
   render() {
     const owner = this.props.owner;

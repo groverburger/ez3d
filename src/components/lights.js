@@ -3,12 +3,18 @@ import { useHelper } from '@react-three/drei';
 import { DirectionalLightHelper, PointLightHelper } from 'three';
 
 export function AmbientLight(props) {
+  // Use the functions defined in LightRenderer
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
+  // Make a copy of the properties in the light list so that we can delete the type property.
+  // This is done because we can't pass the object as a position prop if there are more than one properties
   const propsCopy = Object.assign({}, props);
   delete propsCopy.type;
 
+  // When the light is clicked, set the selected light to the light object to change its properties, such as its intensity. Also, set intensity
+  // of the currently selected light so that the light window can properly display its intensity. Then, handleLightClick
+  // of the type so that the light window can properly display the current type. Close the light window if we click anywhere but the light
   return (
     <mesh
       scale={[0.1, 0.1, 0.1]}

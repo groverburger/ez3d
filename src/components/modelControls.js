@@ -1,46 +1,57 @@
-import React, { useRef, useEffect } from 'react'
-import { TransformControls } from '@react-three/drei'
+import React, { useRef, useEffect } from 'react';
+import { TransformControls } from '@react-three/drei';
 
+// Transform Controls
 export default function ModelControls(props) {
-  let transformRef = useRef()
-  let selectionMode = props.owner.state.selectionMode
-  const setSelectionMode = mode => {
-    props.owner.setState({selectionMode: mode})
-    selectionMode = mode
-  }
+  // Transform Controls reference so that we can change its properties
+  let transformRef = useRef();
+
+  let selectionMode = props.owner.state.selectionMode;
+  const setSelectionMode = (mode) => {
+    props.owner.setState({ selectionMode: mode });
+    selectionMode = mode;
+  };
 
   useEffect(() => {
-    if (!transformRef.current) return
+    if (!transformRef.current) return;
 
-    const controls = transformRef.current
+    const controls = transformRef.current;
 
     if (!selectionMode) {
-      controls.mode = "translate"
-      setSelectionMode(controls.mode)
+      controls.mode = 'translate';
+      setSelectionMode(controls.mode);
     } else {
-      controls.mode = selectionMode
+      controls.mode = selectionMode;
     }
 
-    const handleKeyDown = event => {
-      if (event.key == "w") {
-        controls.mode = "translate"
-        setSelectionMode(controls.mode)
+    const handleKeyDown = (event) => {
+      if (event.key === 'w') {
+        controls.mode = 'translate';
+        setSelectionMode(controls.mode);
       }
 
-      if (event.key == "e") {
-        controls.mode = "scale"
-        setSelectionMode(controls.mode)
+      if (event.key === 'e') {
+        controls.mode = 'scale';
+        setSelectionMode(controls.mode);
       }
 
-      if (event.key == "r") {
-        controls.mode = "rotate"
-        setSelectionMode(controls.mode)
+      if (event.key === 'r') {
+        controls.mode = 'rotate';
+        setSelectionMode(controls.mode);
       }
-    }
+    };
 
-    document.addEventListener("keydown", handleKeyDown)
-    return () => { document.removeEventListener("keydown", handleKeyDown) }
-  })
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  });
 
-  return <TransformControls size={0.4} object={props.owner.state.selected} ref={transformRef}/>
+  return (
+    <TransformControls
+      size={0.4}
+      object={props.owner.state.selected}
+      ref={transformRef}
+    />
+  );
 }

@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
 import * as THREE from 'three';
 
@@ -25,6 +24,7 @@ export default function NavAdd(props) {
     props.owner.forceUpdate();
   };
 
+  // When generating a new light, push an object containing the properties of the new light to the light list
   const addLight = (event) => {
     switch (event.target.innerHTML) {
       case 'Ambient Light':
