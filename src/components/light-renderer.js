@@ -20,35 +20,32 @@ export default function LightRenderer(props) {
   // functions as props called onClick and onClose for the components to use
   return (
     <>
-      {props.data.type === 'ambient' ? (
+      {props.type === 'ambient' ? (
         <>
           <AmbientLight
-            {...props.data}
-            onClick={() => handleLightClick(props.data.type)}
-            onClose={() => handleWindowClose(props.data.type)}
-            key={`${props.data.type}`}
+            {...props}
+            onClick={() => handleLightClick(props.type)}
+            onClose={() => handleWindowClose(props.type)}
           />
         </>
       ) : null}
 
-      {props.data.type === 'directional' ? (
+      {props.type === 'directional' ? (
         <>
           <DirectionalLight
-            {...props.data}
-            onClick={() => handleLightClick(props.data.type)}
-            onClose={() => handleWindowClose(props.data.type)}
-            key={`${props.data.type}`}
+            {...props}
+            onClick={() => handleLightClick(props.type)}
+            onClose={() => handleWindowClose(props.type)}
           />
         </>
       ) : null}
 
-      {props.data.type === 'point' ? (
+      {props.type === 'point' ? (
         <>
           <PointLight
-            {...props.data}
-            onClick={() => handleLightClick(props.data.type)}
-            onClose={() => handleWindowClose(props.data.type)}
-            key={`${props.data.type}`}
+            {...props}
+            onClick={() => handleLightClick(props.type)}
+            onClose={() => handleWindowClose(props.type)}
           />
         </>
       ) : null}

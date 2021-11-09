@@ -17,10 +17,10 @@ export const useTransform = create((set) => ({
 
 // Model State
 export const useModel = create((set) => ({
-  modelList: [],
-  setModelList: (modelList) =>
+  modelData: [],
+  setModelData: (modelData) =>
     set((state) => ({
-      modelList: [modelList, ...state.modelList],
+      modelData: [modelData, ...state.modelData],
     })),
 }));
 
@@ -29,10 +29,10 @@ export const useLight = create((set) => ({
   targetLight: null,
   setTargetLight: (targetLight) => set({ targetLight }),
 
-  lightList: [],
-  setLightList: (lightList) =>
+  lightData: [],
+  setLightData: (lightData) =>
     set((state) => ({
-      lightList: [lightList, ...state.lightList],
+      lightData: [lightData, ...state.lightData],
     })),
 
   intensity: 1,
@@ -50,4 +50,12 @@ export const useLight = create((set) => ({
     set((state) => {
       state.windowInfo.isWindowOpen = windowInfo;
     }),
+}));
+
+export const useGroup = create((set) => ({
+  groupList: [],
+  setGroupList: (groupList) =>
+    set((state) => ({
+      groupList: [...new Set([groupList, ...state.groupList])],
+    })),
 }));

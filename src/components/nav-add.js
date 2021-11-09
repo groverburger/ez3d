@@ -3,8 +3,8 @@ import { useModel, useLight } from './context';
 import '../styles/navbar.css';
 
 export default function NavAdd() {
-  const { modelList, setModelList } = useModel();
-  const { lightList, setLightList } = useLight();
+  const { modelData, setModelData } = useModel();
+  const { lightData, setLightData } = useLight();
 
   return (
     <div className='navbar-items'>
@@ -52,22 +52,34 @@ export default function NavAdd() {
 
   // When generating a new shape, push an object containing the properties of the new shape to the model list
   function generateNewShape(event) {
-    const totalModels = modelList.length;
+    const totalModels = modelData.length;
 
     switch (event.target.innerHTML) {
       case 'Cube':
-        const newCube = { position: [0, 0, 0], type: 'cube' };
-        setModelList(newCube);
+        const newCube = {
+          position: { position: [0, 0, 0] },
+          type: 'cube',
+          uuid: Math.random(),
+        };
+        setModelData(newCube);
         break;
 
       case 'Sphere':
-        const newSphere = { position: [0, 0, 0], type: 'sphere' };
-        setModelList(newSphere);
+        const newSphere = {
+          position: { position: [0, 0, 0] },
+          type: 'sphere',
+          uuid: Math.random(),
+        };
+        setModelData(newSphere);
         break;
 
       case 'Cylinder':
-        const newCylinder = { position: [0, 0, 0], type: 'cylinder' };
-        setModelList(newCylinder);
+        const newCylinder = {
+          position: { position: [0, 0, 0] },
+          type: 'cylinder',
+          uuid: Math.random(),
+        };
+        setModelData(newCylinder);
         break;
 
       default:
@@ -77,24 +89,36 @@ export default function NavAdd() {
     console.log(totalModels);
   }
 
-  // When generating a new shape, push an object containing the properties of the new light to the light list
+  // When generating a new light, push an object containing the properties of the new light to the light list
   function generateNewLight(event) {
-    const totalLights = lightList.length;
+    const totalLights = lightData.length;
 
     switch (event.target.innerHTML) {
       case 'Ambient Light':
-        const newAmbient = { position: [0, 0, 0], type: 'ambient' };
-        setLightList(newAmbient);
+        const newAmbient = {
+          position: { position: [0, 0, 0] },
+          type: 'ambient',
+          uuid: Math.random(),
+        };
+        setLightData(newAmbient);
         break;
 
       case 'Directional Light':
-        const newDirectional = { position: [0, -2.5, 0], type: 'directional' };
-        setLightList(newDirectional);
+        const newDirectional = {
+          position: { position: [0, -2.5, 0] },
+          type: 'directional',
+          uuid: Math.random(),
+        };
+        setLightData(newDirectional);
         break;
 
       case 'Point Light':
-        const newPoint = { position: [0, 0, 0], type: 'point' };
-        setLightList(newPoint);
+        const newPoint = {
+          position: { position: [0, 0, 0] },
+          type: 'point',
+          uuid: Math.random(),
+        };
+        setLightData(newPoint);
         break;
 
       default:

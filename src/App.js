@@ -17,13 +17,14 @@ import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane';
 import Toolbar from './components/toolbar';
 import Viewcube from './components/viewcube';
+import Group from './components/group';
 
 import './App.css';
 import './styles/navbar.css';
 
 export default function App() {
-  const { modelList } = useModel();
-  const { lightList, windowInfo } = useLight();
+  const { modelData } = useModel();
+  const { lightData, windowInfo } = useLight();
   const { isGridVisible } = useGrid();
   const { targetToTransform } = useTransform();
 
@@ -53,12 +54,14 @@ export default function App() {
             <OrbitControls makeDefault />
             {targetToTransform && <Controls object={targetToTransform} />}
 
-            {modelList.map((data) => (
-              <ModelRenderer key={`${data.type}`} data={{ ...data }} />
-            ))}
+            <Group>
+              {modelData.map((data) => (
+                <ModelRenderer key={data.uuid} { ...data } />
+              ))}
+            </Group>
 
-            {lightList.map((data) => (
-              <LightRenderer key={`${data.type}`} data={{ ...data }} />
+            {lightData.map((data) => (
+              <LightRenderer key={data.uuid} { ...data } />
             ))}
 
             {isGridVisible && (
