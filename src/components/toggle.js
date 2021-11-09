@@ -1,5 +1,5 @@
 import React from 'react';
-import './toggle.css';
+import '../styles/toggle.css';
 
 /**
  * Create a Toggle button. The Toggle button is simply a

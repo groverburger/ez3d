@@ -19,6 +19,7 @@ body,
   height: 100%;
   user-select: none;
   overflow: hidden;
+  font-size: 0.85em;
   background: #dddde0;
-  color: rgba(0, 0, 0, 0.55);
+  color: #4f4f4f;
 }
