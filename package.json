@@ -18,7 +18,8 @@
     "react-three-fiber": "^6.0.13",
     "react-three-gui": "0.1.5",
     "three": "^0.133.1",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "zustand": "^3.6.4"
   },
   "scripts": {
     "start": "react-scripts start",

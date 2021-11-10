@@ -1,121 +1,130 @@
-import React from 'react';
 import { NavDropdown } from 'react-bootstrap';
-import * as THREE from 'three';
+import { useModel, useLight } from './context';
+import '../styles/navbar.css';
 
-import './navbar.css';
-
-export default function NavAdd(props) {
-  // adds a new model to the App's models list with the specified vertices
-  const addModel = vertices => {
-    const modelData = {
-      position: [0,0,0],
-      geometry: new THREE.BufferGeometry(),
-      vertices: vertices,
-      uuid: Math.random(),
-    }
-    modelData.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-    modelData.geometry.computeVertexNormals()
-    modelData.data = modelData
-
-    // this is a hack, we're currently not calling setState and instead forcing an update manually
-    props.owner.state.models.push(modelData)
-    props.owner.forceUpdate()
-  }
+export default function NavAdd() {
+  const { modelData, setModelData } = useModel();
+  const { lightData, setLightData } = useLight();
 
   return (
     <div className='navbar-items'>
       <NavDropdown title='Add' id='add-dropdown'>
-        <NavDropdown.ItemText>Meshes</NavDropdown.ItemText>
-        <NavDropdown.Divider />
         <NavDropdown.Item
           href='#action/1.0'
-          onClick={() => {
-            addModel(new Float32Array([
-               1,  1,  1,
-               1, -1,  1,
-               1,  1, -1,
-               1, -1, -1,
-               1,  1, -1,
-               1, -1,  1,
-
-               1,  1,  1,
-               1,  1, -1,
-              -1,  1,  1,
-              -1,  1, -1,
-              -1,  1,  1,
-               1,  1, -1,
-
-               1,  1,  1,
-              -1,  1,  1,
-               1, -1,  1,
-              -1, -1,  1,
-               1, -1,  1,
-              -1,  1,  1,
-
-              -1, -1, -1,
-              -1, -1,  1,
-              -1,  1, -1,
-              -1,  1,  1,
-              -1,  1, -1,
-              -1, -1,  1,
-
-              -1, -1, -1,
-               1, -1, -1,
-              -1, -1,  1,
-               1, -1,  1,
-              -1, -1,  1,
-               1, -1, -1,
-
-              -1, -1, -1,
-              -1,  1, -1,
-               1, -1, -1,
-               1,  1, -1,
-               1, -1, -1,
-              -1,  1, -1,
-            ]))
-          }}
+          onClick={(event) => generateNewShape(event)}
         >
           Cube
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.1'
-          onClick={() => {
-            addModel(new Float32Array([
-              -1, -1,  1,
-               1, -1,  1,
-               1,  1,  1,
-
-               1,  1,  1,
-              -1,  1,  1,
-              -1, -1,  1,
-            ]))
-          }}
+          onClick={(event) => generateNewShape(event)}
         >
           Sphere
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={() => {
-            addModel(new Float32Array([
-              -1, -1,  1,
-               1, -1,  1,
-               1,  1,  1,
-
-               1,  1,  1,
-              -1,  1,  1,
-              -1, -1,  1,
-            ]))
-          }}
+          onClick={(event) => generateNewShape(event)}
         >
           Cylinder
         </NavDropdown.Item>
         <NavDropdown.Divider />
-        <NavDropdown.ItemText>Lights</NavDropdown.ItemText>
-        <NavDropdown.Divider />
-        <NavDropdown.Item href='#action/1.3'>Point</NavDropdown.Item>
-        <NavDropdown.Item href='#action/1.4'>Direction</NavDropdown.Item>
-        <NavDropdown.Item href='#action/1.5'>Ambient</NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.3'
+          onClick={(event) => generateNewLight(event)}
+        >
+          Ambient Light
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.4'
+          onClick={(event) => generateNewLight(event)}
+        >
+          Directional Light
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.5'
+          onClick={(event) => generateNewLight(event)}
+        >
+          Point Light
+        </NavDropdown.Item>
       </NavDropdown>
     </div>
   );
+
+  // When generating a new shape, push an object containing the properties of the new shape to the model list
+  function generateNewShape(event) {
+    const totalModels = modelData.length;
+
+    switch (event.target.innerHTML) {
+      case 'Cube':
+        const newCube = {
+          position: { position: [0, 0, 0] },
+          type: 'cube',
+          uuid: Math.random(),
+        };
+        setModelData(newCube);
+        break;
+
+      case 'Sphere':
+        const newSphere = {
+          position: { position: [0, 0, 0] },
+          type: 'sphere',
+          uuid: Math.random(),
+        };
+        setModelData(newSphere);
+        break;
+
+      case 'Cylinder':
+        const newCylinder = {
+          position: { position: [0, 0, 0] },
+          type: 'cylinder',
+          uuid: Math.random(),
+        };
+        setModelData(newCylinder);
+        break;
+
+      default:
+        break;
+    }
+
+    console.log(totalModels);
+  }
+
+  // When generating a new light, push an object containing the properties of the new light to the light list
+  function generateNewLight(event) {
+    const totalLights = lightData.length;
+
+    switch (event.target.innerHTML) {
+      case 'Ambient Light':
+        const newAmbient = {
+          position: { position: [0, 0, 0] },
+          type: 'ambient',
+          uuid: Math.random(),
+        };
+        setLightData(newAmbient);
+        break;
+
+      case 'Directional Light':
+        const newDirectional = {
+          position: { position: [0, -2.5, 0] },
+          type: 'directional',
+          uuid: Math.random(),
+        };
+        setLightData(newDirectional);
+        break;
+
+      case 'Point Light':
+        const newPoint = {
+          position: { position: [0, 0, 0] },
+          type: 'point',
+          uuid: Math.random(),
+        };
+        setLightData(newPoint);
+        break;
+
+      default:
+        break;
+    }
+
+    console.log(totalLights);
+  }
 }

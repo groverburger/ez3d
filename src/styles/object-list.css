@@ -1,0 +1,52 @@
+.object-list-pane {
+  overflow-y: auto;
+}
+
+.object-list-top {
+  display: flex;
+  flex-direction: column;
+}
+
+.object-list-title {
+  margin: 2rem;
+  margin-bottom: 1.5rem;
+  margin-right: 1.5rem;
+  margin-left: 1.5rem;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.9);
+}
+
+.btn-light.object-list-items {
+  position: relative;
+  padding: 0.7rem;
+  width: 100%;
+  border: 0;
+  z-index: 1;
+  text-align: left;
+  background-color: #fcfcfc;
+  color: rgba(0, 0, 0, 0.9);
+}
+.btn-light.object-list-items:hover{
+  z-index: 1;
+  background-color: #f1f1f9;
+  color: rgba(0, 0, 0, 0.9);
+  transition: all 0.1s ease-in-out;
+}
+.btn-light.object-list-items:focus{
+  z-index: 1;
+  background-color: hotpink;
+  color: rgba(0, 0, 0, 0.9);
+  transition: all 0.1s ease-in-out;
+  outline:none !important;
+  box-shadow: none !important;
+}
+
+
+.camera {
+  width: 3.5rem;
+  border: 1px solid #d1d1d6;
+}
+
+.camera:focus {
+  outline-color: #d1d1d6;
+}

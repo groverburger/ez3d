@@ -3,9 +3,7 @@ import React, { useRef, useMemo, useState } from 'react';
 import { useFrame, useThree, createPortal } from '@react-three/fiber';
 import { OrthographicCamera, useCamera } from '@react-three/drei';
 
-/**
- * Reference: https://codesandbox.io/s/viewcube-py4db?file=/src/App.js
- */
+// Reference: https://codesandbox.io/s/viewcube-py4db?file=/src/App.js
 export default function Viewcube() {
   const { gl, scene, camera, size } = useThree();
   const virtualScene = useMemo(() => new Scene(), []);
@@ -120,4 +118,3 @@ export default function Viewcube() {
     virtualScene
   );
 }
-
