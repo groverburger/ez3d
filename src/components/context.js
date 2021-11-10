@@ -6,6 +6,16 @@ export const useGrid = create((set) => ({
   setGrid: (isGridVisible) => set({ isGridVisible }),
 }));
 
+// Color State
+export const useColor = create((set) => ({
+  targetToColor: null,
+  setTargetToColor: (targetToColor) => set({ targetToColor }),
+  
+  colorChange: "#0000ff",
+  setColor: (colorChange) => set({ colorChange }),
+
+}));
+
 // Transform Controls State
 export const useTransform = create((set) => ({
   targetToTransform: null,
