@@ -19,21 +19,21 @@ export default function ModelRenderer(props) {
         {props.type === 'cube' ? (
           <>
             <boxBufferGeometry attach='geometry' />
-            <meshLambertMaterial attach='material' color={colorChange}/>
+            <meshLambertMaterial attach='material' color={colorChange} />
           </>
         ) : null}
 
         {props.type === 'cylinder' ? (
           <>
             <cylinderBufferGeometry attach='geometry' />
-            <meshLambertMaterial attach='material' color='green' />
+            <meshLambertMaterial attach='material' color={colorChange} />
           </>
         ) : null}
 
         {props.type === 'sphere' ? (
           <>
             <sphereBufferGeometry attach='geometry' />
-            <meshLambertMaterial attach='material' color='blue' />
+            <meshLambertMaterial attach='material' color={colorChange} />
           </>
         ) : null}
       </mesh>
