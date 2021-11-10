@@ -26,36 +26,22 @@
   background-color: #fcfcfc;
   color: rgba(0, 0, 0, 0.9);
 }
-.btn-light.object-list-items:hover:not(.active) {
+.btn-light.object-list-items:hover{
   z-index: 1;
-  background-color: #f1f1f3;
+  background-color: #f1f1f9;
   color: rgba(0, 0, 0, 0.9);
-  transition: all 0.3s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
-/*
-
-.object-list-items:hover {
-  background-color: #f1f1f3;
-} */
-.btn-check.object-list-items:active + .btn-light.object-list-items,
-.btn-check.object-list-items:checked + .btn-light.object-list-items,
-.btn-light.object-list-items.active,
-.btn-light.object-list-items:active,
-.show > .btn-light.object-list-items.dropdown-toggle {
-  z-index: 2;
+.btn-light.object-list-items:focus{
+  z-index: 1;
   background-color: hotpink;
-  color: #fcfcfc;
-}
-
-.btn-light:hover,
-.btn-light:focus,
-.btn-light:active,
-.btn-light:active:focus:not(:disabled):not(.disabled),
-.btn:focus,
-.btn:active,
-.btn:hover {
+  color: rgba(0, 0, 0, 0.9);
+  transition: all 0.1s ease-in-out;
+  outline:none !important;
   box-shadow: none !important;
 }
+
+
 .camera {
   width: 3.5rem;
   border: 1px solid #d1d1d6;

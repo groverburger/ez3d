@@ -17,28 +17,8 @@ export default function ObjectList() {
   var cubesTot = 0;
   var cylindersTot = 0;
   for (let i = 0; i < total; i++) {
-    switch (modelData[i].type){
-      case 'cube':
-        cubesTot++;
-        objList.push({ name: `Cube ${cubesTot}`,
-                          index: `${i}`});
-        break;
-      case 'sphere':
-        spheresTot++;
-        objList.push({ name: `Sphere ${spheresTot}`,
-                          index: `${i}`});
-        break;
-      case 'cylinder':
-        cylindersTot++;
-        objList.push({ name: `Cylinder ${cylindersTot}`,
-                          index: `${i}`});
-        break;
-      default:
-        objList.push({ name: `Object ${i}`,
+        objList.push({ name: `Mesh ${i+1}`,
                           index: i});
-        break;
-    }
-
   }
 
    console.log(groupList);
