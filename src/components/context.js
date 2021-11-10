@@ -14,6 +14,8 @@ export const useColor = create((set) => ({
   colorChange: "#0000ff",
   setColor: (colorChange) => set({ colorChange }),
 
+  currentColor: '#0000ff',
+  setCurrentColor: (currentColor) => set({ currentColor }),
 }));
 
 // Transform Controls State

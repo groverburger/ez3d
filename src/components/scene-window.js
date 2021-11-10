@@ -17,7 +17,7 @@ export default function SceneWindow() {
         </div>
         <div className='scene-window-items'>
           <label>Color</label>
-          <ColorSelector onInput={(event) => setColor(event.target.value)}/>
+          <ColorSelector />
         </div>
         <div className='scene-window-items'>
           <label>Camera</label>
