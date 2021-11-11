@@ -1,4 +1,4 @@
-import { useGroup, useModel, useColor } from './context';
+import { useGroup, useModel, useColor , useShader} from './context';
 import { useTransform } from './context';
 import '../styles/object-list.css';
 
@@ -13,24 +13,24 @@ export default function ObjectList() {
 
   var total = modelData.length;
   var objList = [];
-  var spheresTot = 0;
-  var cubesTot = 0;
-  var cylindersTot = 0;
+
   for (let i = 0; i < total; i++) {
         objList.push({ name: `Mesh ${i+1}`,
                           index: i});
   }
 
-   console.log(groupList);
+   // console.log(groupList);
   const { setTargetToTransform } = useTransform();
-  const { setCurrentColor, setTargetToColor } = useColor();  
+  const { setCurrentColor, setTargetToColor } = useColor();
+  const { setCurrentShade, setTargetToShade } = useShader();
+
 
   //Helper function for handleColorConversion
   function componentToHex(c) {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
   }
-  
+
   //Convert color of object to hex and set it
   const handleColorConversion = (color) => {
     const r = Math.floor(color.r * 255);
@@ -40,7 +40,7 @@ export default function ObjectList() {
     const hex = "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
     setCurrentColor(hex);
   }
-  
+
   return (
     <>
       <div className='object-list-top'>
@@ -53,6 +53,8 @@ export default function ObjectList() {
                   setTargetToTransform(groupList[mesh.index]);
                   setTargetToColor(groupList[mesh.index]);
                   handleColorConversion(groupList[mesh.index].material.color);
+                  setTargetToShade(groupList[mesh.index]);
+
                 }}
               > {mesh.name} </button>
             </div>

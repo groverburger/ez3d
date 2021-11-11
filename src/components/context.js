@@ -10,9 +10,18 @@ export const useGrid = create((set) => ({
 export const useColor = create((set) => ({
   targetToColor: null,
   setTargetToColor: (targetToColor) => set({ targetToColor }),
-  
+
   currentColor: '#ffffff',
   setCurrentColor: (currentColor) => set({ currentColor }),
+}));
+
+// Shader State
+export const useShader = create((set) => ({
+  targetToShade: null,
+  setTargetToShade: (targetToShade) => set({ targetToShade }),
+
+  currentShade: 'smooth',
+  setCurrentShade: (currentShade) => set({ currentShade }),
 }));
 
 // Transform Controls State

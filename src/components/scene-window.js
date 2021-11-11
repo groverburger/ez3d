@@ -1,6 +1,7 @@
 import { useGrid } from './context';
 import Toggle from './toggle';
 import ColorSelector from './colorSelector';
+import ShadeSelector from './shadeSelector';
 import '../styles/scene-window.css';
 
 export default function SceneWindow() {
@@ -17,6 +18,10 @@ export default function SceneWindow() {
         <div className='scene-window-items'>
           <label>Color</label>
           <ColorSelector />
+        </div>
+        <div className='scene-window-items'>
+          <label>Shader</label>
+          <ShadeSelector />
         </div>
         <div className='scene-window-items'>
           <label>Camera</label>
