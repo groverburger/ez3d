@@ -11,10 +11,7 @@ export const useColor = create((set) => ({
   targetToColor: null,
   setTargetToColor: (targetToColor) => set({ targetToColor }),
   
-  colorChange: "#0000ff",
-  setColor: (colorChange) => set({ colorChange }),
-
-  currentColor: '#0000ff',
+  currentColor: '#ffffff',
   setCurrentColor: (currentColor) => set({ currentColor }),
 }));
 

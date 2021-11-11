@@ -5,7 +5,6 @@ import '../styles/scene-window.css';
 
 export default function SceneWindow() {
   const { setGrid } = useGrid();
-  const { setColor } = useColor();
 
   return (
     <>

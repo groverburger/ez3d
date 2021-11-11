@@ -4,17 +4,20 @@ import { useTransform, useColor } from './context';
 export default function ModelRenderer(props) {
   const meshRef = useRef();
   const { setTargetToTransform } = useTransform();
-  const { setCurrentColor, setTargetToColor, colorChange } = useColor();
+  const { setCurrentColor, setTargetToColor } = useColor();
 
+  //Helper function for rgbToHex
   function componentToHex(c) {
     var hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
   }
   
+  //Function to convert color value from decimal to hex
   function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
   }
 
+  //Convert color to hex and set it
   const handleColorConversion = (color) => {
     const r = Math.floor(color.r * 255);
     const g = Math.floor(color.g * 255);
@@ -32,7 +35,6 @@ export default function ModelRenderer(props) {
           setTargetToTransform(event.object);
           setTargetToColor(event.object);
           handleColorConversion(event.object.material.color);
-          console.log(event.object);
         }}
         ref={meshRef}
       >
