@@ -70,6 +70,7 @@ export const useLight = create((set) => ({
     }),
 }));
 
+// Group State
 export const useGroup = create((set) => ({
   groupList: [],
   setGroupList: (groupList) =>

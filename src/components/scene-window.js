@@ -1,7 +1,7 @@
 import { useGrid } from './context';
 import Toggle from './toggle';
-import ColorSelector from './colorSelector';
-import ShadeSelector from './shadeSelector';
+import ColorSelector from './color-selector';
+import ShadeSelector from './shade-selector';
 import '../styles/scene-window.css';
 
 export default function SceneWindow() {

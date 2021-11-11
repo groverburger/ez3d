@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
-import { useTransform, useColor , useShader} from './context';
+import { useTransform, useColor, useShader } from './context';
+import { convertColor } from './color-converter';
 
 export default function ModelRenderer(props) {
   const meshRef = useRef();
@@ -7,32 +8,18 @@ export default function ModelRenderer(props) {
   const { setCurrentColor, setTargetToColor } = useColor();
   const { setCurrentShade, setTargetToShade } = useShader();
 
-  //Helper function for rgbToHex
-  function componentToHex(c) {
-    var hex = c.toString(16);
-    return hex.length == 1 ? "0" + hex : hex;
-  }
-
-  //Convert color to hex and set it
-  const handleColorConversion = (color) => {
-    const r = Math.floor(color.r * 255);
-    const g = Math.floor(color.g * 255);
-    const b = Math.floor(color.b * 255);
-
-    const hex = "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
-    setCurrentColor(hex);
-  }
+  const handleClick = (event) => {
+    setTargetToTransform(event.object);
+    setTargetToColor(event.object);
+    setTargetToShade(event.object);
+    setCurrentColor(convertColor(event.object.material.color));
+  };
 
   return (
     <>
       <mesh
         {...props.position}
-        onClick={(event) => {
-          setTargetToTransform(event.object);
-          setTargetToColor(event.object);
-          handleColorConversion(event.object.material.color);
-          setTargetToShade(event.object);
-        }}
+        onClick={(event) => handleClick(event)}
         ref={meshRef}
       >
         {props.type === 'cube' ? (

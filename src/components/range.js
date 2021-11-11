@@ -4,14 +4,12 @@ import '../styles/range.css';
 export default function Range() {
   const { targetLight, intensity, setIntensity } = useLight();
 
-  // When the range input changes, then change the selected light's intensity
-  // Then, setIntensity to save this value so that we can continue to use it even after deselection
+  // Directly change target light's intensity and save intensity for window
   const handleRangeChange = (event) => {
     targetLight.intensity = event.target.value / 100;
     setIntensity(targetLight.intensity);
   };
 
-  // We divide and multiply by 100 because the intensity value is a decimal
   return (
     <div className='range-container'>
       <div className='slider-value'>
@@ -22,7 +20,7 @@ export default function Range() {
           type='range'
           min='0'
           max='100'
-          defaultValue={Math.floor(intensity * 100)}
+          defaultValue={Math.floor(intensity * 100)} // Divide and multiply by 100 because in intensity is a decimal
           onChange={(event) => handleRangeChange(event)}
           steps='1'
         />

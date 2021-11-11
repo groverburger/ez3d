@@ -10,18 +10,17 @@ export const AmbientLight = (props) => {
 
   const { setTargetLight, setIntensity } = useLight();
 
-  // When the light is clicked, setTargetLight to select light to change its properties, such as its intensity. Also, setIntensity
-  // of the currently selected light so that the light window can properly display its intensity. Then, handleLightClick
-  // of the type so that the light window can properly display the current type. Close the light window if we click anywhere but the light
+  const handleClick = (light) => {
+    setTargetLight(light);
+    setIntensity(light.intensity);
+    handleLightClick(props.type);
+  };
+
   return (
     <mesh
       scale={[0.1, 0.1, 0.1]}
       position={[0, 2, 0]}
-      onClick={(event) => {
-        setTargetLight(event.object.children[0]);
-        setIntensity(event.object.children[0].intensity);
-        handleLightClick(props.type);
-      }}
+      onClick={(event) => handleClick(event.object.children[0])} // event.object.children[0] is the light object
       onPointerMissed={() => handleWindowClose(props.type)}
     >
       <sphereBufferGeometry attach='geometry' />
@@ -42,18 +41,18 @@ export const DirectionalLight = (props) => {
   const lightRef = useRef();
   useHelper(lightRef, DirectionalLightHelper, 5);
 
-  // Since the directional light and the point light comes with a small ball for selection, setTargetToTransform to
-  // select the light to allow for movement
+  const handleClick = (mesh) => {
+    setTargetToTransform(mesh);
+    setTargetLight(mesh.children[0]);
+    setIntensity(mesh.children[0].intensity);
+    handleLightClick(props.type);
+  };
+
   return (
     <mesh
       scale={[0.1, 0.1, 0.1]}
       position={[0, 2, 0]}
-      onClick={(event) => {
-        setTargetToTransform(event.object);
-        setTargetLight(event.object.children[0]);
-        setIntensity(event.object.children[0].intensity);
-        handleLightClick(props.type);
-      }}
+      onClick={(event) => handleClick(event.object)} // event.object is the mesh object that holds the light object
       onPointerMissed={() => handleWindowClose(props.type)}
     >
       <sphereBufferGeometry attach='geometry' />
@@ -74,18 +73,18 @@ export const PointLight = (props) => {
   const lightRef = useRef();
   useHelper(lightRef, PointLightHelper, 5);
 
-  // Since the directional light and the point light comes with a small ball for selection, setTargetToTransform to
-  // select the light to allow for movement
+  const handleClick = (mesh) => {
+    setTargetToTransform(mesh);
+    setTargetLight(mesh.children[0]);
+    setIntensity(mesh.children[0].intensity);
+    handleLightClick(props.type);
+  };
+
   return (
     <mesh
       scale={[0.1, 0.1, 0.1]}
       position={[0, 2, 0]}
-      onClick={(event) => {
-        setTargetToTransform(event.object);
-        setTargetLight(event.object.children[0]);
-        setIntensity(event.object.children[0].intensity);
-        handleLightClick(props.type);
-      }}
+      onClick={(event) => handleClick(event.object)} // event.object is the mesh object that holds the light object
       onPointerMissed={() => handleWindowClose(props.type)}
     >
       <sphereBufferGeometry attach='geometry' />

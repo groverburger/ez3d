@@ -16,7 +16,6 @@ export default function Toolbar() {
 
   const { transformType, setTransformType } = useTransform();
 
-  // When the button is clicked, setTransformType the type that the button represents
   return (
     <div className='toolbar'>
       <ButtonGroup vertical>
@@ -25,9 +24,7 @@ export default function Toolbar() {
             className='btn-light toolbar-items'
             key={type}
             active={transformType === type}
-            onClick={() => {
-              setTransformType(type);
-            }}
+            onClick={() => setTransformType(type)} // When clicked, change transform type
           >
             {icons[type]}
           </Button>

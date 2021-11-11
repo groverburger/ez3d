@@ -16,15 +16,13 @@ export default function LightRenderer(props) {
     setWindowToggle(false);
   };
 
-  // Pass the properties in the light list as props; pass the functions as props - pass the above
-  // functions as props called onClick and onClose for the components to use
   return (
     <>
       {props.type === 'ambient' ? (
         <>
           <AmbientLight
             {...props}
-            onClick={() => handleLightClick(props.type)}
+            onClick={() => handleLightClick(props.type)} // Pass above functions as onClick and onClose props
             onClose={() => handleWindowClose(props.type)}
           />
         </>
