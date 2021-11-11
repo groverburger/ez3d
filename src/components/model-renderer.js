@@ -1,15 +1,36 @@
 import React, { useRef } from 'react';
-import { useTransform } from './context';
+import { useTransform, useColor } from './context';
 
 export default function ModelRenderer(props) {
   const meshRef = useRef();
   const { setTargetToTransform } = useTransform();
+  const { setCurrentColor, setTargetToColor } = useColor();
+
+  //Helper function for rgbToHex
+  function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+  
+  //Convert color to hex and set it
+  const handleColorConversion = (color) => {
+    const r = Math.floor(color.r * 255);
+    const g = Math.floor(color.g * 255);
+    const b = Math.floor(color.b * 255);
+
+    const hex = "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    setCurrentColor(hex);
+  }
 
   return (
     <>
       <mesh
         {...props.position}
-        onClick={(event) => setTargetToTransform(event.object)}
+        onClick={(event) => {
+          setTargetToTransform(event.object);
+          setTargetToColor(event.object);
+          handleColorConversion(event.object.material.color);
+        }}
         ref={meshRef}
       >
         {props.type === 'cube' ? (
@@ -36,3 +57,4 @@ export default function ModelRenderer(props) {
     </>
   );
 }
+

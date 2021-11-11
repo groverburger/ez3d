@@ -1,4 +1,4 @@
-import { useGroup, useModel } from './context';
+import { useGroup, useModel, useColor } from './context';
 import { useTransform } from './context';
 import '../styles/object-list.css';
 
@@ -23,6 +23,24 @@ export default function ObjectList() {
 
    console.log(groupList);
   const { setTargetToTransform } = useTransform();
+  const { setCurrentColor, setTargetToColor } = useColor();  
+
+  //Helper function for handleColorConversion
+  function componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+  
+  //Convert color of object to hex and set it
+  const handleColorConversion = (color) => {
+    const r = Math.floor(color.r * 255);
+    const g = Math.floor(color.g * 255);
+    const b = Math.floor(color.b * 255);
+
+    const hex = "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+    setCurrentColor(hex);
+  }
+  
   return (
     <>
       <div className='object-list-top'>
@@ -31,7 +49,11 @@ export default function ObjectList() {
             <div key='{mesh}'>
               <button
                 className='btn-light object-list-items'
-                onClick={() => setTargetToTransform(groupList[mesh.index])}
+                onClick={() => {
+                  setTargetToTransform(groupList[mesh.index]);
+                  setTargetToColor(groupList[mesh.index]);
+                  handleColorConversion(groupList[mesh.index].material.color);
+                }}
               > {mesh.name} </button>
             </div>
           ))}
