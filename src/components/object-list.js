@@ -1,27 +1,38 @@
 import { Button } from 'react-bootstrap';
-import { useGroup, useModel, useColor, useShader, useTransform } from './context';
+import { useGroup, useColor, useTarget, useLight } from './context';
 import { convertColor } from './color-converter';
 import '../styles/object-list.css';
 
 export default function ObjectList() {
-  const { modelData } = useModel();
+  const { setWindowType, setWindowToggle, setIntensity } = useLight();
   const { groupList } = useGroup();
-  const { setTargetToTransform, targetToTransform } = useTransform();
-  const { setCurrentColor, setTargetToColor } = useColor();
-  const { setCurrentShade, setTargetToShade } = useShader();
+  const { setCurrentColor } = useColor();
+  const { setTargetMesh, targetMesh } = useTarget();
 
-  const total = modelData.length;
+  const total = groupList.length;
   const objList = [];
 
+  let lightCount = 1;
+  let modelCount = 1;
   for (let i = 0; i < total; i++) {
-    objList.push({ name: `Mesh ${i + 1}`, index: i });
+    if (groupList[i].children[0]) {
+      objList.push({ name: `Light ${lightCount++}`, index: i });
+    } else {
+      objList.push({ name: `Mesh ${modelCount++}`, index: i });
+    }
   }
 
   const handleClick = (mesh) => {
-    setTargetToTransform(mesh);
-    setTargetToColor(mesh);
-    setTargetToShade(mesh);
-    setCurrentColor(convertColor(mesh.material.color));
+    setTargetMesh(mesh);
+
+    if (mesh.children[0]) {
+      setIntensity(mesh.children[0].intensity);
+      setCurrentColor(convertColor(mesh.children[0].color));
+      setWindowType(mesh.children[0].type);
+      setWindowToggle(true);
+    } else {
+      setCurrentColor(convertColor(mesh.material.color));
+    }
   };
 
   return (
@@ -29,10 +40,10 @@ export default function ObjectList() {
       <div className='object-list-top'>
         <label className='object-list-title'>Object List</label>
         {objList.map((mesh) => (
-          <div key='{mesh}' className='object-list-items'>
+          <div key={groupList[mesh.index].uuid} className='object-list-items'>
             <Button
               className='btn-light object-list-items'
-              active={groupList[mesh.index] === targetToTransform}
+              active={groupList[mesh.index] === targetMesh}
               onClick={() => handleClick(groupList[mesh.index])}
             >
               {mesh.name}

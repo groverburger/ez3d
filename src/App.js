@@ -2,7 +2,7 @@ import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import { Navbar, Nav } from 'react-bootstrap';
-import { useLight, useModel, useGrid, useTransform } from './components/context';
+import { useLight, useModel, useGrid, useTarget } from './components/context';
 
 import Controls from './components/controls';
 import LightRenderer from './components/light-renderer';
@@ -26,7 +26,7 @@ export default function App() {
   const { modelData } = useModel();
   const { lightData, windowInfo } = useLight();
   const { isGridVisible } = useGrid();
-  const { targetToTransform } = useTransform();
+  const { targetMesh } = useTarget();
 
   return (
     <>
@@ -51,18 +51,18 @@ export default function App() {
             <fog attach='fog' args={['#dddde0', 10, 40]} />
 
             <Viewcube />
-            <OrbitControls makeDefault />
-            {targetToTransform && <Controls object={targetToTransform} />}
+            <OrbitControls makeDefault dampingFactor={0.3} />
+            {targetMesh && <Controls object={targetMesh} />}
 
             <Group>
               {modelData.map((data) => (
                 <ModelRenderer key={data.uuid} { ...data } />
               ))}
-            </Group>
 
-            {lightData.map((data) => (
-              <LightRenderer key={data.uuid} { ...data } />
-            ))}
+              {lightData.map((data) => (
+                <LightRenderer key={data.uuid} { ...data } />
+              ))}
+            </Group>
 
             {isGridVisible && (
               <gridHelper
@@ -75,9 +75,9 @@ export default function App() {
 
         <Pane
           className='pane-outliner'
-          initialSize='350px'
-          minSize='250px'
-          maxSize='350px'
+          initialSize='300px'
+          minSize='300px'
+          maxSize='300px'
         >
           <SplitPane split='horizontal'>
             <Pane

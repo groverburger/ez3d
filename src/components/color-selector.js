@@ -1,14 +1,20 @@
-import { useColor } from './context';
+import { useColor, useTarget } from './context';
 import { convertColor } from './color-converter';
 
 export default function ColorSelect() {
-  const { targetToColor, currentColor, setCurrentColor } = useColor();
+  const { currentColor, setCurrentColor } = useColor();
+  const { targetMesh } = useTarget();
 
-  //Handler for input (converts value into hex)
+  // Handler for input (converts value into hex)
   const handleInputChange = (event) => {
     const rgb = convertColor(event.target.value);
-    if (targetToColor) {
-      targetToColor.material.color = rgb;
+
+    if (targetMesh) {
+      if (targetMesh.children[0]) {
+        targetMesh.children[0].color = rgb;
+      } else {
+        targetMesh.material.color = rgb;
+      }
     }
 
     const hex = convertColor(rgb);

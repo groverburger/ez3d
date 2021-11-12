@@ -1,9 +1,10 @@
 import React, { useEffect, useRef } from 'react';
-import { useGroup, useModel } from './context';
+import { useGroup, useModel, useLight } from './context';
 
 export default function Group({ children }) {
   const { setGroupList } = useGroup();
   const { modelData } = useModel();
+  const { lightData } = useLight();
 
   const groupRef = useRef();
 
@@ -15,7 +16,7 @@ export default function Group({ children }) {
         setGroupList(child);
       })
     }
-  }, [modelData, setGroupList]);
+  }, [modelData, lightData, setGroupList]);
 
   return (
     <group ref={groupRef}>

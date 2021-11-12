@@ -13,27 +13,26 @@ export default function Controls(props) {
     if (transformRef.current) {
       const controls = transformRef.current;
 
-      if (!transformType) {
-        controls.mode = 'translate';
-        setTransformType(controls.mode);
+      if (transformType) {
+        controls.setMode(transformType);
       } else {
-        controls.mode = transformType;
+        setTransformType(controls.mode);
       }
 
       const handleKeyDown = (event) => {
         switch (event.key) {
           case 'w':
-            controls.mode = 'translate';
+            controls.setMode('translate');
             setTransformType(controls.mode);
             break;
 
           case 'e':
-            controls.mode = 'scale';
+            controls.setMode('scale');
             setTransformType(controls.mode);
             break;
 
           case 'r':
-            controls.mode = 'rotate';
+            controls.setMode('rotate');
             setTransformType(controls.mode);
             break;
 

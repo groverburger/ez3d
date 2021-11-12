@@ -1,20 +1,18 @@
-import { useLight } from './context';
+import { useLight, useTarget } from './context';
 import '../styles/range.css';
 
 export default function Range() {
-  const { targetLight, intensity, setIntensity } = useLight();
+  const { intensity, setIntensity } = useLight();
+  const { targetMesh } = useTarget();
 
   // Directly change target light's intensity and save intensity for window
   const handleRangeChange = (event) => {
-    targetLight.intensity = event.target.value / 100;
-    setIntensity(targetLight.intensity);
+    targetMesh.children[0].intensity = event.target.value / 100;
+    setIntensity(targetMesh.children[0].intensity);
   };
 
   return (
     <div className='range-container'>
-      <div className='slider-value'>
-        <span>{`${Math.floor(intensity * 100)}%`}</span>
-      </div>
       <div className='field'>
         <input
           type='range'

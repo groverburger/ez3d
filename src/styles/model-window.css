@@ -1,4 +1,4 @@
-/* Light-Window's Resizer */
+/* Model-Window's Resizer */
 .sc-htpNat.fXAXjb.sc-bdVaJa.cjjWdp {
   border-right: 5px solid transparent;
   border-left: 5px solid transparent;
@@ -12,12 +12,12 @@
   background-color: #b5b5c0;
 }
 
-.light-window-top {
+.model-window-top {
   display: flex;
   flex-direction: column;
 }
 
-.light-window-title {
+.model-window-title {
   margin: 2rem;
   margin-bottom: 1.5rem;
   margin-right: 1.5rem;
@@ -26,7 +26,7 @@
   color: rgba(0, 0, 0, 0.9);
 }
 
-.light-window-items {
+.model-window-items {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,15 +35,6 @@
   padding-bottom: 1rem;
 }
 
-.light-window-items-intensity {
-  display: flex;
-  flex-direction: column;
-  padding: 1.5rem;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-.light-window-items-header {
-  display: flex;
-  justify-content: space-between;
+.model-window-items:hover {
+  background-color: #f1f1f3;
 }
