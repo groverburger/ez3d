@@ -1,5 +1,7 @@
 .range-container {
   display: grid;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   width: 100%;
   text-align: center;
   place-items: center;
@@ -10,19 +12,13 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 75%;
+  height: 1rem;
+  width: 100%;
   top: 0.05rem;
-  right: 1rem;
-}
-
-.slider-value {
-  position: absolute;
-  margin: 1.5rem;
-  right: 0;
 }
 
 .field input {
-  height: 0.25rem;
+  height: 0.2rem;
   width: 100%;
   background: #ddd;
   border-radius: 1rem;

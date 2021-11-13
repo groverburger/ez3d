@@ -1,37 +1,37 @@
 import create from 'zustand';
 
-// Grid State
-export const useGrid = create((set) => ({
-  isGridVisible: true,
-  setGrid: (isGridVisible) => set({ isGridVisible }),
+// Target State
+export const useTarget = create((set) => ({
+  targetMesh: null,
+  setTargetMesh: (targetMesh) => set({ targetMesh }),
+
+  hoveredMesh: null,
+  setHoveredMesh: (hoveredMesh) => set({ hoveredMesh }),
 }));
 
-// Color State
-export const useColor = create((set) => ({
-  targetToColor: null,
-  setTargetToColor: (targetToColor) => set({ targetToColor }),
-
+// Property States
+export const useProperty = create((set) => ({
   currentColor: '#ffffff',
   setCurrentColor: (currentColor) => set({ currentColor }),
-}));
-
-// Shader State
-export const useShader = create((set) => ({
-  targetToShade: null,
-  setTargetToShade: (targetToShade) => set({ targetToShade }),
 
   currentShade: 'smooth',
   setCurrentShade: (currentShade) => set({ currentShade }),
-}));
 
-// Transform Controls State
-export const useTransform = create((set) => ({
-  targetToTransform: null,
-  setTargetToTransform: (targetToTransform) => set({ targetToTransform }),
+  currentIntensity: 1,
+  setCurrentIntensity: (currentIntensity) => set({ currentIntensity }),
 
-  transformType: null,
-  setTransformType: (transformType) => set({ transformType }),
-}));
+  currentTransformMode: null,
+  setCurrentTransformMode: (currentTransformMode) => set({ currentTransformMode }),
+}))
+
+// Scene States
+export const useScene = create((set) => ({
+  isGridVisible: true,
+  setGrid: (isGridVisible) => set({ isGridVisible }),
+
+  isShadowsVisible: true,
+  setShadows: (isShadowsVisible) => set({ isShadowsVisible }),
+}))
 
 // Model State
 export const useModel = create((set) => ({
@@ -44,9 +44,6 @@ export const useModel = create((set) => ({
 
 // Light State
 export const useLight = create((set) => ({
-  targetLight: null,
-  setTargetLight: (targetLight) => set({ targetLight }),
-
   lightData: [],
   setLightData: (lightData) =>
     set((state) => ({
@@ -75,6 +72,6 @@ export const useGroup = create((set) => ({
   groupList: [],
   setGroupList: (groupList) =>
     set((state) => ({
-      groupList: [...new Set([groupList, ...state.groupList])],
+      groupList: [...new Set([...state.groupList, groupList])],
     })),
 }));
