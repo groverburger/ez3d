@@ -1,11 +1,11 @@
 import React, { useRef } from 'react';
-import { useColor, useTarget } from './context';
+import { useProperty, useTarget } from './context';
 import { convertColor } from './color-converter';
 
 export default function ModelRenderer(props) {
   const meshRef = useRef();
-  const { setTargetMesh } = useTarget();
-  const { setCurrentColor } = useColor();
+  const { setTargetMesh, setHoveredMesh } = useTarget();
+  const { setCurrentColor } = useProperty();
 
   const handleClick = (mesh) => {
     setTargetMesh(mesh);
@@ -16,8 +16,11 @@ export default function ModelRenderer(props) {
     <>
       <mesh
         {...props.position}
-        onClick={(event) => handleClick(event.object)}
         ref={meshRef}
+        onClick={(event) => handleClick(event.object)}
+        onPointerOver={() => setHoveredMesh(meshRef)}
+        onPointerOut={() => setHoveredMesh(null)}
+        castShadow
       >
         {props.type === 'cube' ? (
           <>

@@ -1,11 +1,11 @@
-import { useGrid } from './context';
+import { useScene } from './context';
 import Toggle from './toggle';
 import ColorSelector from './color-selector';
 import ShadeSelector from './shade-selector';
 import '../styles/scene-window.css';
 
 export default function SceneWindow() {
-  const { setGrid } = useGrid();
+  const { setGrid, setShadows } = useScene();
 
   return (
     <>
@@ -13,7 +13,11 @@ export default function SceneWindow() {
         <label className='scene-window-title'>Scene</label>
         <div className='scene-window-items'>
           <label>Grid</label>
-          <Toggle onChange={(event) => setGrid(event.target.checked)} />
+          <Toggle onChange={(event) => setGrid(event.target.checked)} defaultChecked={true} />
+        </div>
+        <div className='scene-window-items'>
+          <label>Shadows</label>
+          <Toggle onChange={(event) => setShadows(event.target.checked)} defaultChecked={true} />
         </div>
         <div className='scene-window-items'>
           <label>Color</label>

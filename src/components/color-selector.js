@@ -1,8 +1,8 @@
-import { useColor, useTarget } from './context';
+import { useProperty, useTarget } from './context';
 import { convertColor } from './color-converter';
 
 export default function ColorSelect() {
-  const { currentColor, setCurrentColor } = useColor();
+  const { currentColor, setCurrentColor } = useProperty();
   const { targetMesh } = useTarget();
 
   // Handler for input (converts value into hex)

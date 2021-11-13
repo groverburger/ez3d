@@ -4,31 +4,34 @@ import create from 'zustand';
 export const useTarget = create((set) => ({
   targetMesh: null,
   setTargetMesh: (targetMesh) => set({ targetMesh }),
+
+  hoveredMesh: null,
+  setHoveredMesh: (hoveredMesh) => set({ hoveredMesh }),
 }));
 
-// Grid State
-export const useGrid = create((set) => ({
-  isGridVisible: true,
-  setGrid: (isGridVisible) => set({ isGridVisible }),
-}));
-
-// Color State
-export const useColor = create((set) => ({
+// Property States
+export const useProperty = create((set) => ({
   currentColor: '#ffffff',
   setCurrentColor: (currentColor) => set({ currentColor }),
-}));
 
-// Shader State
-export const useShader = create((set) => ({
   currentShade: 'smooth',
   setCurrentShade: (currentShade) => set({ currentShade }),
-}));
 
-// Transform Controls State
-export const useTransform = create((set) => ({
-  transformType: null,
-  setTransformType: (transformType) => set({ transformType }),
-}));
+  currentIntensity: 1,
+  setCurrentIntensity: (currentIntensity) => set({ currentIntensity }),
+
+  currentTransformMode: null,
+  setCurrentTransformMode: (currentTransformMode) => set({ currentTransformMode }),
+}))
+
+// Scene States
+export const useScene = create((set) => ({
+  isGridVisible: true,
+  setGrid: (isGridVisible) => set({ isGridVisible }),
+
+  isShadowsVisible: true,
+  setShadows: (isShadowsVisible) => set({ isShadowsVisible }),
+}))
 
 // Model State
 export const useModel = create((set) => ({

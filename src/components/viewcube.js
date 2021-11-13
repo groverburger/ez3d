@@ -1,16 +1,20 @@
-import { Scene, Matrix4 } from 'three';
 import React, { useRef, useMemo, useState } from 'react';
 import { useFrame, useThree, createPortal } from '@react-three/fiber';
 import { OrthographicCamera, useCamera } from '@react-three/drei';
+import { Scene, Matrix4 } from 'three';
 
 // Reference: https://codesandbox.io/s/viewcube-py4db?file=/src/App.js
+// Reference: https://github.com/pmndrs/drei/blob/master/src/core/GizmoHelper.tsx
 export default function Viewcube() {
-  const { gl, scene, camera, size } = useThree();
-  const virtualScene = useMemo(() => new Scene(), []);
-  const virtualCam = useRef();
-  const ref = useRef();
-  const [hover, set] = useState(null);
+  const { gl, camera, size } = useThree();
   const matrix = new Matrix4();
+  const virtualScene = useMemo(() => new Scene(), []);
+
+  const virtualCam = useRef();
+  const viewcubeRef = useRef();
+
+  const [hover, set] = useState(null);
+  const RENDER_PRIORITY = 2;
 
   const setCameraPosition = (event) => {
     switch (Math.floor(event.faceIndex / 2)) {
@@ -77,14 +81,14 @@ export default function Viewcube() {
   };
 
   useFrame(() => {
-    matrix.copy(camera.matrix).invert();
-    ref.current.quaternion.setFromRotationMatrix(matrix);
-    gl.autoClear = true;
-    gl.render(scene, camera);
-    gl.autoClear = false;
-    gl.clearDepth();
-    gl.render(virtualScene, virtualCam.current);
-  }, 1);
+    if (virtualCam.current && viewcubeRef.current) {
+      matrix.copy(camera.matrix).invert();
+      viewcubeRef.current?.quaternion.setFromRotationMatrix(matrix);
+      gl.autoClear = false;
+      gl.clearDepth();
+      gl.render(virtualScene, virtualCam.current);
+    }
+  }, RENDER_PRIORITY);
 
   return createPortal(
     <>
@@ -94,14 +98,12 @@ export default function Viewcube() {
         position={[0, 0, 100]}
       />
       <mesh
-        ref={ref}
+        ref={viewcubeRef}
         raycast={useCamera(virtualCam)}
         position={[-(size.width / 2 - 80), -(size.height / 2 - 120), 0]}
         onPointerOut={() => set(null)}
         onPointerMove={(event) => set(Math.floor(event.faceIndex / 2))}
-        onClick={(event) => {
-          setCameraPosition(event);
-        }}
+        onClick={(event) => setCameraPosition(event)}
       >
         {[...Array(6)].map((_, index) => (
           <meshLambertMaterial

@@ -1,13 +1,13 @@
 import '../styles/toggle.css';
 
-export default function Toggle({ onChange }) {
+export default function Toggle(props) {
   return (
     <label className='wrapper'>
       <input
         className='input'
         type='checkbox'
-        onChange={onChange}
-        defaultChecked
+        onChange={props.onChange}
+        defaultChecked={props.defaultChecked}
       />
       <span className='slider' />
     </label>

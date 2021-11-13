@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { TransformControls } from '@react-three/drei';
-import { useTransform } from './context';
+import { useProperty } from './context';
 
 // Transform Controls
 export default function Controls(props) {
-  const { transformType, setTransformType } = useTransform();
+  const { currentTransformMode, setCurrentTransformMode } = useProperty();
 
   // Transform Controls reference so that we can change its properties
   const transformRef = useRef();
@@ -13,27 +13,27 @@ export default function Controls(props) {
     if (transformRef.current) {
       const controls = transformRef.current;
 
-      if (transformType) {
-        controls.setMode(transformType);
+      if (currentTransformMode) {
+        controls.setMode(currentTransformMode);
       } else {
-        setTransformType(controls.mode);
+        setCurrentTransformMode(controls.mode);
       }
 
       const handleKeyDown = (event) => {
         switch (event.key) {
           case 'w':
             controls.setMode('translate');
-            setTransformType(controls.mode);
+            setCurrentTransformMode(controls.mode);
             break;
 
           case 'e':
             controls.setMode('scale');
-            setTransformType(controls.mode);
+            setCurrentTransformMode(controls.mode);
             break;
 
           case 'r':
             controls.setMode('rotate');
-            setTransformType(controls.mode);
+            setCurrentTransformMode(controls.mode);
             break;
 
           case 't':

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
+import { EffectComposer, Outline } from '@react-three/postprocessing';
 import { Navbar, Nav } from 'react-bootstrap';
-import { useLight, useModel, useGrid, useTarget } from './components/context';
+import { useLight, useModel, useTarget } from './components/context';
 
 import Controls from './components/controls';
 import LightRenderer from './components/light-renderer';
@@ -18,6 +19,7 @@ import Pane from 'react-split-pane/lib/Pane';
 import Toolbar from './components/toolbar';
 import Viewcube from './components/viewcube';
 import Group from './components/group';
+import Grid from './components/grid';
 
 import './App.css';
 import './styles/navbar.css';
@@ -25,8 +27,13 @@ import './styles/navbar.css';
 export default function App() {
   const { modelData } = useModel();
   const { lightData, windowInfo } = useLight();
-  const { isGridVisible } = useGrid();
-  const { targetMesh } = useTarget();
+  const { targetMesh, hoveredMesh } = useTarget();
+
+  // Reference: https://codesandbox.io/s/basic-demo-forked-v8ji5?file=/src/App.js:1036-1079
+  // Selection is done on the outermost mesh - not the innermost mesh
+  const intersectionsFilter = (intersections) => {
+    return intersections?.length ? [intersections[0]] : intersections
+  }
 
   return (
     <>
@@ -45,10 +52,15 @@ export default function App() {
         <Pane className='pane-canvas'>
           <Toolbar />
 
-          <Canvas className='canvas' camera={{ position: [3, 3, 3] }}>
+          <Canvas
+            camera={{ position: [3, 3, 3] }}
+            raycaster={{ filter: intersectionsFilter }}
+            shadows
+          >
+            <color attach='background' args={['#bbbbbe']} />
+            <fog attach='fog' args={['#bbbbbe', 10, 40]} />
             <ambientLight intensity={0.5} />
             <spotLight position={[0, 5, 10]} angle={0.3} />
-            <fog attach='fog' args={['#dddde0', 10, 40]} />
 
             <Viewcube />
             <OrbitControls makeDefault dampingFactor={0.3} />
@@ -64,12 +76,17 @@ export default function App() {
               ))}
             </Group>
 
-            {isGridVisible && (
-              <gridHelper
-                position={[0, -0.51, 0]}
-                args={[100, 100, '#89898e', '#adadb4']}
+            <Grid position={[0, -0.51, 0]} args={[100, 100, '#89898e', '#adadb4']} />
+
+            <EffectComposer multisampling={8} autoClear={false}>
+              <Outline
+                blur
+                selection={hoveredMesh ? [hoveredMesh] : undefined}
+                visibleEdgeColor="white"
+                edgeStrength={100}
+                width={1000}
               />
-            )}
+            </EffectComposer>
           </Canvas>
         </Pane>
 

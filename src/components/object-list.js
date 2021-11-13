@@ -1,13 +1,13 @@
 import { Button } from 'react-bootstrap';
-import { useGroup, useColor, useTarget, useLight } from './context';
+import { useGroup, useLight, useProperty, useTarget } from './context';
 import { convertColor } from './color-converter';
 import '../styles/object-list.css';
 
 export default function ObjectList() {
-  const { setWindowType, setWindowToggle, setIntensity } = useLight();
+  const { setCurrentColor, setCurrentIntensity } = useProperty();
+  const { setWindowType, setWindowToggle } = useLight();
   const { groupList } = useGroup();
-  const { setCurrentColor } = useColor();
-  const { setTargetMesh, targetMesh } = useTarget();
+  const { setHoveredMesh, setTargetMesh, targetMesh } = useTarget();
 
   const total = groupList.length;
   const objList = [];
@@ -26,7 +26,7 @@ export default function ObjectList() {
     setTargetMesh(mesh);
 
     if (mesh.children[0]) {
-      setIntensity(mesh.children[0].intensity);
+      setCurrentIntensity(mesh.children[0].intensity);
       setCurrentColor(convertColor(mesh.children[0].color));
       setWindowType(mesh.children[0].type);
       setWindowToggle(true);
@@ -45,6 +45,8 @@ export default function ObjectList() {
               className='btn-light object-list-items'
               active={groupList[mesh.index] === targetMesh}
               onClick={() => handleClick(groupList[mesh.index])}
+              onPointerOver={() => setHoveredMesh({current: groupList[mesh.index]})}
+              onPointerOut={() => setHoveredMesh(null)}
             >
               {mesh.name}
             </Button>

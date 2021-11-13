@@ -1,10 +1,11 @@
-import { useLight } from './context';
+import { useLight, useProperty } from './context';
 import Range from './range';
 import ColorSelect from './color-selector';
 import '../styles/light-window.css';
 
 export default function LightWindow() {
-  const { windowInfo, intensity } = useLight();
+  const { currentIntensity } = useProperty();
+  const { windowInfo } = useLight();
 
   // If the window info is of a type, then label the window as such
   return (
@@ -21,7 +22,7 @@ export default function LightWindow() {
               <div className='light-window-items-header'>
                 <label>Intensity</label>
                 <div className='slider-value'>
-                  <span>{`${Math.floor(intensity * 100)}%`}</span>
+                  <span>{`${Math.floor(currentIntensity * 100)}%`}</span>
                 </div>
               </div>
               <Range />
@@ -40,7 +41,7 @@ export default function LightWindow() {
               <div className='light-window-items-header'>
                 <label>Intensity</label>
                 <div className='slider-value'>
-                  <span>{`${Math.floor(intensity * 100)}%`}</span>
+                  <span>{`${Math.floor(currentIntensity * 100)}%`}</span>
                 </div>
               </div>
               <Range />
@@ -59,7 +60,7 @@ export default function LightWindow() {
               <div className='light-window-items-header'>
                 <label>Intensity</label>
                 <div className='slider-value'>
-                  <span>{`${Math.floor(intensity * 100)}%`}</span>
+                  <span>{`${Math.floor(currentIntensity * 100)}%`}</span>
                 </div>
               </div>
               <Range />

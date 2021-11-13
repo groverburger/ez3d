@@ -1,8 +1,8 @@
 import { ButtonGroup, Button } from 'react-bootstrap';
-import { useShader, useTarget } from './context';
+import { useProperty, useTarget } from './context';
 
 export default function ShadeSelect() {
-  const { setCurrentShade } = useShader();
+  const { setCurrentShade } = useProperty();
   const { targetMesh } = useTarget();
 
   function handleWireframe() {

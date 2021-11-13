@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useHelper } from '@react-three/drei';
 import { DirectionalLightHelper, PointLightHelper } from 'three';
-import { useLight, useColor, useTarget } from './context';
+import { useProperty, useTarget } from './context';
 import { convertColor } from './color-converter';
 
 export const AmbientLight = (props) => {
@@ -9,13 +9,12 @@ export const AmbientLight = (props) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
-  const { setIntensity } = useLight();
-  const { setCurrentColor } = useColor();
-  const { setTargetMesh } = useTarget();
+  const { setCurrentColor, setCurrentIntensity } = useProperty();
+  const { setHoveredMesh, setTargetMesh } = useTarget();
 
   const handleClick = (mesh) => {
     setTargetMesh(mesh);
-    setIntensity(mesh.children[0].intensity);
+    setCurrentIntensity(mesh.children[0].intensity);
     setCurrentColor(convertColor(mesh.children[0].color));
     handleLightClick(props.type);
   };
@@ -26,6 +25,8 @@ export const AmbientLight = (props) => {
       position={[0, 2, 0]}
       onClick={(event) => handleClick(event.object)} /// event.object is the mesh object that holds the light object
       onPointerMissed={() => handleWindowClose(props.type)}
+      onPointerOver={(event) => setHoveredMesh({current: event.object})}
+      onPointerOut={() => setHoveredMesh(null)}
     >
       <icosahedronBufferGeometry attach='geometry' />
       <meshBasicMaterial attach='material' color='hotpink' wireframe />
@@ -38,9 +39,8 @@ export const DirectionalLight = (props) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
-  const { setIntensity } = useLight();
-  const { setCurrentColor } = useColor();
-  const { setTargetMesh } = useTarget();
+  const { setCurrentColor, setCurrentIntensity } = useProperty();
+  const { setHoveredMesh, setTargetMesh } = useTarget();
 
   // The outline that accompanies the light to show direction
   const lightRef = useRef();
@@ -48,7 +48,7 @@ export const DirectionalLight = (props) => {
 
   const handleClick = (mesh) => {
     setTargetMesh(mesh);
-    setIntensity(mesh.children[0].intensity);
+    setCurrentIntensity(mesh.children[0].intensity);
     setCurrentColor(convertColor(mesh.children[0].color));
     handleLightClick(props.type);
   };
@@ -57,12 +57,21 @@ export const DirectionalLight = (props) => {
     <mesh
       scale={[0.07, 0.07, 0.07]}
       position={[0, 2, 0]}
-      onClick={(event) => handleClick(event.object)} // event.object is the mesh object that holds the light object
+      onClick={(event) => handleClick(event.object)}
       onPointerMissed={() => handleWindowClose(props.type)}
+      onPointerOver={(event) => setHoveredMesh({current: event.object})}
+      onPointerOut={() => setHoveredMesh(null)}
     >
       <icosahedronBufferGeometry attach='geometry' />
       <meshBasicMaterial attach='material' color='hotpink' wireframe />
-      <directionalLight {...props.position} color='white' ref={lightRef} />
+      <directionalLight 
+        {...props.position}
+        ref={lightRef}
+        color='white'
+        shadow-mapSize-width={2048}
+        shadow-mapSize-height={2048}
+        castShadow
+      />
     </mesh>
   );
 };
@@ -71,9 +80,8 @@ export const PointLight = (props) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
 
-  const { setIntensity } = useLight();
-  const { setCurrentColor } = useColor();
-  const { setTargetMesh } = useTarget();
+  const { setCurrentColor, setCurrentIntensity } = useProperty();
+  const { setHoveredMesh, setTargetMesh } = useTarget();
 
   // The outline that accompanies the light to show direction
   const lightRef = useRef();
@@ -81,7 +89,7 @@ export const PointLight = (props) => {
 
   const handleClick = (mesh) => {
     setTargetMesh(mesh);
-    setIntensity(mesh.children[0].intensity);
+    setCurrentIntensity(mesh.children[0].intensity);
     setCurrentColor(convertColor(mesh.children[0].color));
     handleLightClick(props.type);
   };
@@ -90,12 +98,19 @@ export const PointLight = (props) => {
     <mesh
       scale={[0.07, 0.07, 0.07]}
       position={[0, 2, 0]}
-      onClick={(event) => handleClick(event.object)} // event.object is the mesh object that holds the light object
+      onClick={(event) => handleClick(event.object)}
       onPointerMissed={() => handleWindowClose(props.type)}
+      onPointerOver={(event) => setHoveredMesh({current: event.object})}
+      onPointerOut={() => setHoveredMesh(null)}
     >
       <icosahedronBufferGeometry attach='geometry' />
       <meshBasicMaterial attach='material' color='hotpink' wireframe />
-      <pointLight {...props.position} color='white' ref={lightRef} />
+      <pointLight
+        {...props.position}
+        ref={lightRef}
+        color='white'
+        castShadow
+      />
     </mesh>
   );
 };
