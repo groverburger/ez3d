@@ -1,13 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { TransformControls } from '@react-three/drei';
-import { useProperty } from './context';
+import { useProperty,useTarget } from './context';
 
 // Transform Controls
 export default function Controls(props) {
   const { currentTransformMode, setCurrentTransformMode } = useProperty();
+  const { setTargetMesh } = useTarget();
 
   // Transform Controls reference so that we can change its properties
   const transformRef = useRef();
+  
 
   useEffect(() => {
     if (transformRef.current) {
@@ -38,6 +40,10 @@ export default function Controls(props) {
 
           case 't':
             controls.visible = !controls.visible;
+            break;
+
+          case "Escape":
+            setTargetMesh(null);
             break;
 
           default:
