@@ -15,33 +15,14 @@ export default function ModelRenderer(props) {
   return (
     <>
       <mesh
-        {...props.position}
+        {...props}
         ref={meshRef}
         onClick={(event) => handleClick(event.object)}
         onPointerOver={() => setHoveredMesh(meshRef)}
         onPointerOut={() => setHoveredMesh(null)}
         castShadow
       >
-        {props.type === 'cube' ? (
-          <>
-            <boxBufferGeometry attach='geometry' />
-            <meshStandardMaterial attach='material' color='hotpink' />
-          </>
-        ) : null}
-
-        {props.type === 'cylinder' ? (
-          <>
-            <cylinderBufferGeometry attach='geometry' />
-            <meshStandardMaterial attach='material' color='green' />
-          </>
-        ) : null}
-
-        {props.type === 'sphere' ? (
-          <>
-            <sphereBufferGeometry attach='geometry' />
-            <meshStandardMaterial attach='material' color='blue' />
-          </>
-        ) : null}
+        <meshStandardMaterial attach='material' color={props.color || "black"} />
       </mesh>
     </>
   );

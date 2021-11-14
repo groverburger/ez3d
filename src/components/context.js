@@ -36,6 +36,13 @@ export const useScene = create((set) => ({
 // Model State
 export const useModel = create((set) => ({
   modelData: [],
+
+  replaceModelData: data => {
+    set(() => ({
+      modelData: data,
+    }))
+  },
+
   setModelData: (modelData) =>
     set((state) => ({
       modelData: [modelData, ...state.modelData],

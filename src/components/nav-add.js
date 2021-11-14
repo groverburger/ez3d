@@ -1,6 +1,7 @@
 import { NavDropdown } from 'react-bootstrap';
 import { useModel, useLight } from './context';
 import '../styles/navbar.css';
+import * as THREE from 'three';
 
 export default function NavAdd() {
   const { modelData, setModelData } = useModel();
@@ -11,19 +12,31 @@ export default function NavAdd() {
       <NavDropdown title='Add' id='add-dropdown'>
         <NavDropdown.Item
           href='#action/1.0'
-          onClick={(event) => generateNewShape(event)}
+          onClick={() => {
+            addModel(
+              new Float32Array([
+                1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, 1,
+                1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1, 1, -1,
+                1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1,
+                -1, -1, -1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1,
+                -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, -1, -1,
+                -1, -1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1,
+              ]),
+              "#4488ff"
+            )
+          }}
         >
           Cube
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.1'
-          onClick={(event) => generateNewShape(event)}
+          onClick={() => generateSphere(16, 12)}
         >
           Sphere
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape(event)}
+          onClick={() => generateCylinder(16)}
         >
           Cylinder
         </NavDropdown.Item>
@@ -50,43 +63,74 @@ export default function NavAdd() {
     </div>
   );
 
-  // When generating a new shape, push an object containing the properties of the new shape to the model list
-  function generateNewShape(event) {
-    const totalModels = modelData.length;
+  function addModel(vertices, color) {
+    const newModel = {
+      position: [0, 0, 0],
+      geometry: new THREE.BufferGeometry(),
+      uuid: Math.random(),
+      color: color,
+      vertices: vertices,
+    };
 
-    switch (event.target.innerHTML) {
-      case 'Cube':
-        const newCube = {
-          position: { position: [0, 0, 0] },
-          type: 'cube',
-          uuid: Math.random(),
-        };
-        setModelData(newCube);
-        break;
+    newModel.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    newModel.geometry.computeVertexNormals();
 
-      case 'Sphere':
-        const newSphere = {
-          position: { position: [0, 0, 0] },
-          type: 'sphere',
-          uuid: Math.random(),
-        };
-        setModelData(newSphere);
-        break;
+    setModelData(newModel)
+  }
 
-      case 'Cylinder':
-        const newCylinder = {
-          position: { position: [0, 0, 0] },
-          type: 'cylinder',
-          uuid: Math.random(),
-        };
-        setModelData(newCylinder);
-        break;
+  function generateSphere(hsegs, vsegs) {
+  }
 
-      default:
-        break;
+  function generateCylinder(segs) {
+    const verts = []
+    const step = Math.PI*2/segs
+
+    for (let i=0; i<Math.PI*2; i += step) {
+      // generate the sides
+      verts.push(Math.cos(i))
+      verts.push(-1)
+      verts.push(Math.sin(i))
+      verts.push(Math.cos(i))
+      verts.push(1)
+      verts.push(Math.sin(i))
+      verts.push(Math.cos(i + step))
+      verts.push(-1)
+      verts.push(Math.sin(i + step))
+
+      verts.push(Math.cos(i + step))
+      verts.push(-1)
+      verts.push(Math.sin(i + step))
+      verts.push(Math.cos(i))
+      verts.push(1)
+      verts.push(Math.sin(i))
+      verts.push(Math.cos(i + step))
+      verts.push(1)
+      verts.push(Math.sin(i + step))
+
+      // generate top
+      verts.push(Math.cos(i))
+      verts.push(1)
+      verts.push(Math.sin(i))
+      verts.push(0)
+      verts.push(1)
+      verts.push(0)
+      verts.push(Math.cos(i + step))
+      verts.push(1)
+      verts.push(Math.sin(i + step))
+
+      // generate bottom
+      verts.push(Math.cos(i))
+      verts.push(-1)
+      verts.push(Math.sin(i))
+      verts.push(Math.cos(i + step))
+      verts.push(-1)
+      verts.push(Math.sin(i + step))
+      verts.push(0)
+      verts.push(-1)
+      verts.push(0)
     }
 
-    console.log(totalModels);
+    addModel(new Float32Array(verts), "green")
   }
 
   // When generating a new light, push an object containing the properties of the new light to the light list
