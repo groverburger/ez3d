@@ -39,10 +39,10 @@ export default function NavFile() {
 
   function load(event) {
     const reader = new FileReader()
-    console.log(modelData)
+    //console.log(modelData)
     reader.addEventListener("load", () => {
       const result = JSON.parse(reader.result)
-      console.log(result)
+      //console.log(result)
       replaceModelData(result.modelData)
     })
     reader.readAsText(event.target.files[0])

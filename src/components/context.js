@@ -7,6 +7,8 @@ export const useTarget = create((set) => ({
 
   hoveredMesh: null,
   setHoveredMesh: (hoveredMesh) => set({ hoveredMesh }),
+
+
 }));
 
 // Property States
@@ -43,6 +45,18 @@ export const useModel = create((set) => ({
     }))
   },
 
+  deleteModelData: (delModel) => set((state) => {
+    var newList = state.modelData;
+    var index = -1;
+    state.modelData.forEach((entry, i) => {
+      if(entry.uuid == delModel.uuid){
+        index = i;
+      }  
+    })
+    newList.splice(index,1);
+    state.modelData = newList;
+  }),
+
   setModelData: (modelData) =>
     set((state) => ({
       modelData: [modelData, ...state.modelData],
@@ -77,6 +91,15 @@ export const useLight = create((set) => ({
 // Group State
 export const useGroup = create((set) => ({
   groupList: [],
+  delGroupList: (delGroup) => 
+    set((state) => {
+      const index = state.groupList.indexOf(delGroup);
+      var newList = state.groupList;
+      newList.splice(index,1);
+      state.groupList = newList;
+  }),
+    
+    
   setGroupList: (groupList) =>
     set((state) => ({
       groupList: [...new Set([...state.groupList, groupList])],

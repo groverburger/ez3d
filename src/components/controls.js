@@ -1,11 +1,13 @@
 import React, { useEffect, useRef } from 'react';
 import { TransformControls } from '@react-three/drei';
-import { useProperty,useTarget } from './context';
+import { useProperty,useTarget,useGroup,useModel} from './context';
 
 // Transform Controls
 export default function Controls(props) {
   const { currentTransformMode, setCurrentTransformMode } = useProperty();
-  const { setTargetMesh } = useTarget();
+  const { setTargetMesh,targetMesh,setHoveredMesh } = useTarget();
+  const { delGroupList } = useGroup();
+  const { modelData,deleteModelData } = useModel();
 
   // Transform Controls reference so that we can change its properties
   const transformRef = useRef();
@@ -45,6 +47,12 @@ export default function Controls(props) {
           case "Escape":
             setTargetMesh(null);
             break;
+
+          case "Backspace":
+            setHoveredMesh(null);
+            setTargetMesh(null);
+            delGroupList(targetMesh);
+            deleteModelData(targetMesh);
 
           default:
             break;
