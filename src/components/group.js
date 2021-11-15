@@ -14,10 +14,11 @@ export default function Group({ children }) {
 
       group.children.forEach((child) => {
         setGroupList(child);
+        console.log("child is: ", child);
       })
+      
     }
   }, [modelData, lightData, setGroupList]);
-
   return (
     <group ref={groupRef}>
       {children}

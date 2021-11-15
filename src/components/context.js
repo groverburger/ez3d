@@ -45,16 +45,18 @@ export const useModel = create((set) => ({
     }))
   },
 
+  //function to delete model from modelData list
+  //use the uuid of the input object to find the corresponding
+  //model in modelData and delete it
+  //the input object must be a groupList object
   deleteModelData: (delModel) => set((state) => {
     var newList = state.modelData;
-    var index = -1;
     state.modelData.forEach((entry, i) => {
       if(entry.uuid == delModel.uuid){
-        index = i;
+        newList.splice(i,1);
       }  
     })
-    newList.splice(index,1);
-    state.modelData = newList;
+    state.modelData = newList;   
   }),
 
   setModelData: (modelData) =>
@@ -86,11 +88,25 @@ export const useLight = create((set) => ({
     set((state) => {
       state.windowInfo.isWindowOpen = windowInfo;
     }),
+
+  //function to delete light from lightData
+  //use the uuid of the input object to find the corresponding
+  //light in lightData and delete it
+  //the input object must be a groupList object
+  deleteLightData: (delIndex) => set((state) => {
+    var newList = state.lightData;
+    newList.splice(delIndex,1);
+    state.lightData = newList;  
+  }),
 }));
 
 // Group State
 export const useGroup = create((set) => ({
   groupList: [],
+
+  //useGroup function to delete the specified object from the group list
+  //input is a group object to delete
+  //make a copy, delete from copy, set state to copy
   delGroupList: (delGroup) => 
     set((state) => {
       const index = state.groupList.indexOf(delGroup);
