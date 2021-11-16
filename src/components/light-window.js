@@ -8,13 +8,20 @@ export default function LightWindow() {
   const { currentIntensity } = useProperty();
   const { lightWindowInfo } = useLight();
 
+  const windowType = (type) => {
+    if (type === 'ambient' || type === 'AmbientLight') return 'Ambient Light';
+    else if (type === 'directional' || type === 'DirectionalLight') return 'Directional Light';
+    else if (type === 'point' || type === 'PointLight') return 'Point Light';
+    else return undefined;
+  }
+
   // If the window info is of a type, then label the window as such
   return (
     <>
       <div className='light-window-top'>
-        {lightWindowInfo.lightType === 'ambient' || lightWindowInfo.lightType === 'AmbientLight' ? (
+        {windowType(lightWindowInfo.lightType) &&
           <>
-            <label className='light-window-title'>Ambient Light</label>
+            <label className='light-window-title'>{windowType(lightWindowInfo.lightType)}</label>
             <div className='light-window-items-transformation'>
               <div className='light-window-items-transformation label'>
                 <label>Transformation</label>
@@ -35,57 +42,7 @@ export default function LightWindow() {
               <Range />
             </div>
           </>
-        ) : null}
-
-        {lightWindowInfo.lightType === 'directional' || lightWindowInfo.lightType === 'DirectionalLight' ? (
-          <>
-            <label className='light-window-title'>Directional Light</label>
-            <div className='light-window-items-transformation'>
-              <div className='light-window-items-transformation label'>
-                <label>Transformation</label>
-              </div>
-              <Number />
-            </div>
-            <div className='light-window-items'>
-              <label>Color</label>
-              <ColorSelect />
-            </div>
-            <div className='light-window-items-intensity'>
-              <div className='light-window-items-header'>
-                <label>Intensity</label>
-                <div className='slider-value'>
-                  <span>{`${Math.floor(currentIntensity * 100)}%`}</span>
-                </div>
-              </div>
-              <Range />
-            </div>
-          </>
-        ) : null}
-
-        {lightWindowInfo.lightType === 'point' || lightWindowInfo.lightType === 'PointLight' ? (
-          <>
-            <label className='light-window-title'>Point Light</label>
-            <div className='light-window-items-transformation'>
-              <div className='light-window-items-transformation label'>
-                <label>Transformation</label>
-              </div>
-              <Number />
-            </div>
-            <div className='light-window-items'>
-              <label>Color</label>
-              <ColorSelect />
-            </div>
-            <div className='light-window-items-intensity'>
-              <div className='light-window-items-header'>
-                <label>Intensity</label>
-                <div className='slider-value'>
-                  <span>{`${Math.floor(currentIntensity * 100)}%`}</span>
-                </div>
-              </div>
-              <Range />
-            </div>
-          </>
-        ) : null}
+        }
       </div>
     </>
   );
