@@ -35,13 +35,13 @@ export default function ShadeSelect() {
   return (
     <ButtonGroup>
       <Button
-        className='btn-light object-list-items'
+        className='btn-light scene-window-items'
         onClick={() => handleWireframe()}
       >
         Wireframe
       </Button>
       <Button
-        className='btn-light object-list-items'
+        className='btn-light scene-window-items'
         onClick={() => handleSmooth()}
       >
         Smooth

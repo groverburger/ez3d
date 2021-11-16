@@ -1,11 +1,9 @@
 import { useScene } from './context';
 import Toggle from './toggle';
-import ColorSelector from './color-selector';
-import ShadeSelector from './shade-selector';
 import '../styles/scene-window.css';
 
 export default function SceneWindow() {
-  const { setGrid, setShadows } = useScene();
+  const { isGridVisible, setGrid, isShadowsVisible, setShadows } = useScene();
 
   return (
     <>
@@ -13,19 +11,17 @@ export default function SceneWindow() {
         <label className='scene-window-title'>Scene</label>
         <div className='scene-window-items'>
           <label>Grid</label>
-          <Toggle onChange={(event) => setGrid(event.target.checked)} defaultChecked={true} />
+          <Toggle
+            onChange={(event) => setGrid(event.target.checked)}
+            defaultChecked={isGridVisible}
+          />
         </div>
         <div className='scene-window-items'>
           <label>Shadows</label>
-          <Toggle onChange={(event) => setShadows(event.target.checked)} defaultChecked={true} />
-        </div>
-        <div className='scene-window-items'>
-          <label>Color</label>
-          <ColorSelector />
-        </div>
-        <div className='scene-window-items'>
-          <label>Shader</label>
-          <ShadeSelector />
+          <Toggle
+            onChange={(event) => setShadows(event.target.checked)}
+            defaultChecked={isShadowsVisible}
+          />
         </div>
         <div className='scene-window-items'>
           <label>Camera</label>

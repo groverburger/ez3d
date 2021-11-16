@@ -1,6 +1,6 @@
 import { useScene } from './context';
 
-export default function Grid(props) {
+export default function Grid() {
   const { isGridVisible, isShadowsVisible } = useScene();
 
   return (
@@ -13,7 +13,12 @@ export default function Grid(props) {
         <planeBufferGeometry args={[100, 100]} attach='geometry' />
         <shadowMaterial attach='material' transparent opacity={0.5} />
       </mesh>
-      {isGridVisible && <gridHelper {...props} />}
+      {isGridVisible && (
+        <gridHelper
+          position={[0, -0.51, 0]}
+          args={[100, 100, '#89898e', '#adadb4']}
+        />
+      )}
     </>
   );
 }

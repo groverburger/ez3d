@@ -26,6 +26,7 @@ export default function ColorSelect() {
       type='color'
       value={currentColor}
       onInput={(event) => handleInputChange(event)}
+      style={{ border: 'none', borderRadius: '0.2rem', outline: 'none' }}
     />
   );
 }

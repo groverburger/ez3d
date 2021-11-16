@@ -1,5 +1,5 @@
 import { useProperty, useTarget } from './context';
-import '../styles/range.css';
+import '../styles/range-input.css';
 
 export default function Range() {
   const { currentIntensity, setCurrentIntensity } = useProperty();

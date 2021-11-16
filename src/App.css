@@ -1,3 +1,19 @@
+/* Vertical Resizer */
+.sc-htpNat.fXAXjb.sc-bdVaJa.cjjWdp {
+  cursor: default;
+  border-right: 5px solid transparent;
+  border-left: 5px solid transparent;
+  background-color: var(--resizer-vertical);
+}
+
+/* Horizontal Resizer */
+.sc-bwzfXH.hEACtv.sc-bdVaJa.cjjWdp {
+  height: 1px;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  background-color: var(--resizer-horizontal);
+}
+
 .pane-outliner {
-  background-color: #fcfcfc;
+  background-color: var(--window-background);
 }

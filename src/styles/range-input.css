@@ -20,7 +20,7 @@
 .field input {
   height: 0.2rem;
   width: 100%;
-  background: #ddd;
+  background: var(--lightgray-input);
   border-radius: 1rem;
   outline: none;
   border: none;
@@ -30,11 +30,11 @@
 .field input::-webkit-slider-thumb {
   border: none;
   border-radius: 50%;
-  background: white;
+  background: var(--window-background);
   height: 1rem;
   width: 1rem;
   cursor: pointer;
-  box-shadow: 1px 1px 2.5px #787878;
+  box-shadow: 1px 1px 2.5px var(--box-shadow);
   transition: box-shadow 0.5s ease;
   -webkit-appearance: none;
 }

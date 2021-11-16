@@ -11,14 +11,14 @@
   padding-left: 0.8rem;
   border: 0;
   z-index: 1;
-  background-color: #fcfcfc;
-  color: rgba(0, 0, 0, 0.9);
+  background-color: var(--window-background);
+  color: var(--black-font-color);
 }
 
 .btn-light.toolbar-items:hover:not(.active) {
   z-index: 1;
-  background-color: #f1f1f3;
-  color: rgba(0, 0, 0, 0.9);
+  background-color: var(--hover-background);
+  color: var(--black-font-color);
   transition: all 0.3s ease-in-out;
 }
 
@@ -28,8 +28,8 @@
 .btn-light.toolbar-items:active,
 .show > .btn-light.toolbar-items.dropdown-toggle {
   z-index: 2;
-  background-color: hotpink;
-  color: #fcfcfc;
+  background-color: var(--brand-color);
+  color: var(--white-font-color);
 }
 
 .btn-light:hover,

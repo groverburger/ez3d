@@ -4,8 +4,8 @@ import '../styles/navbar.css';
 import * as THREE from 'three';
 
 export default function NavAdd() {
-  const { modelData, setModelData } = useModel();
-  const { lightData, setLightData } = useLight();
+  const { setModelData } = useModel();
+  const { setLightData } = useLight();
 
   return (
     <div className='navbar-items'>
@@ -15,15 +15,16 @@ export default function NavAdd() {
           onClick={() => {
             addModel(
               new Float32Array([
-                1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, 1,
-                1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1, 1, -1,
-                1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1,
-                -1, -1, -1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1,
-                -1, -1, -1, 1, -1, -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, -1, -1,
-                -1, -1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1,
+                1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1,
+                1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1, 1, -1, 1, 1,
+                1, -1, 1, 1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1,
+                -1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1,
+                -1, -1, 1, -1, -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, -1, -1,
+                -1, -1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1,
+                -1,
               ]),
-              "#4488ff"
-            )
+              '#4488ff'
+            );
           }}
         >
           Cube
@@ -40,7 +41,7 @@ export default function NavAdd() {
         >
           Cylinder
         </NavDropdown.Item>
-        <NavDropdown.Divider />
+        <NavDropdown.Divider className='nav-divider' />
         <NavDropdown.Item
           href='#action/1.3'
           onClick={(event) => generateNewLight(event)}
@@ -75,68 +76,65 @@ export default function NavAdd() {
     newModel.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
     newModel.geometry.computeVertexNormals();
 
-    setModelData(newModel)
+    setModelData(newModel);
   }
 
-  function generateSphere(hsegs, vsegs) {
-  }
+  function generateSphere(hsegs, vsegs) {}
 
   function generateCylinder(segs) {
-    const verts = []
-    const step = Math.PI*2/segs
+    const verts = [];
+    const step = (Math.PI * 2) / segs;
 
-    for (let i=0; i<Math.PI*2; i += step) {
+    for (let i = 0; i < Math.PI * 2; i += step) {
       // generate the sides
-      verts.push(Math.cos(i))
-      verts.push(-1)
-      verts.push(Math.sin(i))
-      verts.push(Math.cos(i))
-      verts.push(1)
-      verts.push(Math.sin(i))
-      verts.push(Math.cos(i + step))
-      verts.push(-1)
-      verts.push(Math.sin(i + step))
+      verts.push(Math.cos(i));
+      verts.push(-1);
+      verts.push(Math.sin(i));
+      verts.push(Math.cos(i));
+      verts.push(1);
+      verts.push(Math.sin(i));
+      verts.push(Math.cos(i + step));
+      verts.push(-1);
+      verts.push(Math.sin(i + step));
 
-      verts.push(Math.cos(i + step))
-      verts.push(-1)
-      verts.push(Math.sin(i + step))
-      verts.push(Math.cos(i))
-      verts.push(1)
-      verts.push(Math.sin(i))
-      verts.push(Math.cos(i + step))
-      verts.push(1)
-      verts.push(Math.sin(i + step))
+      verts.push(Math.cos(i + step));
+      verts.push(-1);
+      verts.push(Math.sin(i + step));
+      verts.push(Math.cos(i));
+      verts.push(1);
+      verts.push(Math.sin(i));
+      verts.push(Math.cos(i + step));
+      verts.push(1);
+      verts.push(Math.sin(i + step));
 
       // generate top
-      verts.push(Math.cos(i))
-      verts.push(1)
-      verts.push(Math.sin(i))
-      verts.push(0)
-      verts.push(1)
-      verts.push(0)
-      verts.push(Math.cos(i + step))
-      verts.push(1)
-      verts.push(Math.sin(i + step))
+      verts.push(Math.cos(i));
+      verts.push(1);
+      verts.push(Math.sin(i));
+      verts.push(0);
+      verts.push(1);
+      verts.push(0);
+      verts.push(Math.cos(i + step));
+      verts.push(1);
+      verts.push(Math.sin(i + step));
 
       // generate bottom
-      verts.push(Math.cos(i))
-      verts.push(-1)
-      verts.push(Math.sin(i))
-      verts.push(Math.cos(i + step))
-      verts.push(-1)
-      verts.push(Math.sin(i + step))
-      verts.push(0)
-      verts.push(-1)
-      verts.push(0)
+      verts.push(Math.cos(i));
+      verts.push(-1);
+      verts.push(Math.sin(i));
+      verts.push(Math.cos(i + step));
+      verts.push(-1);
+      verts.push(Math.sin(i + step));
+      verts.push(0);
+      verts.push(-1);
+      verts.push(0);
     }
 
-    addModel(new Float32Array(verts), "green")
+    addModel(new Float32Array(verts), 'green');
   }
 
   // When generating a new light, push an object containing the properties of the new light to the light list
   function generateNewLight(event) {
-    const totalLights = lightData.length;
-
     switch (event.target.innerHTML) {
       case 'Ambient Light':
         const newAmbient = {
@@ -158,7 +156,7 @@ export default function NavAdd() {
 
       case 'Point Light':
         const newPoint = {
-          position: { position: [0, 0, 0] },
+          position: { position: [0, 6.5, 0] },
           type: 'point',
           uuid: Math.random(),
         };
@@ -168,7 +166,5 @@ export default function NavAdd() {
       default:
         break;
     }
-
-    console.log(totalLights);
   }
 }

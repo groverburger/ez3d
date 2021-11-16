@@ -1,11 +1,13 @@
 import { Button } from 'react-bootstrap';
-import { useGroup, useLight, useProperty, useTarget } from './context';
+import { useGroup, useLight, useModel, useProperty, useTarget } from './context';
 import { convertColor } from './color-converter';
+
 import '../styles/object-list.css';
 
 export default function ObjectList() {
-  const { setCurrentColor, setCurrentIntensity } = useProperty();
-  const { setWindowType, setWindowToggle } = useLight();
+  const { setCurrentColor, setCurrentIntensity, setCurrentTransform } = useProperty();
+  const { setIsModelWindowOpen } = useModel();
+  const { setLightWindowType, setLightWindowToggle } = useLight();
   const { groupList } = useGroup();
   const { setHoveredMesh, setTargetMesh, targetMesh } = useTarget();
 
@@ -28,14 +30,23 @@ export default function ObjectList() {
     if (mesh.children[0]) {
       setCurrentIntensity(mesh.children[0].intensity);
       setCurrentColor(convertColor(mesh.children[0].color));
-      setWindowType(mesh.children[0].type);
-      setWindowToggle(true);
+      setCurrentTransform({
+        translate: mesh.position,
+        rotate: mesh.rotation.toVector3(),
+        scale: mesh.scale,
+      });
+      setLightWindowType(mesh.children[0].type);
+      setLightWindowToggle(true);
     } else {
       setCurrentColor(convertColor(mesh.material.color));
+      setCurrentTransform({
+        translate: mesh.position,
+        rotate: mesh.rotation.toVector3(),
+        scale: mesh.scale,
+      });
+      setIsModelWindowOpen(true);
     }
   };
-
-
 
   return (
     <>
@@ -47,7 +58,7 @@ export default function ObjectList() {
               className='btn-light object-list-items'
               active={groupList[mesh.index] === targetMesh}
               onClick={() => handleClick(groupList[mesh.index])}
-              onPointerOver={() => setHoveredMesh({current: groupList[mesh.index]})}
+              onPointerOver={() => setHoveredMesh({ current: groupList[mesh.index] })}
               onPointerOut={() => setHoveredMesh(null)}
             >
               {mesh.name}

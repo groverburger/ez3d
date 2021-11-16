@@ -23,7 +23,7 @@ export default function Toolbar() {
         {select.map((type) => (
           <Button
             className='btn-light toolbar-items'
-            key={type}
+            key={`toolbar ${type}`}
             active={targetMesh && currentTransformMode === type}
             onClick={targetMesh ? () => setCurrentTransformMode(type) : null} // When clicked, change transform type
           >

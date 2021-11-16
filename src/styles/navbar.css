@@ -6,41 +6,45 @@
 .navbar {
   z-index: 2;
   height: 3rem;
-  border-bottom: 1px solid #e4e4ea;
-  background-color: #fcfcfc;
+  border-bottom: 1px solid var(--navbar-border);
+  background-color: var(--window-background);
 }
 
 .navbar-expand .navbar-nav .dropdown-menu {
   top: 3.3rem;
   border: 0;
-  background-color: #fcfcfc;
+  background-color: var(--window-background);
 }
 
 div .dropdown-item {
-  color: #4f4f4f;
+  color: var(--gray-font-color);
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
 
 div .dropdown-item:hover {
-  background-color: #f1f1f3;
+  background-color: var(--hover-background);
 }
 
 div .dropdown-item.active,
 .dropdown-item:active {
   background-color: transparent;
-  color: #4f4f4f;
+  color: var(--gray-font-color);
 }
 
 div .dropdown-item.active:hover,
 .dropdown-item:active:hover {
-  background-color: #f1f1f3;
-  color: #4f4f4f;
+  background-color: var(--hover-background);
+  color: var(--gray-font-color);
 }
 
 div .dropdown-divider {
-  border-top: 1px solid #e4e4ea;
-  box-shadow: 0.4rem 0.4rem 0.5rem #d9d9d9;
+  border-top: 1px solid var(--navbar-divider);
+  box-shadow: 0.4rem 0.4rem 0.5rem var(--box-shadow);
+}
+
+div hr {
+  background-color: transparent;
 }
 
 .brand {

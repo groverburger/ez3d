@@ -13,7 +13,7 @@
   margin-right: 1.5rem;
   margin-left: 1.5rem;
   font-weight: 600;
-  color: rgba(0, 0, 0, 0.9);
+  color: var(--black-font-color);
 }
 
 .object-list-items {
@@ -34,13 +34,13 @@
   border-radius: 0;
   text-align: left;
   font-size: 1em;
-  background-color: #fcfcfc;
-  color: #4f4f4f;
+  background-color: var(--window-background);
+  color: var(--gray-font-color);
 }
 
 .btn-light.object-list-items:hover {
   z-index: 1;
-  background-color: #f1f1f3;
+  background-color: var(--hover-background);
   transition: all 0.1s ease-in-out;
 }
 
@@ -49,5 +49,5 @@
 .btn-light.object-list-items.active,
 .btn-light.object-list-items:active {
   z-index: 2;
-  background-color: #f1f1f3;
+  background-color: var(--hover-background);
 }
