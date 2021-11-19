@@ -41,6 +41,42 @@ export default function NavAdd() {
         >
           Cylinder
         </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.2'
+          onClick={(event) => generateComplexShape(event, 'crimson')}
+        >
+          Cone
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.2'
+          onClick={(event) => generateComplexShape(event, 'orange')}
+        >
+          Torus
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.2'
+          onClick={(event) => generateComplexShape(event, 'seagreen')}
+        >
+          Tetrahedron
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.2'
+          onClick={(event) => generateComplexShape(event, 'hotpink')}
+        >
+          Icosahedron
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.2'
+          onClick={(event) => generateComplexShape(event, 'tomato')}
+        >
+          Octahedron
+        </NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/1.2'
+          onClick={(event) => generateComplexShape(event, 'slateblue')}
+        >
+          Dodecahedron
+        </NavDropdown.Item>
         <NavDropdown.Divider className='nav-divider' />
         <NavDropdown.Item
           href='#action/1.3'
@@ -66,15 +102,18 @@ export default function NavAdd() {
 
   function addModel(vertices, color) {
     const newModel = {
-      position: [0, 0, 0],
-      geometry: new THREE.BufferGeometry(),
-      uuid: Math.random(),
-      color: color,
-      vertices: vertices,
+      attributes: {
+        position: [0, 0, 0],
+        geometry: new THREE.BufferGeometry(),
+        uuid: Math.random(),
+        color: color,
+        vertices: vertices,
+      },
+      type: 'simple',
     };
 
-    newModel.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-    newModel.geometry.computeVertexNormals();
+    newModel.attributes.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
+    newModel.attributes.geometry.computeVertexNormals();
 
     setModelData(newModel);
   }
@@ -130,7 +169,49 @@ export default function NavAdd() {
       verts.push(0);
     }
 
-    addModel(new Float32Array(verts), 'green');
+    addModel(new Float32Array(verts), 'limegreen');
+  }
+
+  function generateComplexShape(event, color) {
+    const newModel = {
+      attributes: 
+        { position: [0, 0, 0],
+          uuid: Math.random(),
+          color: color,
+        },
+      type: 'complex',
+    }
+
+    switch (event.target.innerHTML) {
+      case 'Cone':
+        newModel['geometry'] = <coneBufferGeometry attach='geometry' />
+        break;
+
+      case 'Torus':
+        newModel['geometry'] = <torusBufferGeometry attach='geometry' />
+        break;
+
+      case 'Tetrahedron':
+        newModel['geometry'] = <tetrahedronBufferGeometry attach='geometry' />
+        break;
+
+      case 'Icosahedron':
+        newModel['geometry'] = <icosahedronBufferGeometry attach='geometry' />
+        break;
+
+      case 'Octahedron':
+        newModel['geometry'] = <octahedronBufferGeometry attach='geometry' />
+        break;
+
+      case 'Dodecahedron':
+        newModel['geometry'] = <dodecahedronBufferGeometry attach='geometry' />
+        break;
+
+      default:
+        break;
+    }
+
+    setModelData(newModel);
   }
 
   // When generating a new light, push an object containing the properties of the new light to the light list

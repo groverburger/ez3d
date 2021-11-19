@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useHelper } from '@react-three/drei';
 import { DirectionalLightHelper, PointLightHelper } from 'three';
-import { useProperty, useTarget } from './context';
+import { useGroup, useProperty, useTarget } from './context';
 import { convertColor } from './color-converter';
 
 const LightMesh = ({ children, props }) => {
@@ -10,6 +10,9 @@ const LightMesh = ({ children, props }) => {
 
   const { setCurrentColor, setCurrentIntensity, setCurrentTransform } = useProperty();
   const { setTargetMesh } = useTarget();
+  const { groupList } = useGroup();
+
+  const lightIndex = useRef(`${groupList.filter((mesh) => mesh.children[0]).length + 1}`);
 
   const handleClick = (mesh) => {
     setTargetMesh(mesh);
@@ -25,6 +28,7 @@ const LightMesh = ({ children, props }) => {
 
   return (
     <mesh
+      name={`Light ${lightIndex.current}`}
       scale={[0.1, 0.1, 0.1]}
       position={[0, 1.55, 0]}
       onClick={(event) => handleClick(event.object)} /// event.object is the mesh object that holds the light object

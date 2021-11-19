@@ -26,7 +26,7 @@ export default function HotKeys({ children }) {
           break;
 
         // Delete selected mesh
-        case 'Backspace':
+        case 'x':
           setHoveredMesh(null);           // Remove hovered mesh to avoid bugs
           setTargetMesh(null);            // Remove target mesh
           setLightWindowToggle(false);    // Close light window

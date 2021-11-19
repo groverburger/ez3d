@@ -71,7 +71,7 @@ export default function App() {
 
               <Group>
                 {modelData.map((data) => (
-                  <ModelRenderer key={data.uuid} { ...data } />
+                  <ModelRenderer key={data.attributes.uuid} { ...data } />
                 ))}
 
                 {lightData.map((data) => (

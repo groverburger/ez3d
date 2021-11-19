@@ -14,13 +14,11 @@ export default function ObjectList() {
   const total = groupList.length;
   const objList = [];
 
-  let lightCount = 1;
-  let modelCount = 1;
   for (let i = 0; i < total; i++) {
     if (groupList[i].children[0]) {
-      objList.push({ name: `Light ${lightCount++}`, index: i });
+      objList.push({ index: i });
     } else {
-      objList.push({ name: `Mesh ${modelCount++}`, index: i });
+      objList.push({ index: i });
     }
   }
 
@@ -61,7 +59,7 @@ export default function ObjectList() {
               onPointerOver={() => setHoveredMesh({ current: groupList[mesh.index] })}
               onPointerOut={() => setHoveredMesh(null)}
             >
-              {mesh.name}
+              {groupList[mesh.index].name}
             </Button>
           </div>
         ))}

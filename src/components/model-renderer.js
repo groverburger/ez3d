@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useModel, useProperty, useTarget } from './context';
+import { useGroup, useModel, useProperty, useTarget } from './context';
 import { convertColor } from './color-converter';
 
 export default function ModelRenderer(props) {
@@ -7,6 +7,9 @@ export default function ModelRenderer(props) {
   const { setTargetMesh } = useTarget();
   const { setCurrentColor, setCurrentTransform } = useProperty();
   const { setIsModelWindowOpen } = useModel();
+  const { groupList } = useGroup();
+
+  const meshIndex = useRef(`${groupList.filter((mesh) => !mesh.children[0]).length + 1}`);
 
   const handleClick = (mesh) => {
     setTargetMesh(mesh);
@@ -22,15 +25,17 @@ export default function ModelRenderer(props) {
   return (
     <>
       <mesh
-        {...props}
+        {...props.attributes}
         ref={meshRef}
+        name={`Model ${meshIndex.current}`}
         onClick={(event) => handleClick(event.object)}
         onPointerMissed={() => setIsModelWindowOpen(false)}
         castShadow
       >
+        {props.type === 'complex' ? {...props.geometry} : null}
         <meshStandardMaterial
           attach='material'
-          color={props.color || 'black'}
+          color={props.attributes.color}
         />
       </mesh>
     </>

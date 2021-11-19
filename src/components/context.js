@@ -69,7 +69,7 @@ export const useModel = create((set) => ({
     set((state) => {
       var newList = state.modelData;
       state.modelData.forEach((entry, i) => {
-        if (entry.uuid === delModel.uuid) {
+        if (entry.attributes.uuid === delModel.uuid) {
           newList.splice(i, 1);
         }
       });
