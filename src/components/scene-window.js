@@ -3,7 +3,7 @@ import Toggle from './toggle';
 import '../styles/scene-window.css';
 
 export default function SceneWindow() {
-  const { isGridVisible, setGrid, isShadowsVisible, setShadows} = useScene();
+  const { isGridVisible, setGrid, isShadowsVisible, setShadows, isFogVisible, setFog} = useScene();
 
   return (
     <>
@@ -21,6 +21,13 @@ export default function SceneWindow() {
           <Toggle
             onChange={(event) => setShadows(event.target.checked)}
             defaultChecked={isShadowsVisible}
+          />
+        </div>
+        <div className='scene-window-items'>
+          <label>Fog</label>
+          <Toggle
+            onChange={(event) => setFog(event.target.checked)}
+            defaultChecked={isFogVisible}
           />
         </div>
       </div>

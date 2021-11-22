@@ -44,6 +44,9 @@ export const useScene = create((set) => ({
   isShadowsVisible: true,
   setShadows: (isShadowsVisible) => set({ isShadowsVisible }),
 
+  isFogVisible: true,
+  setFog: (isFogVisible) => set({ isFogVisible }),
+
   isMeshVisible: true,
   setVisibility: (isMeshVisible) => set({ isMeshVisible }),
 

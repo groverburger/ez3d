@@ -20,6 +20,7 @@ import Toolbar from './components/toolbar';
 import Viewcube from './components/viewcube';
 import Group from './components/group';
 import Grid from './components/grid';
+import Fog from './components/fog';
 import HotKeys from './components/hotkeys';
 
 import './App.css';
@@ -60,7 +61,7 @@ export default function App() {
               shadows
             >
               <color attach='background' args={['#bbbbbe']} />
-              <fog attach='fog' args={['#bbbbbe', 10, 40]} />
+              <Fog />
               <ambientLight intensity={0.5} />
               <pointLight position={[0, 5, 10]} intensity={0.5} />
               <pointLight position={[0, -5, -10]} intensity={0.5} />
