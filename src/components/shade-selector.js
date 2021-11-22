@@ -3,26 +3,26 @@ import { useProperty, useTarget } from './context';
 
 export default function ShadeSelect() {
   const { setCurrentShade } = useProperty();
-  const { targetMesh } = useTarget();
+  const { targetMesh, setTargetMesh } = useTarget();
 
   function handleWireframe() {
     if (targetMesh) {
-      targetMesh.material.wireframe = true;
       targetMesh.material.flatShading = false;
+      targetMesh.material.wireframe = true;
+
     }
 
     setCurrentShade('wireframe');
   }
-  // BUG: there is a bug with flatShading attribute in meshStandardMaterial
-  // Ignore for now
 
-  // function handleFaceted() {
-  //   if(targetToShade){
-  //     targetToShade.material.wireframe = false;
-  //     targetToShade.material.flatShading = true;
-  //   }
-  //   setCurrentShade('flatShading');
-  // }
+  function handleFaceted() {
+    if(targetMesh){
+      targetMesh.material.flatShading = true;
+      targetMesh.material.wireframe = false;
+
+    }
+    setCurrentShade('flat');
+  }
   function handleSmooth() {
     if (targetMesh) {
       targetMesh.material.flatShading = false;
@@ -39,6 +39,12 @@ export default function ShadeSelect() {
         onClick={() => handleWireframe()}
       >
         Wireframe
+      </Button>
+      <Button
+        className='btn-light scene-window-items'
+        onClick={() => handleFaceted()}
+      >
+        Flat
       </Button>
       <Button
         className='btn-light scene-window-items'
