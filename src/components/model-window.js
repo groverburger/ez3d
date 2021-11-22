@@ -1,6 +1,7 @@
 import Number from './number-input';
 import ColorSelect from './color-selector';
 import ShadeSelector from './shade-selector';
+import Visibility from './visibility-toggle';
 
 import '../styles/model-window.css';
 
@@ -22,6 +23,10 @@ export default function ModelWindow() {
         <div className='model-window-items'>
           <label>Shader</label>
           <ShadeSelector />
+        </div>
+        <div className='model-window-items'>
+          <label>Visibility</label>
+          <Visibility />
         </div>
       </div>
     </>

@@ -44,9 +44,13 @@ export const useScene = create((set) => ({
   isShadowsVisible: true,
   setShadows: (isShadowsVisible) => set({ isShadowsVisible }),
 
+  isMeshVisible: true,
+  setVisibility: (isMeshVisible) => set({ isMeshVisible }),
+
   isDragging: false,
   setIsDragging: (isDragging) => set({ isDragging }),
 }));
+
 
 // Model State
 export const useModel = create((set) => ({

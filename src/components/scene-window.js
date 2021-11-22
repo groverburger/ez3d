@@ -3,7 +3,7 @@ import Toggle from './toggle';
 import '../styles/scene-window.css';
 
 export default function SceneWindow() {
-  const { isGridVisible, setGrid, isShadowsVisible, setShadows } = useScene();
+  const { isGridVisible, setGrid, isShadowsVisible, setShadows} = useScene();
 
   return (
     <>
@@ -22,10 +22,6 @@ export default function SceneWindow() {
             onChange={(event) => setShadows(event.target.checked)}
             defaultChecked={isShadowsVisible}
           />
-        </div>
-        <div className='scene-window-items'>
-          <label>Camera</label>
-          <input className='camera' />
         </div>
       </div>
     </>
