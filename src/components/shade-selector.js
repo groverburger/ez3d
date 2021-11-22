@@ -1,17 +1,15 @@
 import { ButtonGroup, Button } from 'react-bootstrap';
-import { useProperty, useTarget } from './context';
+import { useProperty, useTarget, useScene } from './context';
 
 export default function ShadeSelect() {
   const { setCurrentShade } = useProperty();
-  const { targetMesh, setTargetMesh } = useTarget();
+  const { targetMesh} = useTarget();
 
   function handleWireframe() {
     if (targetMesh) {
       targetMesh.material.flatShading = false;
       targetMesh.material.wireframe = true;
-
     }
-
     setCurrentShade('wireframe');
   }
 
@@ -19,7 +17,7 @@ export default function ShadeSelect() {
     if(targetMesh){
       targetMesh.material.flatShading = true;
       targetMesh.material.wireframe = false;
-
+      targetMesh.material.needsUpdate = true;
     }
     setCurrentShade('flat');
   }
@@ -27,8 +25,8 @@ export default function ShadeSelect() {
     if (targetMesh) {
       targetMesh.material.flatShading = false;
       targetMesh.material.wireframe = false;
+      targetMesh.material.needsUpdate = true;
     }
-
     setCurrentShade('smooth');
   }
 
@@ -40,12 +38,14 @@ export default function ShadeSelect() {
       >
         Wireframe
       </Button>
+
       <Button
         className='btn-light scene-window-items'
         onClick={() => handleFaceted()}
       >
         Flat
       </Button>
+
       <Button
         className='btn-light scene-window-items'
         onClick={() => handleSmooth()}

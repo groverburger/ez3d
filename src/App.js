@@ -88,6 +88,7 @@ export default function App() {
                   width={1000}
                 />
               </EffectComposer>
+
             </Canvas>
           </Pane>
 
