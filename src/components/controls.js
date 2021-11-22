@@ -1,12 +1,15 @@
 import React, { useEffect, useRef } from 'react';
 import { OrbitControls, TransformControls } from '@react-three/drei';
-import { useProperty, useTarget, useScene } from './context';
+import { useProperty, useTarget, useScene, useGroup, useLight, useModel } from './context';
 
 // Transform Controls
 export default function Controls() {
   const { currentTransformMode, setCurrentTransformMode } = useProperty();
   const { targetMesh } = useTarget();
   const { setIsDragging } = useScene();
+  const { saveGroupList } = useGroup();
+  const { saveModelData } = useModel();
+  const { saveLightData } = useLight();
 
   // Transform Controls reference so that we can change its properties
   const transformRef = useRef();
@@ -47,8 +50,16 @@ export default function Controls() {
         }
       };
 
+    // called when start to drag or drag ends
       const callback = (event) => {
         setIsDragging(event.value);
+
+
+        if(event.value){
+            saveModelData()
+            saveLightData()
+            saveGroupList()
+        }
       };
 
       controls.addEventListener('dragging-changed', callback);

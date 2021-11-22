@@ -52,6 +52,8 @@ export const useScene = create((set) => ({
 export const useModel = create((set) => ({
   modelData: [],
 
+  modelDataPrev: [],
+
   isModelWindowOpen: false,
   setIsModelWindowOpen: (isModelWindowOpen) => set({ isModelWindowOpen }),
 
@@ -76,6 +78,22 @@ export const useModel = create((set) => ({
       state.modelData = newList;
     }),
 
+    saveModelData: () =>{
+        console.log("Saved Model Data")
+        set((state) => {
+            var newList = state.modelData;
+            state.modelDataPrev = newList;
+        })},
+
+    undoModelData: () =>
+        set((state) => {
+            // state.modelData = [];
+            var newList = state.modelDataPrev.slice();
+            var oldList = state.modelData.slice();
+            state.modelData = newList;
+            state.modelDataPrev = oldList;
+        }),
+
   setModelData: (modelDataElement) =>
     set((state) => ({
       modelData: [modelDataElement, ...state.modelData],
@@ -85,6 +103,7 @@ export const useModel = create((set) => ({
 // Light State
 export const useLight = create((set) => ({
   lightData: [],
+  lightDataPrev: [],
   setLightData: (lightDataElement) =>
     set((state) => ({
       lightData: [lightDataElement, ...state.lightData],
@@ -113,11 +132,32 @@ export const useLight = create((set) => ({
       newList.splice(delIndex, 1);
       state.lightData = newList;
     }),
+
+    saveLightData: () =>{
+        console.log("Saved Light Data")
+        set((state) => {
+            var newList = state.lightData.slice();
+            state.lightDataPrev = newList;
+    })},
+    
+    undoLightData: () =>
+        set((state) => {
+            // state.lightData = [];
+            var newList = state.lightDataPrev.slice();
+            var oldList = state.lightData.slice();
+            state.lightData = newList;
+            state.lightDataPrev = oldList;
+    }),
 }));
 
 // Group State
 export const useGroup = create((set) => ({
   groupList: [],
+  groupListPrev: [],
+  undoingMode: false,
+  
+  setUndoingMode: (undoingMode) =>
+    set({ undoingMode }),
 
   // useGroup function to delete the specified object from the group list
   // input is a group object to delete
@@ -129,9 +169,32 @@ export const useGroup = create((set) => ({
       newList.splice(index, 1);
       state.groupList = newList;
     }),
+    
+    saveGroupList: () =>{
+        console.log("Saved GroupList")
+        set((state) => {
+            var newList = [...new Set([...state.groupList])];
+            state.groupListPrev = newList;
+            console.log("saved newList after undo: ", state.groupListPrev);
+    })},
+        
+    undoGroupList: () =>{
+        console.log("command z");
+        set((state) => {
+            // state.groupList = [];
+            console.log("state of prevList before swap: ", state.groupListPrev);
+            var newList = state.groupListPrev.map(a => {return {...a}});
+            var oldList = state.groupList.map(a => {return {...a}});
+            console.log("state of newList before swap: ", newList);
+            state.groupList = newList;
+            state.groupListPrev = oldList;
+            console.log("state of grouplist after undo: ", state.groupList);
+    })},
 
   setGroupList: (groupListElement) =>
+    
     set((state) => ({
       groupList: [...new Set([...state.groupList, groupListElement])],
-    })),
+    })),   
+    
 }));

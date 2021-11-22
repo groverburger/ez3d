@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { useGroup, useModel, useLight, useTarget } from './context';
 
 export default function Group({ children }) {
-  const { setGroupList } = useGroup();
+  const { setGroupList,groupList,undoingMode } = useGroup();
   const { modelData } = useModel();
   const { lightData, setLightWindowToggle, setLightWindowType } = useLight();
   const { setHoveredMesh, setTargetMesh } = useTarget();
@@ -16,10 +16,10 @@ export default function Group({ children }) {
   }
 
   useEffect(() => {
-    if (groupRef.current) {
+    if (groupRef.current && undoingMode == false) {
       const group = groupRef.current;
 
-      console.log(group.children && 'Current meshes in group are: ',group.children);
+    //   console.log(group.children && 'Current meshes in group are: ',group.children);
       group.children.forEach((mesh) => {
         setGroupList(mesh);
       });

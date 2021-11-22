@@ -3,9 +3,9 @@ import { useGroup, useLight, useModel, useTarget } from './context';
 
 export default function HotKeys({ children }) {
   const { setTargetMesh, targetMesh, setHoveredMesh } = useTarget();
-  const { delGroupList, groupList } = useGroup();
-  const { modelData, deleteModelData, setIsModelWindowOpen } = useModel();
-  const { deleteLightData, lightData, setLightWindowToggle, setLightWindowType } = useLight();
+  const { delGroupList, groupList, undoGroupList, groupListPrev, setUndoingMode, saveGroupList } = useGroup();
+  const { modelData, deleteModelData, setIsModelWindowOpen, undoModelData, modelDataPrev, saveModelData } = useModel();
+  const { deleteLightData, lightData, setLightWindowToggle, setLightWindowType, undoLightData, lightDataPrev, saveLightData } = useLight();
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -14,7 +14,11 @@ export default function HotKeys({ children }) {
         case 'p':
           console.log('Currently Selected Mesh:', targetMesh);
           console.log('Grouplist:', groupList);
+          console.log('ModelData:', modelData);
           console.log('LightData:', lightData);
+          console.log('GrouplistPrev:', groupListPrev);
+          console.log('ModelDataPrev:', modelDataPrev);
+          console.log('LightDataPrev:', lightDataPrev);
           break;
 
         // Deselect target mesh
@@ -24,6 +28,34 @@ export default function HotKeys({ children }) {
           setLightWindowToggle(false);    // Close light window
           setIsModelWindowOpen(false);    // Close model window
           break;
+
+        case 's':
+            saveModelData()
+            saveLightData()
+            saveGroupList()
+            break;
+
+        case 'z':
+            
+
+            if(event.metaKey){
+                // set undoing to true as we perform undoing function
+                setUndoingMode(true);
+
+                setHoveredMesh(null);           // Remove hovered mesh to avoid bugs
+                setTargetMesh(null);            // Remove target mesh
+                setLightWindowToggle(false);    // Close light window
+                setIsModelWindowOpen(false);    // Close model window
+                undoGroupList();
+                undoModelData();
+                undoLightData();
+
+                // unset undoing to false as we finish
+                setUndoingMode(false);
+                
+                
+            }
+            break;
 
         // Delete selected mesh
         case 'x':
