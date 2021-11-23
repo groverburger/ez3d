@@ -12,68 +12,55 @@ export default function NavAdd() {
       <NavDropdown title='Add' id='add-dropdown'>
         <NavDropdown.Item
           href='#action/1.0'
-          onClick={() => {
-            addModel(
-              new Float32Array([
-                1, 1, 1, 1, -1, 1, 1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1,
-                1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, 1, 1, -1, 1, 1,
-                1, -1, 1, 1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, -1, -1,
-                -1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1, -1,
-                -1, -1, 1, -1, -1, -1, -1, 1, 1, -1, 1, -1, -1, 1, 1, -1, -1,
-                -1, -1, -1, -1, 1, -1, 1, -1, -1, 1, 1, -1, 1, -1, -1, -1, 1,
-                -1,
-              ]),
-              '#4488ff'
-            );
-          }}
+          onClick={(event) => generateNewShape(event, 'cornFlowerBlue')}
         >
           Cube
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.1'
-          onClick={() => generateSphere(16, 12)}
+          onClick={(event) => generateNewShape(event, 'purple')}
         >
           Sphere
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={() => generateCylinder(16)}
+          onClick={(event) => generateNewShape(event, 'yellow')}
         >
           Cylinder
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateComplexShape(event, 'crimson')}
+          onClick={(event) => generateNewShape(event, 'crimson')}
         >
           Cone
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateComplexShape(event, 'orange')}
+          onClick={(event) => generateNewShape(event, 'orange')}
         >
           Torus
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateComplexShape(event, 'seagreen')}
+          onClick={(event) => generateNewShape(event, 'seagreen')}
         >
           Tetrahedron
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateComplexShape(event, 'hotpink')}
+          onClick={(event) => generateNewShape(event, 'hotpink')}
         >
           Icosahedron
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateComplexShape(event, 'tomato')}
+          onClick={(event) => generateNewShape(event, 'tomato')}
         >
           Octahedron
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateComplexShape(event, 'slateblue')}
+          onClick={(event) => generateNewShape(event, 'slateblue')}
         >
           Dodecahedron
         </NavDropdown.Item>
@@ -100,111 +87,51 @@ export default function NavAdd() {
     </div>
   );
 
-  function addModel(vertices, color) {
+  function generateNewShape(event, color) {
     const newModel = {
       attributes: {
         position: [0, 0, 0],
-        geometry: new THREE.BufferGeometry(),
         uuid: Math.random(),
         color: color,
-        vertices: vertices,
       },
-      type: 'simple',
-    };
-
-    newModel.attributes.geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-    newModel.attributes.geometry.computeVertexNormals();
-
-    setModelData(newModel);
-  }
-
-  function generateSphere(hsegs, vsegs) {}
-
-  function generateCylinder(segs) {
-    const verts = [];
-    const step = (Math.PI * 2) / segs;
-
-    for (let i = 0; i < Math.PI * 2; i += step) {
-      // generate the sides
-      verts.push(Math.cos(i));
-      verts.push(-1);
-      verts.push(Math.sin(i));
-      verts.push(Math.cos(i));
-      verts.push(1);
-      verts.push(Math.sin(i));
-      verts.push(Math.cos(i + step));
-      verts.push(-1);
-      verts.push(Math.sin(i + step));
-
-      verts.push(Math.cos(i + step));
-      verts.push(-1);
-      verts.push(Math.sin(i + step));
-      verts.push(Math.cos(i));
-      verts.push(1);
-      verts.push(Math.sin(i));
-      verts.push(Math.cos(i + step));
-      verts.push(1);
-      verts.push(Math.sin(i + step));
-
-      // generate top
-      verts.push(Math.cos(i));
-      verts.push(1);
-      verts.push(Math.sin(i));
-      verts.push(0);
-      verts.push(1);
-      verts.push(0);
-      verts.push(Math.cos(i + step));
-      verts.push(1);
-      verts.push(Math.sin(i + step));
-
-      // generate bottom
-      verts.push(Math.cos(i));
-      verts.push(-1);
-      verts.push(Math.sin(i));
-      verts.push(Math.cos(i + step));
-      verts.push(-1);
-      verts.push(Math.sin(i + step));
-      verts.push(0);
-      verts.push(-1);
-      verts.push(0);
-    }
-
-    addModel(new Float32Array(verts), 'limegreen');
-  }
-
-  function generateComplexShape(event, color) {
-    const newModel = {
-      attributes: 
-        { position: [0, 0, 0],
-          uuid: Math.random(),
-          color: color,
-        },
-      type: 'complex',
+      type: event.target.innerHTML,
     }
 
     switch (event.target.innerHTML) {
+      case 'Cube':
+        newModel.geometry = <boxBufferGeometry attach='geometry' />
+        break;
+
+      case 'Sphere':
+        newModel.geometry = <sphereBufferGeometry attach='geometry' />
+        break;
+
+      case 'Cylinder':
+        newModel.geometry = <cylinderBufferGeometry attach='geometry' />
+        break;
+
       case 'Cone':
-        newModel['geometry'] = <coneBufferGeometry attach='geometry' />
+        newModel.geometry = <coneBufferGeometry attach='geometry' />
         break;
 
       case 'Torus':
-        newModel['geometry'] = <torusBufferGeometry attach='geometry' />
+        newModel.geometry = <torusBufferGeometry attach='geometry' />
         break;
 
       case 'Tetrahedron':
-        newModel['geometry'] = <tetrahedronBufferGeometry attach='geometry' />
+        newModel.geometry = <tetrahedronBufferGeometry attach='geometry' />
         break;
 
       case 'Icosahedron':
-        newModel['geometry'] = <icosahedronBufferGeometry attach='geometry' />
+        newModel.geometry = <icosahedronBufferGeometry attach='geometry' />
         break;
 
       case 'Octahedron':
-        newModel['geometry'] = <octahedronBufferGeometry attach='geometry' />
+        newModel.geometry = <octahedronBufferGeometry attach='geometry' />
         break;
 
       case 'Dodecahedron':
-        newModel['geometry'] = <dodecahedronBufferGeometry attach='geometry' />
+        newModel.geometry = <dodecahedronBufferGeometry attach='geometry' />
         break;
 
       default:

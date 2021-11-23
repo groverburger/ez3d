@@ -32,7 +32,7 @@ export default function ModelRenderer(props) {
         onPointerMissed={() => setIsModelWindowOpen(false)}
         castShadow
       >
-        {props.type === 'complex' ? {...props.geometry} : null}
+        {{...props.geometry}}
         <meshStandardMaterial
           attach='material'
           color={props.attributes.color}
