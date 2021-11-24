@@ -82,6 +82,10 @@ export default function ModelRenderer(props) {
       mesh.scale.z = props.scale.z
     }
 
+    if (props.color && typeof(props.color) == "object") {
+      mesh.material.color = props.color
+    }
+
     console.log(mesh)
   }, [])
 

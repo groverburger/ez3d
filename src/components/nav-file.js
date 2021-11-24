@@ -4,8 +4,9 @@ import '../styles/navbar.css';
 import * as context from './context';
 
 export default function NavFile() {
-  const { replaceModelData } = context.useModel();
-  const { groupList } = context.useGroup();
+  const { replaceModelData } = context.useModel()
+  const { groupList, resetGroupList } = context.useGroup()
+  const { setTargetMesh, setHoveredMesh } = context.useTarget()
 
   return (
     <div className='navbar-items'>
@@ -44,13 +45,19 @@ export default function NavFile() {
           // TODO
         })
       } else {
+        let color = thing.material.color
+
+        if (typeof(color) != "object") {
+          console.log(color)
+        }
+
         serialized.models.push({
           uuid: Math.random(),
           position: thing.position,
           rotation: thing.rotation.toVector3(),
           scale: thing.scale,
-          color: thing.material.color,
-          geometryType: new String(thing.geometry.type),
+          color: {r: color.r, g: color.g, b: color.b},
+          geometryType: thing.geometry.type,
         })
       }
     }
@@ -63,6 +70,9 @@ export default function NavFile() {
     console.log(data.models)
     //const { isMeshVisible, isGridVisible, isShadowsVisible } = context.useScene();
 
+    setTargetMesh(null)
+    setHoveredMesh(null)
+    resetGroupList()
     replaceModelData(data.models)
   }
 

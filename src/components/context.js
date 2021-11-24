@@ -135,6 +135,11 @@ export const useGroup = create((set) => ({
       state.groupList = newList;
     }),
 
+  resetGroupList: () => 
+    set(state => ({
+      groupList: [],
+    })),
+
   setGroupList: (groupListElement) =>
     set((state) => ({
       groupList: [...new Set([...state.groupList, groupListElement])],
