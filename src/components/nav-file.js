@@ -1,12 +1,11 @@
 import { NavDropdown } from 'react-bootstrap';
-import * as context from './context';
+import { serialize, deserialize } from './serialize';
 import '../styles/navbar.css';
+import * as context from './context';
 
 export default function NavFile() {
-  const { modelData, replaceModelData } = context.useModel();
-  const { lightData, setLightData } = context.useLight();
-  const { groupList, setGroupList } = context.useGroup();
-  const { isGridVisible, setGrid, isShadowsVisible, setShadows } = context.useScene();
+  const { replaceModelData } = context.useModel();
+  const { groupList } = context.useGroup();
 
   return (
     <div className='navbar-items'>
@@ -31,27 +30,55 @@ export default function NavFile() {
     </div>
   );
 
-  function save() {
-    const savedata = JSON.stringify({
-      modelData: modelData,
-      lightData: lightData,
-      groupList: groupList,
-      isGridVisible: isGridVisible,
-      setShadows: setShadows,
-    });
+  function serialize() {
+    const serialized = {
+      models: [],
+      lights: [],
+    }
 
-    download('project.ez3d', savedata);
+    for (const thing of groupList) {
+      // check if this thing is a model or a light
+      // and put it in the correct category
+      if (thing.children[0]) {
+        serialized.lights.push({
+          // TODO
+        })
+      } else {
+        serialized.models.push({
+          uuid: Math.random(),
+          position: thing.position,
+          rotation: thing.rotation.toVector3(),
+          scale: thing.scale,
+          color: thing.material.color,
+          geometryType: new String(thing.geometry.type),
+        })
+      }
+    }
+
+    return JSON.stringify(serialized)
+  }
+
+  function deserialize(serialized) {
+    const data = JSON.parse(serialized)
+    console.log(data.models)
+    //const { isMeshVisible, isGridVisible, isShadowsVisible } = context.useScene();
+
+    replaceModelData(data.models)
+  }
+
+  function save() {
+    const data = serialize()
+    console.log(data)
+    download('project.ez3d', data);
   }
 
   function load(event) {
-    const reader = new FileReader();
-    //console.log(modelData)
-    reader.addEventListener('load', () => {
-      const result = JSON.parse(reader.result);
-      //console.log(result)
-      replaceModelData(result.modelData);
-    });
-    reader.readAsText(event.target.files[0]);
+    console.log("test")
+    const reader = new FileReader()
+    reader.addEventListener("load", () => {
+      deserialize(reader.result)
+    })
+    reader.readAsText(event.target.files[0])
   }
 }
 

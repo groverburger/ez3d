@@ -15,11 +15,7 @@ export default function ObjectList() {
   const objList = [];
 
   for (let i = 0; i < total; i++) {
-    if (groupList[i].children[0]) {
-      objList.push({ index: i });
-    } else {
-      objList.push({ index: i });
-    }
+    objList.push(i);
   }
 
   const handleClick = (mesh) => {
@@ -50,16 +46,16 @@ export default function ObjectList() {
     <>
       <div className='object-list-top'>
         <label className='object-list-title'>Object List</label>
-        {objList.map((mesh) => (
-          <div key={groupList[mesh.index].uuid} className='object-list-items'>
+        {objList.map((index) => (
+          <div key={groupList[index].uuid} className='object-list-items'>
             <Button
               className='btn-light object-list-items'
-              active={groupList[mesh.index] === targetMesh}
-              onClick={() => handleClick(groupList[mesh.index])}
-              onPointerOver={() => setHoveredMesh({ current: groupList[mesh.index] })}
+              active={groupList[index] === targetMesh}
+              onClick={() => handleClick(groupList[index])}
+              onPointerOver={() => setHoveredMesh({ current: groupList[index] })}
               onPointerOut={() => setHoveredMesh(null)}
             >
-              {groupList[mesh.index].name}
+              {groupList[index].name}
             </Button>
           </div>
         ))}

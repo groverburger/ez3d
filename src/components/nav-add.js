@@ -12,55 +12,55 @@ export default function NavAdd() {
       <NavDropdown title='Add' id='add-dropdown'>
         <NavDropdown.Item
           href='#action/1.0'
-          onClick={(event) => generateNewShape(event, 'cornFlowerBlue')}
+          onClick={(event) => generateNewShape("BoxGeometry", 'cornFlowerBlue')}
         >
           Cube
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.1'
-          onClick={(event) => generateNewShape(event, 'purple')}
+          onClick={(event) => generateNewShape("SphereGeometry", 'purple')}
         >
           Sphere
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape(event, 'yellow')}
+          onClick={(event) => generateNewShape("CylinderGeometry", 'yellow')}
         >
           Cylinder
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape(event, 'crimson')}
+          onClick={(event) => generateNewShape("ConeGeometry", 'crimson')}
         >
           Cone
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape(event, 'orange')}
+          onClick={(event) => generateNewShape("TorusGeometry", 'orange')}
         >
           Torus
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape(event, 'seagreen')}
+          onClick={(event) => generateNewShape("TetrahedronGeometry", 'seagreen')}
         >
           Tetrahedron
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape(event, 'hotpink')}
+          onClick={(event) => generateNewShape("IcosahedronGeometry", 'hotpink')}
         >
           Icosahedron
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape(event, 'tomato')}
+          onClick={(event) => generateNewShape("OctahedronGeometry", 'tomato')}
         >
           Octahedron
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape(event, 'slateblue')}
+          onClick={(event) => generateNewShape("DodecahedronGeometry", 'slateblue')}
         >
           Dodecahedron
         </NavDropdown.Item>
@@ -87,58 +87,15 @@ export default function NavAdd() {
     </div>
   );
 
-  function generateNewShape(event, color) {
-    const newModel = {
-      attributes: {
-        position: [0, 0, 0],
-        uuid: Math.random(),
-        color: color,
-      },
-      type: event.target.innerHTML,
-    }
-
-    switch (event.target.innerHTML) {
-      case 'Cube':
-        newModel.geometry = <boxBufferGeometry attach='geometry' />
-        break;
-
-      case 'Sphere':
-        newModel.geometry = <sphereBufferGeometry attach='geometry' />
-        break;
-
-      case 'Cylinder':
-        newModel.geometry = <cylinderBufferGeometry attach='geometry' />
-        break;
-
-      case 'Cone':
-        newModel.geometry = <coneBufferGeometry attach='geometry' />
-        break;
-
-      case 'Torus':
-        newModel.geometry = <torusBufferGeometry attach='geometry' />
-        break;
-
-      case 'Tetrahedron':
-        newModel.geometry = <tetrahedronBufferGeometry attach='geometry' />
-        break;
-
-      case 'Icosahedron':
-        newModel.geometry = <icosahedronBufferGeometry attach='geometry' />
-        break;
-
-      case 'Octahedron':
-        newModel.geometry = <octahedronBufferGeometry attach='geometry' />
-        break;
-
-      case 'Dodecahedron':
-        newModel.geometry = <dodecahedronBufferGeometry attach='geometry' />
-        break;
-
-      default:
-        break;
-    }
-
-    setModelData(newModel);
+  function generateNewShape(geometryType, color) {
+    setModelData({
+      uuid: Math.random(),
+      color: color,
+      geometryType: geometryType,
+      //position: {x: 2, y: 3, z: 4},
+      //rotation: {x: 0, y: 0, z: Math.PI/8},
+      //scale: {x: 2, y: 1, z: 3},
+    });
   }
 
   // When generating a new light, push an object containing the properties of the new light to the light list

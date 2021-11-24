@@ -63,9 +63,7 @@ export const useModel = create((set) => ({
   setIsModelWindowOpen: (isModelWindowOpen) => set({ isModelWindowOpen }),
 
   replaceModelData: (data) => {
-    set(() => ({
-      modelData: data,
-    }));
+    set(state => ({ modelData: data }))
   },
 
   // function to delete model from modelData list
@@ -76,7 +74,7 @@ export const useModel = create((set) => ({
     set((state) => {
       var newList = state.modelData;
       state.modelData.forEach((entry, i) => {
-        if (entry.attributes.uuid === delModel.uuid) {
+        if (entry.uuid === delModel.uuid) {
           newList.splice(i, 1);
         }
       });
