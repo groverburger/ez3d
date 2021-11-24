@@ -18,7 +18,7 @@ export default function LightRenderer(props) {
 
   return (
     <>
-      {props.type === 'ambient' ? (
+      {props.type === 'AmbientLight' ? (
         <>
           <AmbientLight
             {...props}
@@ -28,7 +28,7 @@ export default function LightRenderer(props) {
         </>
       ) : null}
 
-      {props.type === 'directional' ? (
+      {props.type === 'DirectionalLight' ? (
         <>
           <DirectionalLight
             {...props}
@@ -38,7 +38,7 @@ export default function LightRenderer(props) {
         </>
       ) : null}
 
-      {props.type === 'point' ? (
+      {props.type === 'PointLight' ? (
         <>
           <PointLight
             {...props}

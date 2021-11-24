@@ -108,6 +108,10 @@ export const useLight = create((set) => ({
       state.lightWindowInfo.isWindowOpen = windowInfoIsWindowOpen;
     }),
 
+  replaceLightData: (data) => {
+    set(state => ({ lightData: data }))
+  },
+
   // function to delete light from lightData
   // use the uuid of the input object to find the corresponding
   // light in lightData and delete it

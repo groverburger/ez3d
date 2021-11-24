@@ -5,13 +5,14 @@ import * as context from './context';
 
 export default function NavFile() {
   const { replaceModelData } = context.useModel()
+  const { replaceLightData } = context.useLight()
   const { groupList, resetGroupList } = context.useGroup()
   const { setTargetMesh, setHoveredMesh } = context.useTarget()
 
   return (
     <div className='navbar-items'>
       <NavDropdown title='File' id='file-dropdown'>
-        <NavDropdown.Item href='#action/2.0'>New</NavDropdown.Item>
+        <NavDropdown.Item href='#action/2.0' onClick={() => deserialize(`{"models": [], "lights": []}`)}>New</NavDropdown.Item>
         <NavDropdown.Item
           href='#action/2.0'
           accept='.ez3d'
@@ -41,8 +42,11 @@ export default function NavFile() {
       // check if this thing is a model or a light
       // and put it in the correct category
       if (thing.children[0]) {
+        console.log(thing)
         serialized.lights.push({
-          // TODO
+          uuid: Math.random(),
+          position: thing.position,
+          type: thing.children[0].type,
         })
       } else {
         let color = thing.material.color
@@ -62,28 +66,28 @@ export default function NavFile() {
       }
     }
 
-    return JSON.stringify(serialized)
+    const json = JSON.stringify(serialized)
+    console.log(json)
+    return json
   }
 
   function deserialize(serialized) {
     const data = JSON.parse(serialized)
-    console.log(data.models)
-    //const { isMeshVisible, isGridVisible, isShadowsVisible } = context.useScene();
+    console.log(data)
 
     setTargetMesh(null)
     setHoveredMesh(null)
     resetGroupList()
     replaceModelData(data.models)
+    replaceLightData(data.lights)
   }
 
   function save() {
     const data = serialize()
-    console.log(data)
     download('project.ez3d', data);
   }
 
   function load(event) {
-    console.log("test")
     const reader = new FileReader()
     reader.addEventListener("load", () => {
       deserialize(reader.result)
