@@ -1,7 +1,6 @@
 import { Button } from 'react-bootstrap';
 import { useGroup, useLight, useModel, useProperty, useTarget } from './context';
 import { convertColor } from './color-converter';
-
 import '../styles/object-list.css';
 
 export default function ObjectList() {
@@ -41,13 +40,15 @@ export default function ObjectList() {
       setIsModelWindowOpen(true);
     }
   };
-
+  
   return (
     <>
       <div className='object-list-top'>
         <label className='object-list-title'>Object List</label>
+
         {objList.map((index) => (
           <div key={groupList[index].uuid} className='object-list-items'>
+            
             <Button
               className='btn-light object-list-items'
               active={groupList[index] === targetMesh}
@@ -56,7 +57,9 @@ export default function ObjectList() {
               onPointerOut={() => setHoveredMesh(null)}
             >
               {groupList[index].name}
+              
             </Button>
+            <input/>
           </div>
         ))}
       </div>
