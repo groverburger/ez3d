@@ -14,6 +14,7 @@ import SceneWindow from './components/scene-window';
 import NavFile from './components/nav-file';
 import NavEdit from './components/nav-edit';
 import NavAdd from './components/nav-add';
+import NavHelp from './components/nav-help';
 import SplitPane from 'react-split-pane/lib/SplitPane';
 import Pane from 'react-split-pane/lib/Pane';
 import Toolbar from './components/toolbar';
@@ -48,6 +49,7 @@ export default function App() {
             <NavFile />
             <NavEdit />
             <NavAdd />
+            <NavHelp />
           </Nav>
         </Navbar>
 
