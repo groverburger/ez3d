@@ -59,7 +59,9 @@ export default function ObjectList() {
               {groupList[index].name}
               
             </Button>
-            <input/>
+            <input
+              placeholder="Type your Name"
+            />
           </div>
         ))}
       </div>
