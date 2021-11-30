@@ -67,6 +67,7 @@ export default function NavFile() {
     }
 
     const json = JSON.stringify(serialized)
+    
     console.log(json)
     return json
   }

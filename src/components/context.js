@@ -69,7 +69,6 @@ export const useModel = create((set) => ({
 
     set(state => {
         state.modelData = data
-        console.log("this is the modeldata", state.modelData)
         })
     
   },
@@ -142,15 +141,56 @@ export const useGroup = create((set) => ({
     
   groupList: [],
   undoingMode: false,
-  groupData: null,
+  statesList: [],
+  redoList: [],
+  justPopped: null,
+  
 
     setUndoingMode: (undoingMode) =>
     set({ undoingMode }),
 
-    setGroupData: (data) => {
-    set(state => ({ groupData: data }))
-    },
+    
         
+    setStatesList: (data) => {
+        set(state => {
+        state.statesList.push(data)
+        })
+    },
+
+    popStatesList: () => {
+        set(state => {
+        state.justPopped = state.statesList.pop()
+        // if(state.statesList.length != 0 && state.statesList[state.statesList.length-1] == state.justPopped){
+        //     state.statesList.pop()
+        // }
+        
+        
+        
+        })
+    },
+
+    setRedoList: (data) => {
+        set(state => {
+        state.redoList.push(data)
+        })
+    },
+
+    popRedoList: () => {
+        set(state => {
+        state.justPopped = state.redoList.pop()
+        // if(state.redoList.length != 0 && state.redoList[state.redoList.length-1] == state.justPopped){
+        //     state.redoList.pop()
+        // }
+        
+        })
+    },
+
+    resetUndoLists: () => {
+        set(state => {
+            state.redoList = [];
+            state.statesList = [];
+        })
+    },
 
   // useGroup function to delete the specified object from the group list
   // input is a group object to delete

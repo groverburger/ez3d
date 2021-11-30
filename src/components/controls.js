@@ -7,12 +7,49 @@ export default function Controls() {
   const { currentTransformMode, setCurrentTransformMode } = useProperty();
   const { targetMesh } = useTarget();
   const { setIsDragging } = useScene();
-  const { setGroupData, groupList } = useGroup();
+  const { groupList,setStatesList, resetUndoLists } = useGroup();
   
 
   // Transform Controls reference so that we can change its properties
   const transformRef = useRef();
 
+    function serialize(){
+        const serialized = {
+            models: [],
+            lights: [],
+            }
+
+            for (const thing of groupList) {
+            // check if this thing is a model or a light
+            // and put it in the correct category
+            if (thing.children[0]) {
+                console.log(thing)
+                serialized.lights.push({
+                uuid: Math.random(),
+                position: thing.position,
+                type: thing.children[0].type,
+                })
+            } else {
+                let color = thing.material.color
+
+                if (typeof(color) != "object") {
+                console.log(color)
+                }
+
+                serialized.models.push({
+                uuid: Math.random(),
+                position: thing.position,
+                rotation: thing.rotation.toVector3(),
+                scale: thing.scale,
+                color: {r: color.r, g: color.g, b: color.b},
+                geometryType: thing.geometry.type,
+                })
+            }
+            }
+            
+            // saver = serialized;
+            setStatesList(JSON.stringify(serialized))
+    }
   useEffect(() => {
     if (transformRef.current) {
       const controls = transformRef.current;
@@ -38,6 +75,10 @@ export default function Controls() {
           case 'r':
             controls.setMode('rotate');
             setCurrentTransformMode(controls.mode);
+            if(event.shiftKey){
+                resetUndoLists();
+                console.log("RESET");
+            }
             break;
 
           case 't':
@@ -45,6 +86,9 @@ export default function Controls() {
             break;
 
           default:
+              if(isFinite(event.key)){
+                  serialize();
+              }
             break;
         }
       };
@@ -52,89 +96,19 @@ export default function Controls() {
       const callback = (event) => {
         setIsDragging(event.value);
         if(event.value){
-            const serialized = {
-            models: [],
-            lights: [],
-            }
-
-            for (const thing of groupList) {
-            // check if this thing is a model or a light
-            // and put it in the correct category
-            if (thing.children[0]) {
-                console.log(thing)
-                serialized.lights.push({
-                uuid: Math.random(),
-                position: thing.position,
-                type: thing.children[0].type,
-                })
-            } else {
-                let color = thing.material.color
-
-                if (typeof(color) != "object") {
-                console.log(color)
-                }
-
-                serialized.models.push({
-                uuid: Math.random(),
-                position: thing.position,
-                rotation: thing.rotation.toVector3(),
-                scale: thing.scale,
-                color: {r: color.r, g: color.g, b: color.b},
-                geometryType: thing.geometry.type,
-                })
-            }
-            }
-            console.log("this serialized ", serialized)
-            // saver = serialized;
-            setGroupData(JSON.stringify(serialized))
+            serialize();
         }
       };
 
-      const saveCallBack = (event) => {
-          const serialized = {
-            models: [],
-            lights: [],
-            }
-
-            for (const thing of groupList) {
-            // check if this thing is a model or a light
-            // and put it in the correct category
-            if (thing.children[0]) {
-                console.log(thing)
-                serialized.lights.push({
-                uuid: Math.random(),
-                position: thing.position,
-                type: thing.children[0].type,
-                })
-            } else {
-                let color = thing.material.color
-
-                if (typeof(color) != "object") {
-                console.log(color)
-                }
-
-                serialized.models.push({
-                uuid: Math.random(),
-                position: thing.position,
-                rotation: thing.rotation.toVector3(),
-                scale: thing.scale,
-                color: {r: color.r, g: color.g, b: color.b},
-                geometryType: thing.geometry.type,
-                })
-            }
-            }
-            console.log("this serialized ", serialized)
-            // saver = serialized;
-            setGroupData(JSON.stringify(serialized))
-      }
+      
 
       controls.addEventListener('dragging-changed', callback);
       document.addEventListener('keydown', handleKeyDown);
-      document.addEventListener('onmousedown', saveCallBack);
+      
       return () => {
         document.removeEventListener('keydown', handleKeyDown);
         controls.removeEventListener('dragging-changed', callback);
-        document.removeEventListener('onmousedown', saveCallBack);
+        
       };
     }
   });
