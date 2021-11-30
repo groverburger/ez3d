@@ -12,55 +12,55 @@ export function NavAdd() {
       <NavDropdown title='Add' id='add-dropdown'>
         <NavDropdown.Item
           href='#action/1.0'
-          onClick={(event) => generateNewShape("BoxGeometry", 'cornFlowerBlue')}
+          onClick={() => generateNewShape('BoxGeometry', 'cornFlowerBlue')}
         >
           Cube
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.1'
-          onClick={(event) => generateNewShape("SphereGeometry", 'purple')}
+          onClick={() => generateNewShape('SphereGeometry', 'purple')}
         >
           Sphere
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape("CylinderGeometry", 'yellow')}
+          onClick={() => generateNewShape('CylinderGeometry', 'yellow')}
         >
           Cylinder
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape("ConeGeometry", 'crimson')}
+          onClick={() => generateNewShape('ConeGeometry', 'crimson')}
         >
           Cone
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape("TorusGeometry", 'orange')}
+          onClick={() => generateNewShape('TorusGeometry', 'orange')}
         >
           Torus
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape("TetrahedronGeometry", 'seagreen')}
+          onClick={() => generateNewShape('TetrahedronGeometry', 'seagreen')}
         >
           Tetrahedron
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape("IcosahedronGeometry", 'hotpink')}
+          onClick={() => generateNewShape('IcosahedronGeometry', 'hotpink')}
         >
           Icosahedron
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape("OctahedronGeometry", 'tomato')}
+          onClick={() => generateNewShape('OctahedronGeometry', 'tomato')}
         >
           Octahedron
         </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/1.2'
-          onClick={(event) => generateNewShape("DodecahedronGeometry", 'slateblue')}
+          onClick={() => generateNewShape('DodecahedronGeometry', 'slateblue')}
         >
           Dodecahedron
         </NavDropdown.Item>
@@ -87,46 +87,47 @@ export function NavAdd() {
     </div>
   );
 
-    function serialize(){
-        const serialized = {
-            models: [],
-            lights: [],
-            }
+  function serialize() {
+    const serialized = {
+      models: [],
+      lights: [],
+    };
 
-            for (const thing of groupList) {
-            // check if this thing is a model or a light
-            // and put it in the correct category
-            if (thing.children[0]) {
-                console.log(thing)
-                serialized.lights.push({
-                uuid: Math.random(),
-                position: thing.position,
-                type: thing.children[0].type,
-                })
-            } else {
-                let color = thing.material.color
+    for (const thing of groupList) {
+      // check if this thing is a model or a light
+      // and put it in the correct category
+      if (thing.children[0]) {
+        console.log(thing);
 
-                if (typeof(color) != "object") {
-                console.log(color)
-                }
+        serialized.lights.push({
+          uuid: Math.random(),
+          position: thing.position,
+          type: thing.children[0].type,
+        });
+      } else {
+        let color = thing.material.color;
 
-                serialized.models.push({
-                uuid: Math.random(),
-                position: thing.position,
-                rotation: thing.rotation.toVector3(),
-                scale: thing.scale,
-                color: {r: color.r, g: color.g, b: color.b},
-                geometryType: thing.geometry.type,
-                })
-            }
-            }
-            
-            // saver = serialized;
-            setStatesList(JSON.stringify(serialized))
+        if (typeof color != 'object') {
+          console.log(color);
+        }
+
+        serialized.models.push({
+          uuid: Math.random(),
+          position: thing.position,
+          rotation: thing.rotation.toVector3(),
+          scale: thing.scale,
+          color: { r: color.r, g: color.g, b: color.b },
+          geometryType: thing.geometry.type,
+        });
+      }
     }
 
+    // saver = serialized;
+    setStatesList(JSON.stringify(serialized));
+  }
+
   function generateNewShape(geometryType, color) {
-      serialize();
+    serialize();
     setModelData({
       uuid: Math.random(),
       color: color,
@@ -142,7 +143,7 @@ export function NavAdd() {
     switch (event.target.innerHTML) {
       case 'Ambient Light':
         const newAmbient = {
-          position: {x: 0, y: 0, z: 0},
+          position: { x: 0, y: 0, z: 0 },
           type: 'AmbientLight',
           uuid: Math.random(),
         };
@@ -151,7 +152,7 @@ export function NavAdd() {
 
       case 'Directional Light':
         const newDirectional = {
-          position: {x: 0, y: -2.5, z: 0},
+          position: { x: 0, y: -2.5, z: 0 },
           type: 'DirectionalLight',
           uuid: Math.random(),
         };
@@ -160,7 +161,7 @@ export function NavAdd() {
 
       case 'Point Light':
         const newPoint = {
-          position: {x: 0, y: 6.5, z: 0},
+          position: { x: 0, y: 6.5, z: 0 },
           type: 'PointLight',
           uuid: Math.random(),
         };

@@ -54,22 +54,18 @@ export const useScene = create((set) => ({
   setIsDragging: (isDragging) => set({ isDragging }),
 }));
 
-
 // Model State
 export const useModel = create((set) => ({
   modelData: [],
-    modelDataPrev: [],
-
+  modelDataPrev: [],
 
   isModelWindowOpen: false,
   setIsModelWindowOpen: (isModelWindowOpen) => set({ isModelWindowOpen }),
 
   replaceModelData: (data) => {
-
-    set(state => {
-        state.modelData = data
-        })
-    
+    set((state) => {
+      state.modelData = data;
+    });
   },
 
   // function to delete model from modelData list
@@ -86,8 +82,6 @@ export const useModel = create((set) => ({
       });
       state.modelData = newList;
     }),
-
-   
 
   setModelData: (modelDataElement) =>
     set((state) => ({
@@ -118,10 +112,8 @@ export const useLight = create((set) => ({
     }),
 
   replaceLightData: (data) => {
-    set(state => ({ lightData: data }))
+    set((state) => ({ lightData: data }));
   },
-
-  
 
   // function to delete light from lightData
   // use the uuid of the input object to find the corresponding
@@ -137,59 +129,50 @@ export const useLight = create((set) => ({
 
 // Group State
 export const useGroup = create((set) => ({
-    
   groupList: [],
   undoingMode: false,
   statesList: [],
   redoList: [],
   justPopped: null,
-  
 
-    setUndoingMode: (undoingMode) =>
-    set({ undoingMode }),
+  setUndoingMode: (undoingMode) => set({ undoingMode }),
 
-    
-        
-    setStatesList: (data) => {
-        set(state => {
-        state.statesList.push(data)
-        })
-    },
+  setStatesList: (data) => {
+    set((state) => {
+      state.statesList.push(data);
+    });
+  },
 
-    popStatesList: () => {
-        set(state => {
-        state.justPopped = state.statesList.pop()
-        // if(state.statesList.length != 0 && state.statesList[state.statesList.length-1] == state.justPopped){
-        //     state.statesList.pop()
-        // }
-        
-        
-        
-        })
-    },
+  popStatesList: () => {
+    set((state) => {
+      state.justPopped = state.statesList.pop();
+      // if(state.statesList.length != 0 && state.statesList[state.statesList.length-1] == state.justPopped){
+      //     state.statesList.pop()
+      // }
+    });
+  },
 
-    setRedoList: (data) => {
-        set(state => {
-        state.redoList.push(data)
-        })
-    },
+  setRedoList: (data) => {
+    set((state) => {
+      state.redoList.push(data);
+    });
+  },
 
-    popRedoList: () => {
-        set(state => {
-        state.justPopped = state.redoList.pop()
-        // if(state.redoList.length != 0 && state.redoList[state.redoList.length-1] == state.justPopped){
-        //     state.redoList.pop()
-        // }
-        
-        })
-    },
+  popRedoList: () => {
+    set((state) => {
+      state.justPopped = state.redoList.pop();
+      // if(state.redoList.length != 0 && state.redoList[state.redoList.length-1] == state.justPopped){
+      //     state.redoList.pop()
+      // }
+    });
+  },
 
-    resetUndoLists: () => {
-        set(state => {
-            state.redoList = [];
-            state.statesList = [];
-        })
-    },
+  resetUndoLists: () => {
+    set((state) => {
+      state.redoList = [];
+      state.statesList = [];
+    });
+  },
 
   // useGroup function to delete the specified object from the group list
   // input is a group object to delete
@@ -202,8 +185,8 @@ export const useGroup = create((set) => ({
       state.groupList = newList;
     }),
 
-  resetGroupList: () => 
-    set(state => ({
+  resetGroupList: () =>
+    set((state) => ({
       groupList: [],
     })),
 

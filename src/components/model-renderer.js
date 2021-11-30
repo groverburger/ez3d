@@ -43,8 +43,7 @@ export function ModelRenderer(props) {
           return <dodecahedronBufferGeometry attach="geometry" />
       }
     })()}
-    <meshStandardMaterial attach="material" color={props.color}
-    />
+    <meshStandardMaterial attach="material" color={props.color} />
   </mesh>
 
   function handleClick(event) {

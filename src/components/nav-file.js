@@ -4,15 +4,20 @@ import * as context from './context.js';
 import '../styles/navbar.css';
 
 export function NavFile() {
-  const { replaceModelData } = context.useModel()
-  const { replaceLightData } = context.useLight()
-  const { groupList, resetGroupList } = context.useGroup()
-  const { setTargetMesh, setHoveredMesh } = context.useTarget()
+  const { replaceModelData } = context.useModel();
+  const { replaceLightData } = context.useLight();
+  const { groupList, resetGroupList } = context.useGroup();
+  const { setTargetMesh, setHoveredMesh } = context.useTarget();
 
   return (
     <div className='navbar-items'>
       <NavDropdown title='File' id='file-dropdown'>
-        <NavDropdown.Item href='#action/2.0' onClick={() => deserialize(`{"models": [], "lights": []}`)}>New</NavDropdown.Item>
+        <NavDropdown.Item
+          href='#action/2.0'
+          onClick={() => deserialize(`{"models": [], "lights": []}`)}
+        >
+          New
+        </NavDropdown.Item>
         <NavDropdown.Item
           href='#action/2.0'
           accept='.ez3d'
@@ -36,23 +41,23 @@ export function NavFile() {
     const serialized = {
       models: [],
       lights: [],
-    }
+    };
 
     for (const thing of groupList) {
       // check if this thing is a model or a light
       // and put it in the correct category
       if (thing.children[0]) {
-        console.log(thing)
+        console.log(thing);
         serialized.lights.push({
           uuid: Math.random(),
           position: thing.position,
           type: thing.children[0].type,
-        })
+        });
       } else {
-        let color = thing.material.color
+        let color = thing.material.color;
 
-        if (typeof(color) != "object") {
-          console.log(color)
+        if (typeof color != 'object') {
+          console.log(color);
         }
 
         serialized.models.push({
@@ -60,40 +65,40 @@ export function NavFile() {
           position: thing.position,
           rotation: thing.rotation.toVector3(),
           scale: thing.scale,
-          color: {r: color.r, g: color.g, b: color.b},
+          color: { r: color.r, g: color.g, b: color.b },
           geometryType: thing.geometry.type,
-        })
+        });
       }
     }
 
-    const json = JSON.stringify(serialized)
-    
-    console.log(json)
-    return json
+    const json = JSON.stringify(serialized);
+
+    console.log(json);
+    return json;
   }
 
   function deserialize(serialized) {
-    const data = JSON.parse(serialized)
-    console.log(data)
+    const data = JSON.parse(serialized);
+    console.log(data);
 
-    setTargetMesh(null)
-    setHoveredMesh(null)
-    resetGroupList()
-    replaceModelData(data.models)
-    replaceLightData(data.lights)
+    setTargetMesh(null);
+    setHoveredMesh(null);
+    resetGroupList();
+    replaceModelData(data.models);
+    replaceLightData(data.lights);
   }
 
   function save() {
-    const data = serialize()
+    const data = serialize();
     download('project.ez3d', data);
   }
 
   function load(event) {
-    const reader = new FileReader()
-    reader.addEventListener("load", () => {
-      deserialize(reader.result)
-    })
-    reader.readAsText(event.target.files[0])
+    const reader = new FileReader();
+    reader.addEventListener('load', () => {
+      deserialize(reader.result);
+    });
+    reader.readAsText(event.target.files[0]);
   }
 }
 

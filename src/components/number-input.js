@@ -32,37 +32,59 @@ export function Number() {
     switch (type) {
       case 'translate':
         if (event.target.value) {
-          if (event.target.name === 'translate-X') targetMesh.position.x = parseFloat(event.target.value);
-          else if (event.target.name === 'translate-Y') targetMesh.position.y = parseFloat(event.target.value);
-          else targetMesh.position.z = parseFloat(event.target.value);
+          if (event.target.name === 'translate-X') {
+            targetMesh.position.x = parseFloat(event.target.value);
+          } else if (event.target.name === 'translate-Y') {
+            targetMesh.position.y = parseFloat(event.target.value);
+          } else {
+            targetMesh.position.z = parseFloat(event.target.value);
+          }
         } else {
-          if (event.target.name === 'translate-X') targetMesh.position.x = 0;
-          else if (event.target.name === 'translate-Y') targetMesh.position.y = 0;
-          else targetMesh.position.z = 0;
+          if (event.target.name === 'translate-X') {
+            targetMesh.position.x = 0;
+          } else if (event.target.name === 'translate-Y') {
+            targetMesh.position.y = 0;
+          } else {
+            targetMesh.position.z = 0;
+          }
         }
         break;
 
       case 'scale':
         if (event.target.value) {
-          if (event.target.name === 'scale-X') targetMesh.scale.x = parseFloat(event.target.value);
-          else if (event.target.name === 'scale-Y') targetMesh.scale.y = parseFloat(event.target.value);
-          else targetMesh.scale.z = parseFloat(event.target.value);
+          if (event.target.name === 'scale-X') {
+            targetMesh.scale.x = parseFloat(event.target.value);
+          } else if (event.target.name === 'scale-Y') {
+            targetMesh.scale.y = parseFloat(event.target.value);
+          } else {
+            targetMesh.scale.z = parseFloat(event.target.value);
+          }
         } else {
-          if (event.target.name === 'scale-X') targetMesh.scale.x = 0.01;
-          else if (event.target.name === 'scale-Y') targetMesh.scale.y = 0.01;
-          else targetMesh.scale.z = 0.01;
+          if (event.target.name === 'scale-X') {
+            targetMesh.scale.x = 0.01;
+          } else if (event.target.name === 'scale-Y') {
+            targetMesh.scale.y = 0.01;
+          } else {
+            targetMesh.scale.z = 0.01;
+          }
         }
         break;
 
       case 'rotate':
         if (event.target.value) {
-          if (event.target.name === 'rotate-X') targetMesh.rotation.x = parseFloat(event.target.value);
-          else if (event.target.name === 'rotate-Y') targetMesh.rotation.y = parseFloat(event.target.value);
+          if (event.target.name === 'rotate-X')
+            targetMesh.rotation.x = parseFloat(event.target.value);
+          else if (event.target.name === 'rotate-Y')
+            targetMesh.rotation.y = parseFloat(event.target.value);
           else targetMesh.rotation.z = parseFloat(event.target.value);
         } else {
-          if (event.target.name === 'rotate-X') targetMesh.rotation.x = 0;
-          else if (event.target.name === 'rotate-Y') targetMesh.rotation.y = 0;
-          else targetMesh.rotation.z = 0;
+          if (event.target.name === 'rotate-X') {
+            targetMesh.rotation.x = 0;
+          } else if (event.target.name === 'rotate-Y') {
+            targetMesh.rotation.y = 0;
+          } else {
+            targetMesh.rotation.z = 0;
+          }
         }
         break;
 

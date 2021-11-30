@@ -40,7 +40,7 @@ export function ObjectList() {
       setIsModelWindowOpen(true);
     }
   };
-  
+
   return (
     <>
       <div className='object-list-top'>
@@ -48,7 +48,6 @@ export function ObjectList() {
 
         {objList.map((index) => (
           <div key={groupList[index].uuid} className='object-list-items'>
-            
             <Button
               className='btn-light object-list-items'
               active={groupList[index] === targetMesh}
@@ -57,7 +56,6 @@ export function ObjectList() {
               onPointerOut={() => setHoveredMesh(null)}
             >
               {groupList[index].name}
-              
             </Button>
             <input
               placeholder="Type your Name"

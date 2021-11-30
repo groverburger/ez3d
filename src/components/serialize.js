@@ -5,7 +5,7 @@ export function serialize() {
   const serialized = {
     models: [],
     lights: [],
-  }
+  };
 
   for (const thing of groupList) {
     // check if this thing is a model or a light
@@ -13,7 +13,7 @@ export function serialize() {
     if (thing.children[0]) {
       serialized.lights.push({
         // TODO
-      })
+      });
     } else {
       serialized.models.push({
         uuid: Math.random(),
@@ -22,19 +22,19 @@ export function serialize() {
         scale: thing.scale,
         color: thing.material.color,
         geometryType: thing.geometry.type,
-      })
+      });
     }
   }
 
-  return JSON.stringify(serialized)
+  return JSON.stringify(serialized);
 }
 
 export function deserialize(serialized) {
-  const data = JSON.parse(serialized)
+  const data = JSON.parse(serialized);
   const { replaceModelData } = context.useModel();
   //const { isMeshVisible, isGridVisible, isShadowsVisible } = context.useScene();
 
-  console.log(data)
-  console.log(data.models)
+  console.log(data);
+  console.log(data.models);
   //replaceModelData(data.models)
 }

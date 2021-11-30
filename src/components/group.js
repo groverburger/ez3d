@@ -13,13 +13,17 @@ export function Group({ children }) {
     setTargetMesh(null);
     setLightWindowType(null);
     setLightWindowToggle(false);
-  }
+  };
 
   useEffect(() => {
     if (groupRef.current) {
       const group = groupRef.current;
 
-      console.log(group.children && 'Current meshes in group are: ',group.children);
+      console.log(
+        group.children && 'Current meshes in group are: ',
+        group.children
+      );
+
       group.children.forEach((mesh) => {
         setGroupList(mesh);
       });

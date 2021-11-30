@@ -35,8 +35,8 @@ export function App() {
   // Reference: https://codesandbox.io/s/basic-demo-forked-v8ji5?file=/src/App.js:1036-1079
   // Selection is done on the outermost mesh - not the innermost mesh
   const intersectionsFilter = (intersections) => {
-    return intersections?.length ? [intersections[0]] : intersections
-  }
+    return intersections?.length ? [intersections[0]] : intersections;
+  };
 
   return (
     <>
@@ -74,11 +74,11 @@ export function App() {
 
               <Group>
                 {modelData.map((data) => (
-                  <ModelRenderer key={data.uuid} { ...data } />
+                  <ModelRenderer key={data.uuid} {...data} />
                 ))}
 
                 {lightData.map((data) => (
-                  <LightRenderer key={data.uuid} { ...data } />
+                  <LightRenderer key={data.uuid} {...data} />
                 ))}
               </Group>
 
@@ -91,7 +91,6 @@ export function App() {
                   width={1000}
                 />
               </EffectComposer>
-
             </Canvas>
           </Pane>
 
@@ -111,10 +110,13 @@ export function App() {
               </Pane>
 
               <Pane className='scene-window-pane'>
-                {lightWindowInfo.isWindowOpen ? <LightWindow /> :
-                  isModelWindowOpen ? <ModelWindow /> :
+                {lightWindowInfo.isWindowOpen ? (
+                  <LightWindow />
+                ) : isModelWindowOpen ? (
+                  <ModelWindow />
+                ) : (
                   <SceneWindow />
-                }
+                )}
               </Pane>
             </SplitPane>
           </Pane>

@@ -3,7 +3,7 @@ import { useProperty, useTarget } from './context.js';
 
 export function ShadeSelect() {
   const { setCurrentShade } = useProperty();
-  const { targetMesh} = useTarget();
+  const { targetMesh } = useTarget();
 
   function handleWireframe() {
     if (targetMesh) {
@@ -14,7 +14,7 @@ export function ShadeSelect() {
   }
 
   function handleFaceted() {
-    if(targetMesh){
+    if (targetMesh) {
       targetMesh.material.flatShading = true;
       targetMesh.material.wireframe = false;
       targetMesh.material.needsUpdate = true;
