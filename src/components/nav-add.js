@@ -1,11 +1,12 @@
 import { NavDropdown } from 'react-bootstrap';
-import { useModel, useLight } from './context';
+import { useModel, useLight, useGroup } from './context';
 import '../styles/navbar.css';
 import * as THREE from 'three';
 
 export default function NavAdd() {
   const { setModelData } = useModel();
   const { setLightData } = useLight();
+  const { setStatesList, groupList } = useGroup();
 
   return (
     <div className='navbar-items'>
@@ -87,7 +88,46 @@ export default function NavAdd() {
     </div>
   );
 
+    function serialize(){
+        const serialized = {
+            models: [],
+            lights: [],
+            }
+
+            for (const thing of groupList) {
+            // check if this thing is a model or a light
+            // and put it in the correct category
+            if (thing.children[0]) {
+                console.log(thing)
+                serialized.lights.push({
+                uuid: Math.random(),
+                position: thing.position,
+                type: thing.children[0].type,
+                })
+            } else {
+                let color = thing.material.color
+
+                if (typeof(color) != "object") {
+                console.log(color)
+                }
+
+                serialized.models.push({
+                uuid: Math.random(),
+                position: thing.position,
+                rotation: thing.rotation.toVector3(),
+                scale: thing.scale,
+                color: {r: color.r, g: color.g, b: color.b},
+                geometryType: thing.geometry.type,
+                })
+            }
+            }
+            
+            // saver = serialized;
+            setStatesList(JSON.stringify(serialized))
+    }
+
   function generateNewShape(geometryType, color) {
+      serialize();
     setModelData({
       uuid: Math.random(),
       color: color,
