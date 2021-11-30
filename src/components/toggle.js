@@ -1,6 +1,6 @@
 import '../styles/toggle.css';
 
-export default function Toggle(props) {
+export function Toggle(props) {
   return (
     <label className='wrapper'>
       <input

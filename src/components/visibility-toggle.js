@@ -4,7 +4,7 @@ import { ReactComponent as EyeCrossedIcon } from '../icons/eye-crossed.svg';
 import {useTarget, useScene } from './context.js';
 import '../styles/toolbar.css';
 
-export default function Visibility() {
+export function Visibility() {
   const { targetMesh } = useTarget();
   const { isMeshVisible, setVisibility } = useScene();
 

@@ -5,7 +5,7 @@ import { Scene, Matrix4 } from 'three';
 
 // Reference: https://codesandbox.io/s/viewcube-py4db?file=/src/App.js
 // Reference: https://github.com/pmndrs/drei/blob/master/src/core/GizmoHelper.tsx
-export default function Viewcube() {
+export function Viewcube() {
   const { gl, camera, size } = useThree();
   const matrix = new Matrix4();
   const virtualScene = useMemo(() => new Scene(), []);

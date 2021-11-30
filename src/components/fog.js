@@ -1,6 +1,6 @@
 import { useScene } from './context.js';
 
-export default function Fog() {
+export function Fog() {
   const { isFogVisible } = useScene();
 
   return (

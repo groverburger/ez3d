@@ -3,10 +3,9 @@ import { ReactComponent as TranslateIcon } from '../icons/translate.svg';
 import { ReactComponent as RotateIcon } from '../icons/rotate.svg';
 import { ReactComponent as ScaleIcon } from '../icons/scale.svg';
 import { useProperty, useTarget } from './context.js';
-
 import '../styles/toolbar.css';
 
-export default function Toolbar() {
+export function Toolbar() {
   const icons = {
     translate: <TranslateIcon />,
     scale: <ScaleIcon />,

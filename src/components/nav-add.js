@@ -2,7 +2,7 @@ import { NavDropdown } from 'react-bootstrap';
 import { useModel, useLight, useGroup } from './context.js';
 import '../styles/navbar.css';
 
-export default function NavAdd() {
+export function NavAdd() {
   const { setModelData } = useModel();
   const { setLightData } = useLight();
   const { setStatesList, groupList } = useGroup();

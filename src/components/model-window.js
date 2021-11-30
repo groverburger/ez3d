@@ -1,11 +1,10 @@
-import Number from './number-input.js';
-import ColorSelect from './color-selector.js';
-import ShadeSelector from './shade-selector.js';
-import Visibility from './visibility-toggle.js';
-
+import { Number } from './number-input.js';
+import { ColorSelect } from './color-selector.js';
+import { ShadeSelect } from './shade-selector.js';
+import { Visibility } from './visibility-toggle.js';
 import '../styles/model-window.css';
 
-export default function ModelWindow() {
+export function ModelWindow() {
   return (
     <>
       <div className='model-window-top'>
@@ -22,7 +21,7 @@ export default function ModelWindow() {
         </div>
         <div className='model-window-items'>
           <label>Shader</label>
-          <ShadeSelector />
+          <ShadeSelect />
         </div>
         <div className='model-window-items'>
           <label>Visibility</label>

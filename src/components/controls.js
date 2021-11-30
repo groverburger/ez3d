@@ -3,7 +3,7 @@ import { OrbitControls, TransformControls } from '@react-three/drei';
 import { useProperty, useTarget, useScene, useGroup, useLight, useModel} from './context.js';
 
 // Transform Controls
-export default function Controls() {
+export function Controls() {
   const { currentTransformMode, setCurrentTransformMode } = useProperty();
   const { targetMesh } = useTarget();
   const { setIsDragging } = useScene();

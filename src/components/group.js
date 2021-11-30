@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useGroup, useModel, useLight, useTarget } from './context.js';
 
-export default function Group({ children }) {
+export function Group({ children }) {
   const { setGroupList } = useGroup();
   const { modelData } = useModel();
   const { lightData, setLightWindowToggle, setLightWindowType } = useLight();

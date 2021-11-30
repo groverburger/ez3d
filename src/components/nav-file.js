@@ -3,7 +3,7 @@ import { serialize, deserialize } from './serialize.js';
 import * as context from './context.js';
 import '../styles/navbar.css';
 
-export default function NavFile() {
+export function NavFile() {
   const { replaceModelData } = context.useModel()
   const { replaceLightData } = context.useLight()
   const { groupList, resetGroupList } = context.useGroup()

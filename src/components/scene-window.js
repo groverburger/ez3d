@@ -1,8 +1,8 @@
-import Toggle from './toggle.js';
+import { Toggle } from './toggle.js';
 import { useScene } from './context.js';
 import '../styles/scene-window.css';
 
-export default function SceneWindow() {
+export function SceneWindow() {
   const { isGridVisible, setGrid, isShadowsVisible, setShadows, isFogVisible, setFog} = useScene();
 
   return (

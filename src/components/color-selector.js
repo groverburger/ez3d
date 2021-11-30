@@ -1,7 +1,7 @@
 import { useProperty, useTarget, useGroup } from './context.js';
 import { convertColor } from './color-converter.js';
 
-export default function ColorSelect() {
+export function ColorSelect() {
   const { currentColor, setCurrentColor } = useProperty();
   const { targetMesh } = useTarget();
   const { setStatesList, groupList } = useGroup();

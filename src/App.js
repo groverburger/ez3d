@@ -5,29 +5,29 @@ import { Canvas } from '@react-three/fiber';
 import { EffectComposer, Outline } from '@react-three/postprocessing';
 import { Navbar, Nav } from 'react-bootstrap';
 
-import Controls from './components/controls.js';
-import LightRenderer from './components/light-renderer.js';
-import ModelRenderer from './components/model-renderer.js';
-import ObjectList from './components/object-list.js';
-import LightWindow from './components/light-window.js';
-import ModelWindow from './components/model-window.js';
-import SceneWindow from './components/scene-window.js';
-import NavFile from './components/nav-file.js';
-import NavEdit from './components/nav-edit.js';
-import NavAdd from './components/nav-add.js';
-import NavHelp from './components/nav-help.js';
-import Toolbar from './components/toolbar.js';
-import Viewcube from './components/viewcube.js';
-import Group from './components/group.js';
-import Grid from './components/grid.js';
-import Fog from './components/fog.js';
-import HotKeys from './components/hotkeys.js';
+import { Controls } from './components/controls.js';
+import { LightRenderer } from './components/light-renderer.js';
+import { ModelRenderer } from './components/model-renderer.js';
+import { ObjectList } from './components/object-list.js';
+import { LightWindow } from './components/light-window.js';
+import { ModelWindow } from './components/model-window.js';
+import { SceneWindow } from './components/scene-window.js';
+import { NavFile } from './components/nav-file.js';
+import { NavEdit } from './components/nav-edit.js';
+import { NavAdd } from './components/nav-add.js';
+import { NavHelp } from './components/nav-help.js';
+import { Toolbar } from './components/toolbar.js';
+import { Viewcube } from './components/viewcube.js';
+import { Group } from './components/group.js';
+import { Grid } from './components/grid.js';
+import { Fog } from './components/fog.js';
+import { HotKeys } from './components/hotkeys.js';
 import { useLight, useModel, useTarget } from './components/context.js';
 
 import './App.css';
 import './styles/navbar.css';
 
-export default function App() {
+export function App() {
   const { modelData, isModelWindowOpen } = useModel();
   const { lightData, lightWindowInfo } = useLight();
   const { hoveredMesh } = useTarget();

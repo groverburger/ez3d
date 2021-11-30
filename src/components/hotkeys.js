@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useGroup, useLight, useModel, useTarget } from './context.js';
 
-export default function HotKeys({ children }) {
+export function HotKeys({ children }) {
   const { setTargetMesh, targetMesh, setHoveredMesh } = useTarget();
   const { delGroupList, groupList,  groupListPrev,  resetGroupList, setStatesList, popStatesList, statesList, redoList, popRedoList, setRedoList, resetUndoLists} = useGroup();
   const { modelData, deleteModelData, setIsModelWindowOpen,  modelDataPrev,  replaceModelData } = useModel();

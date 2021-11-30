@@ -1,7 +1,7 @@
 import { useProperty, useTarget } from './context.js';
 import '../styles/range-input.css';
 
-export default function Range() {
+export function Range() {
   const { currentIntensity, setCurrentIntensity } = useProperty();
   const { targetMesh } = useTarget();
 

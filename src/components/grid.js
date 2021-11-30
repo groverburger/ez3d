@@ -1,6 +1,6 @@
 import { useScene } from './context.js';
 
-export default function Grid() {
+export function Grid() {
   const { isGridVisible, isShadowsVisible } = useScene();
 
   return (

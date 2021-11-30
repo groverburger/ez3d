@@ -1,10 +1,10 @@
 import { useLight, useProperty } from './context.js';
-import Range from './range-input.js';
-import Number from './number-input.js';
-import ColorSelect from './color-selector.js';
+import { Range } from './range-input.js';
+import { Number } from './number-input.js';
+import { ColorSelect } from './color-selector.js';
 import '../styles/light-window.css';
 
-export default function LightWindow() {
+export function LightWindow() {
   const { currentIntensity } = useProperty();
   const { lightWindowInfo } = useLight();
 

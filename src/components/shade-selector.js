@@ -1,7 +1,7 @@
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { useProperty, useTarget } from './context.js';
 
-export default function ShadeSelect() {
+export function ShadeSelect() {
   const { setCurrentShade } = useProperty();
   const { targetMesh} = useTarget();
 

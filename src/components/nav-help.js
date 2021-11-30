@@ -1,7 +1,7 @@
 import { NavDropdown } from 'react-bootstrap';
 import '../styles/navbar.css';
 
-export default function NavHelp() {
+export function NavHelp() {
   return (
     <div className='navbar-items'>
       <NavDropdown title='Help' id='Help-dropdown'>

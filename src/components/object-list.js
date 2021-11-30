@@ -3,7 +3,7 @@ import { useGroup, useLight, useModel, useProperty, useTarget } from './context.
 import { convertColor } from './color-converter.js';
 import '../styles/object-list.css';
 
-export default function ObjectList() {
+export function ObjectList() {
   const { setCurrentColor, setCurrentIntensity, setCurrentTransform } = useProperty();
   const { setIsModelWindowOpen } = useModel();
   const { setLightWindowType, setLightWindowToggle } = useLight();

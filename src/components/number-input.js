@@ -3,10 +3,9 @@ import { ReactComponent as TranslateIcon } from '../icons/translate.svg';
 import { ReactComponent as RotateIcon } from '../icons/rotate.svg';
 import { ReactComponent as ScaleIcon } from '../icons/scale.svg';
 import { useProperty, useTarget, useScene } from './context.js';
-
 import '../styles/number-input.css';
 
-export default function Number() {
+export function Number() {
   const icons = {
     translate: <TranslateIcon />,
     scale: <ScaleIcon />,

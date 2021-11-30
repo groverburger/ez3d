@@ -1,7 +1,7 @@
 import { NavDropdown } from 'react-bootstrap';
 import '../styles/navbar.css';
 
-export default function NavEdit() {
+export function NavEdit() {
   return (
     <div className='navbar-items'>
       <NavDropdown title='Edit' id='edit-dropdown'>
