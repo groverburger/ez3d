@@ -24,7 +24,7 @@ export function HotKeys({ children }) {
     modelDataPrev,
     replaceModelData,
   } = useModel();
-  
+
   const {
     deleteLightData,
     lightData,
@@ -212,8 +212,8 @@ export function HotKeys({ children }) {
 
             if (beforeLength === modelData.length) {
               // If nothing happened to modelList, a light must be deleted
-              var lightIndex = -1; // Start at -1 to account for index starting at 0
-              var totalLightsMinusOne = -1;
+              let lightIndex = -1; // Start at -1 to account for index starting at 0
+              let totalLightsMinusOne = -1;
 
               groupList.forEach((entry) => {
                 if (!(entry.uuid < 1)) {

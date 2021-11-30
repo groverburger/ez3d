@@ -1,7 +1,7 @@
 export function convertColor(color) {
   // Convert hex string to an rgb object
   const hexToRgb = (hex) => {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
       ? {
           r: parseInt(result[1], 16) / 255,
@@ -14,7 +14,7 @@ export function convertColor(color) {
   // Convert rgb object to a hex string
   const rgbToHex = (rgb) => {
     const componentToHex = (c) => {
-      var hex = c.toString(16);
+      const hex = c.toString(16);
       return hex.length === 1 ? '0' + hex : hex;
     };
 

@@ -74,7 +74,7 @@ export const useModel = create((set) => ({
   // the input object must be a groupList object
   deleteModelData: (delModel) =>
     set((state) => {
-      var newList = state.modelData;
+      const newList = state.modelData;
       state.modelData.forEach((entry, i) => {
         if (entry.uuid === delModel.uuid) {
           newList.splice(i, 1);
@@ -121,7 +121,7 @@ export const useLight = create((set) => ({
   // the input object must be a groupList object
   deleteLightData: (delIndex) =>
     set((state) => {
-      var newList = state.lightData;
+      const newList = state.lightData;
       newList.splice(delIndex, 1);
       state.lightData = newList;
     }),
@@ -180,7 +180,7 @@ export const useGroup = create((set) => ({
   delGroupList: (delGroup) =>
     set((state) => {
       const index = state.groupList.indexOf(delGroup);
-      var newList = state.groupList;
+      const newList = state.groupList;
       newList.splice(index, 1);
       state.groupList = newList;
     }),
