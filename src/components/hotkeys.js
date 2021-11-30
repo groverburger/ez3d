@@ -3,18 +3,23 @@ import { useGroup, useLight, useModel, useTarget } from './context';
 
 export default function HotKeys({ children }) {
   const { setTargetMesh, targetMesh, setHoveredMesh } = useTarget();
-  const { delGroupList, groupList } = useGroup();
-  const { modelData, deleteModelData, setIsModelWindowOpen } = useModel();
-  const { deleteLightData, lightData, setLightWindowToggle, setLightWindowType } = useLight();
-
+  const { delGroupList, groupList,  groupListPrev,  resetGroupList, setGroupData, groupData } = useGroup();
+  const { modelData, deleteModelData, setIsModelWindowOpen,  modelDataPrev,  replaceModelData } = useModel();
+  const { deleteLightData, lightData, setLightWindowToggle, setLightWindowType,  lightDataPrev } = useLight();
+    
   useEffect(() => {
+      
     const handleKeyDown = (event) => {
       switch (event.key) {
         // For debugging purposes
         case 'p':
           console.log('Currently Selected Mesh:', targetMesh);
           console.log('Grouplist:', groupList);
+          console.log('ModelData:', modelData);
           console.log('LightData:', lightData);
+          console.log('GrouplistPrev:', groupListPrev);
+          console.log('ModelDataPrev:', modelDataPrev);
+          console.log('LightDataPrev:', lightDataPrev);
           break;
 
         // Deselect target mesh
@@ -24,6 +29,75 @@ export default function HotKeys({ children }) {
           setLightWindowToggle(false);    // Close light window
           setIsModelWindowOpen(false);    // Close model window
           break;
+
+
+        //undo
+        case 'z':
+            
+
+            if(event.metaKey){
+
+                
+                const data = JSON.parse(groupData)
+                if(data != null){
+                    console.log("this is saver", data)
+                    setTargetMesh(null)
+                    setHoveredMesh(null)
+                    setLightWindowToggle(false);    // Close light window
+                    setIsModelWindowOpen(false);    // Close model window
+                    resetGroupList()
+                    replaceModelData(data.models)
+                }
+                
+                // replaceLightData(data.lights)
+                
+
+
+                
+                
+            }
+            
+            break;
+
+        case 's':
+            const serialized = {
+            models: [],
+            lights: [],
+            }
+
+            for (const thing of groupList) {
+            // check if this thing is a model or a light
+            // and put it in the correct category
+            if (thing.children[0]) {
+                console.log(thing)
+                serialized.lights.push({
+                uuid: Math.random(),
+                position: thing.position,
+                type: thing.children[0].type,
+                })
+            } else {
+                let color = thing.material.color
+
+                if (typeof(color) != "object") {
+                console.log(color)
+                }
+
+                serialized.models.push({
+                uuid: Math.random(),
+                position: thing.position,
+                rotation: thing.rotation.toVector3(),
+                scale: thing.scale,
+                color: {r: color.r, g: color.g, b: color.b},
+                geometryType: thing.geometry.type,
+                })
+            }
+            }
+            console.log("this serialized ", serialized)
+            // saver = serialized;
+            setGroupData(JSON.stringify(serialized))
+            
+            
+            break;
 
         // Delete selected mesh
         case 'x':

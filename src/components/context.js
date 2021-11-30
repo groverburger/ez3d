@@ -1,5 +1,6 @@
 import create from 'zustand';
 
+
 // Target State
 export const useTarget = create((set) => ({
   targetMesh: null,
@@ -58,12 +59,19 @@ export const useScene = create((set) => ({
 // Model State
 export const useModel = create((set) => ({
   modelData: [],
+    modelDataPrev: [],
+
 
   isModelWindowOpen: false,
   setIsModelWindowOpen: (isModelWindowOpen) => set({ isModelWindowOpen }),
 
   replaceModelData: (data) => {
-    set(state => ({ modelData: data }))
+
+    set(state => {
+        state.modelData = data
+        console.log("this is the modeldata", state.modelData)
+        })
+    
   },
 
   // function to delete model from modelData list
@@ -81,6 +89,8 @@ export const useModel = create((set) => ({
       state.modelData = newList;
     }),
 
+   
+
   setModelData: (modelDataElement) =>
     set((state) => ({
       modelData: [modelDataElement, ...state.modelData],
@@ -90,6 +100,7 @@ export const useModel = create((set) => ({
 // Light State
 export const useLight = create((set) => ({
   lightData: [],
+  lightDataPrev: [],
   setLightData: (lightDataElement) =>
     set((state) => ({
       lightData: [lightDataElement, ...state.lightData],
@@ -112,6 +123,8 @@ export const useLight = create((set) => ({
     set(state => ({ lightData: data }))
   },
 
+  
+
   // function to delete light from lightData
   // use the uuid of the input object to find the corresponding
   // light in lightData and delete it
@@ -126,7 +139,18 @@ export const useLight = create((set) => ({
 
 // Group State
 export const useGroup = create((set) => ({
+    
   groupList: [],
+  undoingMode: false,
+  groupData: null,
+
+    setUndoingMode: (undoingMode) =>
+    set({ undoingMode }),
+
+    setGroupData: (data) => {
+    set(state => ({ groupData: data }))
+    },
+        
 
   // useGroup function to delete the specified object from the group list
   // input is a group object to delete
