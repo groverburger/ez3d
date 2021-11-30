@@ -1,4 +1,4 @@
-import * as context from './context';
+import * as context from './context.js';
 
 export function serialize() {
   const { groupList } = context.useGroup();

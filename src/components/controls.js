@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { OrbitControls, TransformControls } from '@react-three/drei';
-import { useProperty, useTarget, useScene, useGroup, useLight, useModel} from './context';
+import { useProperty, useTarget, useScene, useGroup, useLight, useModel} from './context.js';
 
 // Transform Controls
 export default function Controls() {

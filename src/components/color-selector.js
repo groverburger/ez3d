@@ -1,5 +1,5 @@
-import { useProperty, useTarget, useGroup } from './context';
-import { convertColor } from './color-converter';
+import { useProperty, useTarget, useGroup } from './context.js';
+import { convertColor } from './color-converter.js';
 
 export default function ColorSelect() {
   const { currentColor, setCurrentColor } = useProperty();

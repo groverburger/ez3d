@@ -1,4 +1,4 @@
-import { useProperty, useTarget } from './context';
+import { useProperty, useTarget } from './context.js';
 import '../styles/range-input.css';
 
 export default function Range() {

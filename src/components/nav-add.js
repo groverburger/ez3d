@@ -1,7 +1,6 @@
 import { NavDropdown } from 'react-bootstrap';
-import { useModel, useLight, useGroup } from './context';
+import { useModel, useLight, useGroup } from './context.js';
 import '../styles/navbar.css';
-import * as THREE from 'three';
 
 export default function NavAdd() {
   const { setModelData } = useModel();

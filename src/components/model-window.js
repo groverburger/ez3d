@@ -1,7 +1,7 @@
-import Number from './number-input';
-import ColorSelect from './color-selector';
-import ShadeSelector from './shade-selector';
-import Visibility from './visibility-toggle';
+import Number from './number-input.js';
+import ColorSelect from './color-selector.js';
+import ShadeSelector from './shade-selector.js';
+import Visibility from './visibility-toggle.js';
 
 import '../styles/model-window.css';
 

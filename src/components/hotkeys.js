@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useGroup, useLight, useModel, useTarget } from './context';
+import { useGroup, useLight, useModel, useTarget } from './context.js';
 
 export default function HotKeys({ children }) {
   const { setTargetMesh, targetMesh, setHoveredMesh } = useTarget();

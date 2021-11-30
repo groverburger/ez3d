@@ -1,7 +1,7 @@
-import { useLight, useProperty } from './context';
-import Range from './range-input';
-import Number from './number-input';
-import ColorSelect from './color-selector';
+import { useLight, useProperty } from './context.js';
+import Range from './range-input.js';
+import Number from './number-input.js';
+import ColorSelect from './color-selector.js';
 import '../styles/light-window.css';
 
 export default function LightWindow() {

@@ -1,7 +1,7 @@
 import { NavDropdown } from 'react-bootstrap';
-import { serialize, deserialize } from './serialize';
+import { serialize, deserialize } from './serialize.js';
+import * as context from './context.js';
 import '../styles/navbar.css';
-import * as context from './context';
 
 export default function NavFile() {
   const { replaceModelData } = context.useModel()

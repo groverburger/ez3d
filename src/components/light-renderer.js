@@ -1,5 +1,5 @@
 import { useLight } from './context';
-import { AmbientLight, DirectionalLight, PointLight } from './lights';
+import { AmbientLight, DirectionalLight, PointLight } from './lights.js';
 
 export default function LightRenderer(props) {
   const { setLightWindowType, setLightWindowToggle } = useLight();

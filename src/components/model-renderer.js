@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
-import { useGroup, useModel, useProperty, useTarget } from './context';
-import { convertColor } from './color-converter';
+import { useGroup, useModel, useProperty, useTarget } from './context.js';
+import { convertColor } from './color-converter.js';
 
 export default function ModelRenderer(props) {
   const meshRef = useRef();

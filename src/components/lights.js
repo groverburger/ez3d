@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
 import { useHelper } from '@react-three/drei';
 import { DirectionalLightHelper, PointLightHelper } from 'three';
-import { useGroup, useProperty, useTarget } from './context';
-import { convertColor } from './color-converter';
+import { useGroup, useProperty, useTarget } from './context.js';
+import { convertColor } from './color-converter.js';
 
 const LightMesh = ({ children, props }) => {
   const handleLightClick = props.onClick;

@@ -1,17 +1,17 @@
-import {useTarget, useScene } from './context';
 import { Button } from 'react-bootstrap';
 import { ReactComponent as EyeIcon } from '../icons/eye.svg';
-import { ReactComponent as EyeCrossedIcon } from '../icons/eyeCrossed.svg';
+import { ReactComponent as EyeCrossedIcon } from '../icons/eye-crossed.svg';
+import {useTarget, useScene } from './context.js';
 import '../styles/toolbar.css';
 
 export default function Visibility() {
   const { targetMesh } = useTarget();
-  const {isMeshVisible, setVisibility} = useScene();
+  const { isMeshVisible, setVisibility } = useScene();
 
   const handleChange = (event) => {
     if (targetMesh) {
       targetMesh.visible = !targetMesh.visible;
-      if(isMeshVisible == true){
+      if(isMeshVisible === true){
         setVisibility(false);
       }else{
         setVisibility(true);

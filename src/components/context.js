@@ -1,6 +1,5 @@
 import create from 'zustand';
 
-
 // Target State
 export const useTarget = create((set) => ({
   targetMesh: null,

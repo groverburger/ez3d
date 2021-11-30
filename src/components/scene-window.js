@@ -1,5 +1,5 @@
-import { useScene } from './context';
-import Toggle from './toggle';
+import Toggle from './toggle.js';
+import { useScene } from './context.js';
 import '../styles/scene-window.css';
 
 export default function SceneWindow() {

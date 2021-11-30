@@ -1,8 +1,8 @@
+import { ButtonGroup, Button } from 'react-bootstrap';
 import { ReactComponent as TranslateIcon } from '../icons/translate.svg';
 import { ReactComponent as RotateIcon } from '../icons/rotate.svg';
 import { ReactComponent as ScaleIcon } from '../icons/scale.svg';
-import { ButtonGroup, Button } from 'react-bootstrap';
-import { useProperty, useTarget } from './context';
+import { useProperty, useTarget } from './context.js';
 
 import '../styles/toolbar.css';
 

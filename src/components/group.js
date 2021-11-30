@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useGroup, useModel, useLight, useTarget } from './context';
+import { useGroup, useModel, useLight, useTarget } from './context.js';
 
 export default function Group({ children }) {
   const { setGroupList } = useGroup();
