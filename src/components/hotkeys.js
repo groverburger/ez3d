@@ -102,12 +102,8 @@ export function HotKeys({ children }) {
             }
           
           break;
-
-        //undo
-        case 'z':
-            // if command shift z, redo
-          if (event.ctrlKey && event.shiftKey) {
-            if (redoList[redoList.length - 1] != null) {
+        case 'y':
+            if (event.ctrlKey && redoList[redoList.length - 1] != null) {
               for (const thing of groupList) {
                 // check if this thing is a model or a light
                 // and put it in the correct category
@@ -150,7 +146,11 @@ export function HotKeys({ children }) {
               resetGroupList();
               replaceModelData(data.models); // replaceLightData(data.lights)
             }
-          } else {
+            break;
+        //undo
+        case 'z':
+            // if command shift z, redo
+          
               // if command z, undo
             if (event.ctrlKey) {
               if (statesList[statesList.length - 1] != null) {
@@ -197,7 +197,7 @@ export function HotKeys({ children }) {
                 // replaceLightData(data.lights)
               }
             }
-          }
+          
           break;
 
         case 's':
