@@ -1,6 +1,11 @@
 import React, { useEffect, useRef } from 'react';
 import { useGroup, useModel, useLight, useTarget } from './context.js';
 
+/**
+ * Group: this handles the object that holds all of the meshes and lights
+ *
+ * @returns {object} JSX containing group component
+ */
 export function Group({ children }) {
   const { setGroupList } = useGroup();
   const { modelData } = useModel();
@@ -9,6 +14,7 @@ export function Group({ children }) {
 
   const groupRef = useRef();
 
+  //handlePointerMissed handles deselecting and opens a general scene window
   const handlePointerMissed = () => {
     setTargetMesh(null);
     document.dispatchEvent(new KeyboardEvent('keydown',{'key':'d'}));
@@ -16,6 +22,7 @@ export function Group({ children }) {
     setLightWindowToggle(false);
   };
 
+  //When there is a change to the modelData or lightData it updates the groupRef
   useEffect(() => {
     if (groupRef.current) {
       const group = groupRef.current;
@@ -24,13 +31,15 @@ export function Group({ children }) {
         group.children && 'Current meshes in group are: ',
         group.children
       );
-
+      //adds new member to groupRef
       group.children.forEach((mesh) => {
         setGroupList(mesh);
       });
     }
   }, [modelData, lightData, setGroupList]);
 
+  //returns group component
+  //handles pointer over, out, or miss on any member of the group
   return (
     <group
       ref={groupRef}
