@@ -27,6 +27,11 @@ import { useLight, useModel, useTarget } from './components/context.js';
 import './App.css';
 import './styles/navbar.css';
 
+/**
+ * App: This is the overall structure of our components
+ *
+ * @returns {object} JSX containing the combination of components
+ */
 export function App() {
   const { modelData, isModelWindowOpen } = useModel();
   const { lightData, lightWindowInfo } = useLight();
@@ -37,7 +42,7 @@ export function App() {
   const intersectionsFilter = (intersections) => {
     return intersections?.length ? [intersections[0]] : intersections;
   };
-
+  //divides these components by using SplitPane
   return (
     <>
       <HotKeys>
