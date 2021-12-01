@@ -56,6 +56,7 @@ export function ColorSelect() {
   const handleInputChange = (event) => {
     const rgb = convertColor(event.target.value);
 
+    //save the state before doing anything
     serialize();
 
     if (targetMesh) {

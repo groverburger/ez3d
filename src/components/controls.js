@@ -98,12 +98,17 @@ export function Controls() {
 
       const callback = (event) => {
         setIsDragging(event.value);
+
+        //if the transform just began, save the state
         if (event.value) {
           serialize();
         }
       };
 
+        //event listener for dragging
       controls.addEventListener('dragging-changed', callback);
+
+      //event listener for a keypress while object is selected
       document.addEventListener('keydown', handleKeyDown);
 
       return () => {

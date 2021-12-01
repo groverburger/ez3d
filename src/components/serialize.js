@@ -1,5 +1,7 @@
 import * as context from './context.js';
 
+
+//function to serialize a model into a JSON string
 export function serialize() {
   const { groupList } = context.useGroup();
   const serialized = {

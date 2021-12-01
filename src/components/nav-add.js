@@ -87,6 +87,7 @@ export function NavAdd() {
     </div>
   );
 
+    //function to save the state
   function serialize() {
     const serialized = {
       models: [],

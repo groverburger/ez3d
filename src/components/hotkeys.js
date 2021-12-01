@@ -104,6 +104,7 @@ export function HotKeys({ children }) {
           break;
 
         // ctrl Y to redo your undos
+        // before redo executes, first save the state 
         case 'y':
             if (event.ctrlKey && redoList[redoList.length - 1] != null) {
               for (const thing of groupList) {
@@ -149,10 +150,11 @@ export function HotKeys({ children }) {
               replaceModelData(data.models); // replaceLightData(data.lights)
             }
             break;
-        // ctrl z to undo your changed
+        // ctrl z to undo your changes
+        // before undo executes, first save the state in the redo list
         case 'z':
           
-              // if command z, undo
+              // if ctrl is pressed, continue undo
             if (event.ctrlKey) {
               if (statesList[statesList.length - 1] != null) {
                 for (const thing of groupList) {
@@ -205,7 +207,7 @@ export function HotKeys({ children }) {
           serialize();
           break;
 
-        // Delete selected mesh
+        // ctrl x deletes selected mesh
         case 'x':
           if (targetMesh != null && event.ctrlKey) {
             setHoveredMesh(null); // Remove hovered mesh to avoid bugs
