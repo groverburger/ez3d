@@ -137,12 +137,14 @@ export const useGroup = create((set) => ({
 
   setUndoingMode: (undoingMode) => set({ undoingMode }),
 
+    //add entry to state history
   setStatesList: (data) => {
     set((state) => {
       state.statesList.push(data);
     });
   },
 
+    //remove an entry from state history
   popStatesList: () => {
     set((state) => {
       state.justPopped = state.statesList.pop();
@@ -150,12 +152,14 @@ export const useGroup = create((set) => ({
     });
   },
 
+    //add entry to redo list
   setRedoList: (data) => {
     set((state) => {
       state.redoList.push(data);
     });
   },
 
+    //remove an entry from the redo list
   popRedoList: () => {
     set((state) => {
       state.justPopped = state.redoList.pop();
@@ -163,6 +167,7 @@ export const useGroup = create((set) => ({
     });
   },
 
+    //reset the undo history
   resetUndoLists: () => {
     set((state) => {
       state.redoList = [];
