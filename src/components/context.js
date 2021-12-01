@@ -146,9 +146,7 @@ export const useGroup = create((set) => ({
   popStatesList: () => {
     set((state) => {
       state.justPopped = state.statesList.pop();
-      // if(state.statesList.length != 0 && state.statesList[state.statesList.length-1] == state.justPopped){
-      //     state.statesList.pop()
-      // }
+      
     });
   },
 
@@ -161,9 +159,7 @@ export const useGroup = create((set) => ({
   popRedoList: () => {
     set((state) => {
       state.justPopped = state.redoList.pop();
-      // if(state.redoList.length != 0 && state.redoList[state.redoList.length-1] == state.justPopped){
-      //     state.redoList.pop()
-      // }
+      
     });
   },
 

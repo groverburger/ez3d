@@ -95,12 +95,16 @@ export function HotKeys({ children }) {
 
         // shift r to reset the undo paths
         case 'c':
-          resetUndoLists();
-          console.log('RESET');
+            if (event.metaKey){
+                resetUndoLists();
+                console.log('RESET');
+            }
+          
           break;
 
         //undo
         case 'z':
+            // if command shift z, redo
           if (event.metaKey && event.shiftKey) {
             if (redoList[redoList.length - 1] != null) {
               for (const thing of groupList) {
@@ -145,6 +149,7 @@ export function HotKeys({ children }) {
               replaceModelData(data.models); // replaceLightData(data.lights)
             }
           } else {
+              // if command z, undo
             if (event.metaKey) {
               if (statesList[statesList.length - 1] != null) {
                 for (const thing of groupList) {
@@ -193,12 +198,13 @@ export function HotKeys({ children }) {
           break;
 
         case 's':
+            
           serialize();
           break;
 
         // Delete selected mesh
         case 'x':
-          if (targetMesh != null) {
+          if (targetMesh != null && event.metaKey) {
             setHoveredMesh(null); // Remove hovered mesh to avoid bugs
             setTargetMesh(null); // Remove target mesh
             setLightWindowToggle(false); // Close light window
