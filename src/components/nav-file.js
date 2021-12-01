@@ -31,8 +31,6 @@ export function NavFile() {
         <NavDropdown.Divider />
         <NavDropdown.Item href='#action/2.1'>Import</NavDropdown.Item>
         <NavDropdown.Item href='#action/2.2'>Export</NavDropdown.Item>
-        <NavDropdown.Divider className='nav-divider' />
-        <NavDropdown.Item href='#action/2.3'>Settings</NavDropdown.Item>
       </NavDropdown>
     </div>
   );

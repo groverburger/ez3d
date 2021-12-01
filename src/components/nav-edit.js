@@ -27,16 +27,6 @@ export function NavEdit() {
           <div style={{ margin: '0', color: '#4f4f4f4f' }}>Ctrl + Y</div>
         </NavDropdown.Item>
 
-        <NavDropdown.Item
-          href='#action/3.2'
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div style={{ margin: '0' }}>Duplicate</div>
-          <div style={{ margin: '0', color: '#4f4f4f4f' }}>Ctrl + D</div>
-        </NavDropdown.Item>
 
         <NavDropdown.Item
           href='#action/3.3'
@@ -46,7 +36,7 @@ export function NavEdit() {
           }}
         >
           <div style={{ margin: '0' }}>Delete</div>
-          <div style={{ margin: '0', color: '#4f4f4f4f' }}>Del</div>
+          <div style={{ margin: '0', color: '#4f4f4f4f' }}>Ctrl + X</div>
         </NavDropdown.Item>
       </NavDropdown>
     </div>
