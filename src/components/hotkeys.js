@@ -64,7 +64,8 @@ export function HotKeys({ children }) {
             scale: thing.scale,
             color: { r: color.r, g: color.g, b: color.b },
             geometryType: thing.geometry.type,
-          });
+            name: thing.name,
+            });
         }
       }
 
@@ -95,7 +96,7 @@ export function HotKeys({ children }) {
 
         // shift r to reset the undo paths
         case 'c':
-            if (event.metaKey){
+            if (event.ctrlKey){
                 resetUndoLists();
                 console.log('RESET');
             }
@@ -105,7 +106,7 @@ export function HotKeys({ children }) {
         //undo
         case 'z':
             // if command shift z, redo
-          if (event.metaKey && event.shiftKey) {
+          if (event.ctrlKey && event.shiftKey) {
             if (redoList[redoList.length - 1] != null) {
               for (const thing of groupList) {
                 // check if this thing is a model or a light
@@ -131,6 +132,7 @@ export function HotKeys({ children }) {
                     scale: thing.scale,
                     color: { r: color.r, g: color.g, b: color.b },
                     geometryType: thing.geometry.type,
+                    name: thing.name,
                   });
                 }
               }
@@ -150,7 +152,7 @@ export function HotKeys({ children }) {
             }
           } else {
               // if command z, undo
-            if (event.metaKey) {
+            if (event.ctrlKey) {
               if (statesList[statesList.length - 1] != null) {
                 for (const thing of groupList) {
                   // check if this thing is a model or a light
@@ -170,13 +172,14 @@ export function HotKeys({ children }) {
                     }
 
                     serialized.models.push({
-                      uuid: Math.random(),
-                      position: thing.position,
-                      rotation: thing.rotation.toVector3(),
-                      scale: thing.scale,
-                      color: { r: color.r, g: color.g, b: color.b },
-                      geometryType: thing.geometry.type,
-                    });
+                    uuid: Math.random(),
+                    position: thing.position,
+                    rotation: thing.rotation.toVector3(),
+                    scale: thing.scale,
+                    color: { r: color.r, g: color.g, b: color.b },
+                    geometryType: thing.geometry.type,
+                    name: thing.name,
+                  });
                   }
                 }
 
@@ -204,7 +207,7 @@ export function HotKeys({ children }) {
 
         // Delete selected mesh
         case 'x':
-          if (targetMesh != null && event.metaKey) {
+          if (targetMesh != null && event.ctrlKey) {
             setHoveredMesh(null); // Remove hovered mesh to avoid bugs
             setTargetMesh(null); // Remove target mesh
             setLightWindowToggle(false); // Close light window

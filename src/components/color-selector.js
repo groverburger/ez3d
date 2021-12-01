@@ -36,13 +36,14 @@ export function ColorSelect() {
         }
 
         serialized.models.push({
-          uuid: Math.random(),
-          position: thing.position,
-          rotation: thing.rotation.toVector3(),
-          scale: thing.scale,
-          color: { r: color.r, g: color.g, b: color.b },
-          geometryType: thing.geometry.type,
-        });
+            uuid: Math.random(),
+            position: thing.position,
+            rotation: thing.rotation.toVector3(),
+            scale: thing.scale,
+            color: { r: color.r, g: color.g, b: color.b },
+            geometryType: thing.geometry.type,
+            name: thing.name,
+            });
       }
     }
 

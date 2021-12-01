@@ -22,6 +22,7 @@ export function serialize() {
         scale: thing.scale,
         color: thing.material.color,
         geometryType: thing.geometry.type,
+        name: thing.name,
       });
     }
   }

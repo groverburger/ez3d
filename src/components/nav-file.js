@@ -67,6 +67,7 @@ export function NavFile() {
           scale: thing.scale,
           color: { r: color.r, g: color.g, b: color.b },
           geometryType: thing.geometry.type,
+          name: thing.name,
         });
       }
     }
