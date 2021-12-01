@@ -3,7 +3,13 @@ import { useGroup, useLight, useModel, useProperty, useTarget } from './context.
 import { convertColor } from './color-converter.js';
 import '../styles/object-list.css';
 
-
+/**
+ * ObjectList: A List of meshes and lights that populate the screen
+ * List Item consist of a button and a textbox
+ * Button: press to select that mesh in the viewport
+ * Textbox: names the mesh with user input
+ * @returns {object} JSX containing the button and textbox
+ */
 export function ObjectList() {
   const { setCurrentColor, setCurrentIntensity, setCurrentTransform } = useProperty();
   const { setIsModelWindowOpen } = useModel();
@@ -14,13 +20,15 @@ export function ObjectList() {
   const total = groupList.length;
   const objList = [];
 
+  //push total(# of meshes) indices into objList
   for (let i = 0; i < total; i++) {
     objList.push(i);
   }
-
+  //handles which window(model, light) populates the bottom pane in the outliner
   const handleClick = (mesh) => {
     setTargetMesh(mesh);
-
+    //if mesh has children then it is a light source, open light window
+    //else then it is a mesh, open model window
     if (mesh.children[0]) {
       setCurrentIntensity(mesh.children[0].intensity);
       setCurrentColor(convertColor(mesh.children[0].color));
@@ -41,7 +49,7 @@ export function ObjectList() {
       setIsModelWindowOpen(true);
     }
   };
-
+  //Button representing corresponding model, and input box for naming the mesh
   return (
     <>
       <div className='object-list-top'>
