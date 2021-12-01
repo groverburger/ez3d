@@ -1,38 +1,20 @@
 import { NavDropdown } from 'react-bootstrap';
+import React, { Component } from 'react';
 import '../styles/navbar.css';
+import Pdf from '../Documents/UserManual.pdf';
 
 export function NavHelp() {
   return (
     <div className='navbar-items'>
       <NavDropdown title='Help' id='Help-dropdown'>
         <NavDropdown.Item
-          href='#action/3.0'
+          href={Pdf}
           style={{
             display: 'flex',
             justifyContent: 'space-between',
           }}
         >
-          <div style={{ margin: '0' }}>About mesh</div>
-        </NavDropdown.Item>
-
-        <NavDropdown.Item
-          href='#action/3.1'
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div style={{ margin: '0' }}>About Light</div>
-        </NavDropdown.Item>
-
-        <NavDropdown.Item
-          href='#action/3.2'
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-          }}
-        >
-          <div style={{ margin: '0' }}>Contact us</div>
+          <div style={{ margin: '0' }}>User Manual</div>
         </NavDropdown.Item>
       </NavDropdown>
     </div>
