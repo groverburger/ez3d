@@ -18,7 +18,7 @@ export function ModelRenderer(props) {
     ref={meshRef}
     name={`Model ${meshIndex.current}`}
     onClick={handleClick}
-    // onPointerMissed={() => setIsModelWindowOpen(false)}
+    onPointerMissed={() => setIsModelWindowOpen(false)}
     castShadow
   >
     {(() => {
