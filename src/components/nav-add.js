@@ -145,7 +145,7 @@ export function NavAdd() {
     switch (event.target.innerHTML) {
       case 'Ambient Light':
         const newAmbient = {
-          position: { x: 0, y: 0, z: 0 },
+          position: [0, 0, 0],
           type: 'AmbientLight',
           uuid: Math.random(),
         };
@@ -154,7 +154,7 @@ export function NavAdd() {
 
       case 'Directional Light':
         const newDirectional = {
-          position: { x: 0, y: -2.5, z: 0 },
+          position: [0, -2.5, 0],
           type: 'DirectionalLight',
           uuid: Math.random(),
         };
@@ -163,7 +163,7 @@ export function NavAdd() {
 
       case 'Point Light':
         const newPoint = {
-          position: { x: 0, y: 6.5, z: 0 },
+          position: [0, 6.5, 0],
           type: 'PointLight',
           uuid: Math.random(),
         };

@@ -45,7 +45,7 @@ export const AmbientLight = (props) => {
     <LightMesh props={props}>
       <meshBasicMaterial attach='material' color='hotpink' wireframe />
       <ambientLight
-        {...[props.position.x, props.position.y, props.position.z]}
+        position={props.position}
         color='white'
       />
     </LightMesh>
@@ -60,7 +60,7 @@ export const DirectionalLight = (props) => {
     <LightMesh props={props}>
       <meshBasicMaterial attach='material' color='hotpink' wireframe />
       <directionalLight
-        {...[props.position.x, props.position.y, props.position.z]}
+        position={props.position}
         ref={lightRef}
         color='white'
         shadow-mapSize-width={2048}
@@ -79,7 +79,7 @@ export const PointLight = (props) => {
     <LightMesh props={props}>
       <meshBasicMaterial attach='material' color='hotpink' wireframe />
       <pointLight
-        {...{position: props.position}}
+        position={props.position}
         ref={lightRef}
         color='white'
         castShadow
