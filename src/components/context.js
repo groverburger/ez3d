@@ -148,7 +148,7 @@ export const useGroup = create((set) => ({
   popStatesList: () => {
     set((state) => {
       state.justPopped = state.statesList.pop();
-      
+
     });
   },
 
@@ -163,7 +163,7 @@ export const useGroup = create((set) => ({
   popRedoList: () => {
     set((state) => {
       state.justPopped = state.redoList.pop();
-      
+
     });
   },
 

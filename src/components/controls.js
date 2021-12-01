@@ -5,14 +5,14 @@ import { useProperty, useTarget, useScene, useGroup, useLight, useModel } from '
 // Transform Controls
 export function Controls() {
   const { currentTransformMode, setCurrentTransformMode } = useProperty();
-  const { targetMesh } = useTarget();
+  const { targetMesh} = useTarget();
   const { setIsDragging } = useScene();
   const { groupList, setStatesList, resetUndoLists } = useGroup();
 
   // Transform Controls reference so that we can change its properties
   const transformRef = useRef();
 
-    
+
     //function to save the state history
   function serialize() {
     const serialized = {
@@ -66,21 +66,25 @@ export function Controls() {
       const handleKeyDown = (event) => {
         switch (event.key) {
           case 'w':
+            controls.attach(targetMesh);
             controls.setMode('translate');
             setCurrentTransformMode(controls.mode);
             break;
 
           case 'e':
+            controls.attach(targetMesh);
             controls.setMode('scale');
             setCurrentTransformMode(controls.mode);
             break;
 
           case 'r':
+            controls.attach(targetMesh);
             controls.setMode('rotate');
             setCurrentTransformMode(controls.mode);
-
             break;
-
+          case 'd':
+            controls.detach();
+            break;
           case 't':
             controls.visible = !controls.visible;
             break;

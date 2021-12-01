@@ -5,12 +5,13 @@ export function Group({ children }) {
   const { setGroupList } = useGroup();
   const { modelData } = useModel();
   const { lightData, setLightWindowToggle, setLightWindowType } = useLight();
-  const { setHoveredMesh, setTargetMesh } = useTarget();
+  const { transformRef, setHoveredMesh, setTargetMesh } = useTarget();
 
   const groupRef = useRef();
 
   const handlePointerMissed = () => {
     setTargetMesh(null);
+    document.dispatchEvent(new KeyboardEvent('keydown',{'key':'d'}));
     setLightWindowType(null);
     setLightWindowToggle(false);
   };
