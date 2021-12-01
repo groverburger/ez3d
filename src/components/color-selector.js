@@ -4,8 +4,8 @@ import { convertColor } from './color-converter.js';
 /**
  * Check which component is selected
  * Change color for selected component in the correct format
- * 
- * @returns {object} JSX containing the new color for the objet
+ *
+ * @returns {object} JSX containing the new color for the object
  */
 export function ColorSelect() {
   const { currentColor, setCurrentColor } = useProperty();
