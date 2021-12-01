@@ -1,3 +1,9 @@
+
+/**
+ * 
+ * @param {number, number, number} color 
+ * @returns {string} color in hex or rgb format
+ */
 export function convertColor(color) {
   // Convert hex string to an rgb object
   const hexToRgb = (hex) => {

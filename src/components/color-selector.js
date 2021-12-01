@@ -1,6 +1,11 @@
 import { useProperty, useTarget, useGroup } from './context.js';
 import { convertColor } from './color-converter.js';
 
+/**
+ * Check which component is selected
+ * 
+ * @returns {object} JSX containing the new color
+ */
 export function ColorSelect() {
   const { currentColor, setCurrentColor } = useProperty();
   const { targetMesh } = useTarget();
