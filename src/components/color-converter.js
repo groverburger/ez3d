@@ -1,5 +1,6 @@
 
 /**
+ * Take in the value in rgb and convert it to hex format
  * 
  * @param {number, number, number} color 
  * @returns {string} color in hex or rgb format
