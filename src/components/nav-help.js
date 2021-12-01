@@ -3,6 +3,12 @@ import React, { Component } from 'react';
 import '../styles/navbar.css';
 import Pdf from '../Documents/UserManual.pdf';
 
+/**
+ * Redirect user to user manual on clicking
+ *
+ * @returns {object} JSX containing PDF version of user manual
+ */
+
 export function NavHelp() {
   return (
     <div className='navbar-items'>
