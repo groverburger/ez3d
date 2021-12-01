@@ -39,6 +39,7 @@ export function HotKeys({ children }) {
       lights: [],
     };
 
+    //function to save the state for undo/redo
     function serialize() {
       for (const thing of groupList) {
         // check if this thing is a model or a light
@@ -75,7 +76,7 @@ export function HotKeys({ children }) {
 
     const handleKeyDown = (event) => {
       switch (event.key) {
-        // For debugging purposes
+        // For debugging purposes, print out the state data
         case 'p':
           console.log('Currently Selected Mesh:', targetMesh);
           console.log('Grouplist:', groupList);
@@ -94,14 +95,15 @@ export function HotKeys({ children }) {
           setIsModelWindowOpen(false); // Close model window
           break;
 
-        // shift r to reset the undo paths
+        // shift r to reset the undo history
         case 'c':
             if (event.ctrlKey){
                 resetUndoLists();
                 console.log('RESET');
             }
-          
           break;
+
+        // ctrl Y to redo your undos
         case 'y':
             if (event.ctrlKey && redoList[redoList.length - 1] != null) {
               for (const thing of groupList) {
@@ -147,9 +149,8 @@ export function HotKeys({ children }) {
               replaceModelData(data.models); // replaceLightData(data.lights)
             }
             break;
-        //undo
+        // ctrl z to undo your changed
         case 'z':
-            // if command shift z, redo
           
               // if command z, undo
             if (event.ctrlKey) {
@@ -183,7 +184,6 @@ export function HotKeys({ children }) {
                   }
                 }
 
-                // saver = serialized;
                 setRedoList(JSON.stringify(serialized));
 
                 const data = JSON.parse(statesList[statesList.length - 1]);

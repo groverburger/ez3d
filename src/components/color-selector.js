@@ -12,6 +12,7 @@ export function ColorSelect() {
   const { targetMesh } = useTarget();
   const { setStatesList, groupList } = useGroup();
 
+    //function to save the state history
   function serialize() {
     const serialized = {
       models: [],
