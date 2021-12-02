@@ -2,6 +2,13 @@ import { NavDropdown } from 'react-bootstrap';
 import { useModel, useLight, useGroup } from './context.js';
 import '../styles/navbar.css';
 
+/**
+ * Show the drop-down list that contains all elements can be added to scene
+ * Add the mesh/light based on the selection
+ *
+ * @returns {object} JSX containing mesh/light object
+ */
+
 export function NavAdd() {
   const { setModelData } = useModel();
   const { setLightData } = useLight();

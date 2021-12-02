@@ -3,6 +3,13 @@ import { serialize, deserialize } from './serialize.js';
 import * as context from './context.js';
 import '../styles/navbar.css';
 
+/**
+ * Show the drop-down list that contains all file operations
+ * Save/export/import the file based on the selection
+ *
+ * @returns {object} JSX containing file operation
+ */
+
 export function NavFile() {
   const { replaceModelData } = context.useModel();
   const { replaceLightData } = context.useLight();

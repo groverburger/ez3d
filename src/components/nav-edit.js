@@ -1,6 +1,13 @@
 import { NavDropdown } from 'react-bootstrap';
 import '../styles/navbar.css';
 
+/**
+ * Show the drop-down list that contains all object operations
+ * Undo operation/Redo operation/Delete mesh based on the selection
+ *
+ * @returns {object} JSX containing object operation
+ */
+
 export function NavEdit() {
   return (
     <div className='navbar-items'>
