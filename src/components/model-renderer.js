@@ -2,6 +2,12 @@ import React, { useRef, useEffect } from 'react';
 import { useGroup, useModel, useProperty, useTarget } from './context.js';
 import { convertColor } from './color-converter.js';
 
+/**
+ * Single component responsible for outputting the models.
+ * 
+ * @param {object} props 
+ * @returns {object} JSX containing all possible models.
+ */
 export function ModelRenderer(props) {
   const meshRef = useRef();
   const { setTargetMesh } = useTarget();

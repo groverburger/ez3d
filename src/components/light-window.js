@@ -4,6 +4,11 @@ import { Number } from './number-input.js';
 import { ColorSelect } from './color-selector.js';
 import '../styles/light-window.css';
 
+/**
+ * The window that holds the selected light's information.
+ * 
+ * @returns {object} JSX of the window pertaining to the lights.
+ */
 export function LightWindow() {
   const { currentIntensity } = useProperty();
   const { lightWindowInfo } = useLight();

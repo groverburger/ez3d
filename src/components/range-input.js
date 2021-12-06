@@ -1,6 +1,11 @@
 import { useProperty, useTarget } from './context.js';
 import '../styles/range-input.css';
 
+/**
+ * A UI that provides control over the selected light's intensity.
+ * 
+ * @returns {object} JSX of the intensity range UI.
+ */
 export function Range() {
   const { currentIntensity, setCurrentIntensity } = useProperty();
   const { targetMesh } = useTarget();

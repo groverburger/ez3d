@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { useGroup, useLight, useModel, useTarget } from './context.js';
 
+/**
+ * The hotkeys (not including transform controls hotkeys).
+ * 
+ * @param {object} children
+ * @returns {object} JSX containing hotkeys
+ */
 export function HotKeys({ children }) {
   const { setTargetMesh, targetMesh, setHoveredMesh } = useTarget();
   const {

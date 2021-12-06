@@ -2,6 +2,11 @@ import { Toggle } from './toggle.js';
 import { useScene } from './context.js';
 import '../styles/scene-window.css';
 
+/**
+ * The window that holds the scene's information.
+ * 
+ * @returns {object} JSX of the window pertaining to the scene.
+ */
 export function SceneWindow() {
   const { isGridVisible, setGrid, isShadowsVisible, setShadows, isFogVisible, setFog} = useScene();
 

@@ -4,6 +4,13 @@ import { DirectionalLightHelper, PointLightHelper } from 'three';
 import { useGroup, useProperty, useTarget } from './context.js';
 import { convertColor } from './color-converter.js';
 
+/**
+ * The selectable mesh that accompanies each light.
+ * 
+ * @param {object} children Actual light component.
+ * @param {object} props Light's properties.
+ * @returns {object} JSX containing specific light.
+ */
 const LightMesh = ({ children, props }) => {
   const handleLightClick = props.onClick;
   const handleWindowClose = props.onClose;
@@ -40,6 +47,12 @@ const LightMesh = ({ children, props }) => {
   );
 }
 
+/**
+ * The ambient light component.
+ * 
+ * @param {object} props 
+ * @returns {object} JSX containing the ambient light.
+ */
 export const AmbientLight = (props) => {
   return (
     <LightMesh props={props}>
@@ -52,6 +65,12 @@ export const AmbientLight = (props) => {
   );
 };
 
+/**
+ * The directional light component.
+ * 
+ * @param {object} props 
+ * @returns {object} JSX containing the directional light.
+ */
 export const DirectionalLight = (props) => {
   const lightRef = useRef();
   useHelper(lightRef, DirectionalLightHelper, 5);  // The outline that accompanies the light to show direction
@@ -71,6 +90,12 @@ export const DirectionalLight = (props) => {
   );
 };
 
+/**
+ * The ambient light component.
+ * 
+ * @param {object} props 
+ * @returns {object} JSX containing the point light.
+ */
 export const PointLight = (props) => {
   const lightRef = useRef();
   useHelper(lightRef, PointLightHelper, 5); // The outline that accompanies the light to show direction

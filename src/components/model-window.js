@@ -4,6 +4,11 @@ import { ShadeSelect } from './shade-selector.js';
 import { Visibility } from './visibility-toggle.js';
 import '../styles/model-window.css';
 
+/**
+ * The window that holds the selected model's information.
+ * 
+ * @returns {object} JSX of the window pertaining to the model.
+ */
 export function ModelWindow() {
   return (
     <>

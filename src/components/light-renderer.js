@@ -1,6 +1,12 @@
 import { useLight } from './context';
 import { AmbientLight, DirectionalLight, PointLight } from './lights.js';
 
+/**
+ * Single component responsible for outputting the lights.
+ * 
+ * @param {object} props The relevant props for the lights.
+ * @returns {object} JSX containing all the possible lights.
+ */
 export function LightRenderer(props) {
   const { setLightWindowType, setLightWindowToggle } = useLight();
 

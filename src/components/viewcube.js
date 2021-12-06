@@ -3,8 +3,13 @@ import { useFrame, useThree, createPortal } from '@react-three/fiber';
 import { OrthographicCamera, useCamera } from '@react-three/drei';
 import { Scene, Matrix4 } from 'three';
 
-// Reference: https://codesandbox.io/s/viewcube-py4db?file=/src/App.js
-// Reference: https://github.com/pmndrs/drei/blob/master/src/core/GizmoHelper.tsx
+/**
+ * Reference: https://codesandbox.io/s/viewcube-py4db?file=/src/App.js
+ * Reference: https://github.com/pmndrs/drei/blob/master/src/core/GizmoHelper.tsx
+ * Provides snap-positioning of the camera on the x,y,z axis.
+ * 
+ * @returns {object} JSX of the viewcube UI.
+ */
 export function Viewcube() {
   const { gl, camera, size } = useThree();
   const matrix = new Matrix4();

@@ -3,6 +3,7 @@ import { ReactComponent as EyeIcon } from '../icons/eye.svg';
 import { ReactComponent as EyeCrossedIcon } from '../icons/eye-crossed.svg';
 import {useTarget, useScene } from './context.js';
 import '../styles/toolbar.css';
+
 /**
  * Visibility: turns the selected mesh's Visibility on/off
  *

@@ -5,6 +5,11 @@ import { ReactComponent as ScaleIcon } from '../icons/scale.svg';
 import { useProperty, useTarget, useScene } from './context.js';
 import '../styles/number-input.css';
 
+/**
+ * A UI that provides more selective control over the transform controls.
+ * 
+ * @returns {object} JSX of the transform control UI.
+ */
 export function Number() {
   const icons = {
     translate: <TranslateIcon />,

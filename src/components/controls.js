@@ -2,7 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { OrbitControls, TransformControls } from '@react-three/drei';
 import { useProperty, useTarget, useScene, useGroup, useLight, useModel } from './context.js';
 
-// Transform Controls
+/**
+ * Contains the transform controls that attaches to the selected mesh.
+ * Also includes the hotkeys for the transform controls.
+ * 
+ * @returns {Object} JSX containing transform controls component.
+ */
 export function Controls() {
   const { currentTransformMode, setCurrentTransformMode } = useProperty();
   const { targetMesh} = useTarget();

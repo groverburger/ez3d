@@ -1,5 +1,10 @@
 import { useScene } from './context.js';
 
+/**
+ * The grid for the scene.
+ * 
+ * @returns {object} JSX containing grid component.
+ */
 export function Grid() {
   const { isGridVisible, isShadowsVisible } = useScene();
 

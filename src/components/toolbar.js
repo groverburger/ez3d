@@ -5,6 +5,11 @@ import { ReactComponent as ScaleIcon } from '../icons/scale.svg';
 import { useProperty, useTarget } from './context.js';
 import '../styles/toolbar.css';
 
+/**
+ * Allows selection of the different modes to the transform controls.
+ * 
+ * @returns {object} JSX of the toolbar UI.
+ */
 export function Toolbar() {
   const icons = {
     translate: <TranslateIcon />,
