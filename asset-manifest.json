@@ -1,0 +1,29 @@
+{
+  "files": {
+    "main.css": "/ez3d/static/css/main.58858d63.chunk.css",
+    "main.js": "/ez3d/static/js/main.8be0ca3f.chunk.js",
+    "main.js.map": "/ez3d/static/js/main.8be0ca3f.chunk.js.map",
+    "runtime-main.js": "/ez3d/static/js/runtime-main.3eb426ae.js",
+    "runtime-main.js.map": "/ez3d/static/js/runtime-main.3eb426ae.js.map",
+    "static/css/2.383c0125.chunk.css": "/ez3d/static/css/2.383c0125.chunk.css",
+    "static/js/2.33983259.chunk.js": "/ez3d/static/js/2.33983259.chunk.js",
+    "static/js/2.33983259.chunk.js.map": "/ez3d/static/js/2.33983259.chunk.js.map",
+    "index.html": "/ez3d/index.html",
+    "static/css/2.383c0125.chunk.css.map": "/ez3d/static/css/2.383c0125.chunk.css.map",
+    "static/css/main.58858d63.chunk.css.map": "/ez3d/static/css/main.58858d63.chunk.css.map",
+    "static/js/2.33983259.chunk.js.LICENSE.txt": "/ez3d/static/js/2.33983259.chunk.js.LICENSE.txt",
+    "static/media/UserManual.a0a499b4.pdf": "/ez3d/static/media/UserManual.a0a499b4.pdf",
+    "static/media/eye-crossed.37b7f488.svg": "/ez3d/static/media/eye-crossed.37b7f488.svg",
+    "static/media/eye.0edee94c.svg": "/ez3d/static/media/eye.0edee94c.svg",
+    "static/media/rotate.f90e86ac.svg": "/ez3d/static/media/rotate.f90e86ac.svg",
+    "static/media/scale.f4dd501c.svg": "/ez3d/static/media/scale.f4dd501c.svg",
+    "static/media/translate.71fe0c1f.svg": "/ez3d/static/media/translate.71fe0c1f.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3eb426ae.js",
+    "static/css/2.383c0125.chunk.css",
+    "static/js/2.33983259.chunk.js",
+    "static/css/main.58858d63.chunk.css",
+    "static/js/main.8be0ca3f.chunk.js"
+  ]
+}
