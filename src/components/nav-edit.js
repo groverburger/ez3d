@@ -9,6 +9,17 @@ import '../styles/navbar.css';
  */
 
 export function NavEdit() {
+  //Programmatically triggers the hotkeys for Undo, Redo, Delete
+  const handleRedo = (event) => {
+    document.dispatchEvent(new KeyboardEvent("keydown", {'key': 'y','ctrlKey': 'true'}));
+  };
+  const handleUndo = (event) => {
+    document.dispatchEvent(new KeyboardEvent("keydown", {'key': 'z','ctrlKey': 'true'}));
+  };
+  const handleDelete = (event) => {
+    document.dispatchEvent(new KeyboardEvent("keydown", {'key': 'x','ctrlKey': 'true'}));
+  };
+
   return (
     <div className='navbar-items'>
       <NavDropdown title='Edit' id='edit-dropdown'>
@@ -18,6 +29,7 @@ export function NavEdit() {
             display: 'flex',
             justifyContent: 'space-between',
           }}
+          onClick={() => handleUndo()}
         >
           <div style={{ margin: '0' }}>Undo</div>
           <div style={{ margin: '0', color: '#4f4f4f4f' }}>Ctrl + Z</div>
@@ -29,6 +41,7 @@ export function NavEdit() {
             display: 'flex',
             justifyContent: 'space-between',
           }}
+          onClick={() => handleRedo()}
         >
           <div style={{ margin: '0' }}>Redo</div>
           <div style={{ margin: '0', color: '#4f4f4f4f' }}>Ctrl + Y</div>
@@ -41,6 +54,7 @@ export function NavEdit() {
             display: 'flex',
             justifyContent: 'space-between',
           }}
+          onClick={() => handleDelete()}
         >
           <div style={{ margin: '0' }}>Delete</div>
           <div style={{ margin: '0', color: '#4f4f4f4f' }}>Ctrl + X</div>
